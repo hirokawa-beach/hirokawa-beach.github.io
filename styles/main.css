@@ -1,0 +1,82 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #f5f6f8;
+  color: #222;
+}
+
+.global-nav {
+  background: #111;
+  padding: 0.8rem 1rem;
+}
+.global-nav a {
+  color: #fff;
+  margin-right: 1rem;
+  text-decoration: none;
+}
+.global-nav a:hover {
+  text-decoration: underline;
+}
+
+.hero {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.content {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem 1rem;
+}
+
+.card {
+  background: #fff;
+  padding: 1.5rem;
+  margin: 1.5rem;
+  border-radius: 6px;
+}
+
+.tool, .memo {
+  background: #fff;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 6px;
+}
+
+.github-button, .button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 1.2rem;
+  background: #111;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+}
+.github-button img, .button img {
+  width: 32px;
+  height: 32px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.github-button span, .button span {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.github-button:hover, .button:hover {
+  background: dimgray;
+}
+
+.button {
+  background: deepskyblue;
+}
+.button:hover {
+  background: lightskyblue;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #111;
+  color: #fff;
+}/*# sourceMappingURL=main.css.map */
