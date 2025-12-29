@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>hirokawa-beach | Tools</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+<nav class="global-nav">
+  <a href="index.html">Home</a>
+  <a href="tools.html">Tools/Projects</a>
+  <a href="memo.html">Memo</a>
+  <a href="https://github.com/hirokawa-beach" target="_blank">GitHub</a>
+</nav>
+
+<main class="content">
+  <h1>Oki Archive Bot</h1>
+  <h3>このページではbotの利用方法を説明しています。</h3>
+  <article class="tool">
+    <h2>(沖ノ鳥鯖での)大まかな利用方法</h2>
+    <p>基本的に「oki-archive-bot用」チャンネルで使用してください<br>"/"を入力して"Oki Archive Bot"を選択するとコマンド一覧が表示され、選択できます</p>
+    <img src="img/botimg1.png" alt="bot一覧が表示されます">
+  </article>
+  <article class="tool">
+    <h2>コマンド一覧</h2>
+    <h3>/archive tile</h3>
+    <p>アーカイブをタイル座標指定で取得します。<br>
+      <code>/archive tile x: y: [time:]</code><br>
+      ●x, y…タイルX座標、Y座標(マーブル系に表示されます)<br>
+      ●time…時間指定。なにも指定しない場合は3時間前。*時間前→*h、*日前→*d、*か月前→*m
+    </p>
+    <h3>/archive url</h3>
+    <p>アーカイブをURL指定で取得します。<br>
+      <code>/archive url url: [time:]</code><br>
+      ●url…wplaceのURL(ｈttps//wplace.live/?lat=...&lng=...&zoom=...)。wplaceでpx選択時にShareから取得できます。<br>
+      ●time…上記参照
+    </p>
+    <h3>/diff tile</h3>
+    <p>差分画像をタイル座標指定で生成します。<br>
+      <code>/diff tile x: y: time1: time2:</code><br>
+      ●x, y…上記参照<br>
+      ●time1, time2…前者が比較元、後者が比較先のそれぞれ時間を指定。入力形式はtimeと同じ
+    </p>
+    <h3>/diff url</h3>
+    <p>差分画像をURL指定で生成します。<br>
+      <code>/diff url url: time1: time2:</code><br>
+      ●url…上記参照<br>
+      ●time1, time2…上記参照
+    </p>
+    <h4>ここより下は開発者専用</h4>
+    <h3>/divmode</h3>
+    <p>開発者モードの切り替えをします。(トグル式)<br>
+      <code>/divmode</code><br>
+      ＊ひろかわびーちのみが実行権限をもっていますが、権限が欲しい方はお知らせください。
+    </p>
+    <h3>/test</h3>
+    <p>開発者モードONの時のみ使用できる簡易テストコマンド。<br>
+      <code>/test x: y: [time:]</code><br>
+    </p>
+
+  </article>
+
+</main>
+
+<footer>© 2025 ひろかわびーち All Rights Reserved.</footer>
+
+</body>
+</html>

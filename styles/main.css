@@ -28,6 +28,9 @@ body {
   margin: auto;
   padding: 2rem 1rem;
 }
+.content .tool img {
+  width: 80%;
+}
 
 .card {
   background: #fff;
@@ -43,7 +46,7 @@ body {
   border-radius: 6px;
 }
 
-.github-button, .button {
+.github-button, .button, .info-button {
   display: inline-flex;
   align-items: center;
   gap: 0.8rem;
@@ -53,17 +56,17 @@ body {
   border-radius: 8px;
   text-decoration: none;
 }
-.github-button img, .button img {
+.github-button img, .button img, .info-button img {
   width: 32px;
   height: 32px;
   -o-object-fit: contain;
      object-fit: contain;
 }
-.github-button span, .button span {
+.github-button span, .button span, .info-button span {
   font-size: 1rem;
   font-weight: 600;
 }
-.github-button:hover, .button:hover {
+.github-button:hover, .button:hover, .info-button:hover {
   background: dimgray;
 }
 
@@ -72,6 +75,13 @@ body {
 }
 .button:hover {
   background: lightskyblue;
+}
+
+.info-button {
+  background: green;
+}
+.info-button:hover {
+  background: limegreen;
 }
 
 footer {
