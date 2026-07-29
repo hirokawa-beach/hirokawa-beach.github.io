@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>ひろかわびーちのブログ</title>
+    <link>https://hirokawa-beach.github.io/blog.html</link>
+    <description>開発やサイト更新について書いています。</description>
+    <language>ja</language>
+    <item>
+      <title>ホームページのデザインを見直しました</title>
+      <link>https://hirokawa-beach.github.io/posts/2026-07-29-design-renewal.html</link>
+      <guid>https://hirokawa-beach.github.io/posts/2026-07-29-design-renewal.html</guid>
+      <pubDate>Wed, 29 Jul 2026 00:00:00 +0900</pubDate>
+      <category>Web</category>
+      <description>個人サイトらしさを残しながら、少し読みやすいデザインへ変更しました。</description>
+    </item>
+    <item>
+      <title>GitHub Pagesでウェブサイトを開設</title>
+      <link>https://hirokawa-beach.github.io/posts/2025-12-29-site-open.html</link>
+      <guid>https://hirokawa-beach.github.io/posts/2025-12-29-site-open.html</guid>
+      <pubDate>Mon, 29 Dec 2025 00:00:00 +0900</pubDate>
+      <category>Web</category>
+      <description>このホームページを開設したときの記録です。</description>
+    </item>
+  </channel>
+</rss>

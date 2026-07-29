@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ひろかわびーちのブログです。開発やサイト更新について書いています。">
+  <title>ブログ | ひろかわびーち</title>
+  <link rel="alternate" type="application/rss+xml" title="ひろかわびーちのブログ" href="feed.xml">
+  <link rel="stylesheet" href="styles/main.css">
+  <script src="scripts/blog.js" defer></script>
+</head>
+<body>
+<nav class="global-nav" aria-label="メインナビゲーション">
+  <a class="site-name" href="index.html">ひろかわびーち</a>
+  <div class="nav-links">
+    <a href="index.html">ホーム</a>
+    <a href="tools.html">制作物</a>
+    <a class="active" href="blog.html" aria-current="page">ブログ</a>
+  </div>
+</nav>
+<main class="content">
+  <header class="page-header blog-header">
+    <div>
+      <h1>ブログ</h1>
+      <p>開発やサイト更新について書いています。</p>
+    </div>
+    <a class="rss-link" href="feed.xml">RSS</a>
+  </header>
+
+  <section class="blog-controls" aria-label="タグによる記事の絞り込み">
+    <span class="blog-controls-label">タグで絞り込む</span>
+    <div class="blog-tag-filter">
+      <button class="active" type="button" data-tag="" aria-pressed="true">すべて</button>
+      <button type="button" data-tag="Web" aria-pressed="false">Web</button>
+      <button type="button" data-tag="鉄道" aria-pressed="false">鉄道</button>
+      <button type="button" data-tag="C#" aria-pressed="false">C#</button>
+      <button type="button" data-tag="Python" aria-pressed="false">Python</button>
+      <button type="button" data-tag="Raspberry Pi" aria-pressed="false">Raspberry Pi</button>
+      <button type="button" data-tag="独り言(愚痴)" aria-pressed="false">独り言(愚痴)</button>
+    </div>
+  </section>
+
+  <p id="blog-result-count" class="blog-result-count" aria-live="polite">2件の記事</p>
+
+  <section id="blog-list" class="blog-list" aria-label="記事一覧">
+    <!-- 複数タグを付ける場合は data-tags="Web|Python" のように | で区切ってください -->
+    <article
+      class="blog-card"
+      data-tags="Web"
+    >
+      <div class="blog-meta">
+        <time datetime="2026-07-29">2026年7月29日</time>
+        <span class="blog-tag">Web</span>
+      </div>
+      <h2>
+        <a href="posts/2026-07-29-design-renewal.html">ホームページのデザインを見直しました</a>
+      </h2>
+      <p>個人サイトらしさを残しながら、少し読みやすいデザインへ変更しました。</p>
+      <a class="read-more" href="posts/2026-07-29-design-renewal.html">続きを読む</a>
+    </article>
+
+    <article
+      class="blog-card"
+      data-tags="Web"
+    >
+      <div class="blog-meta">
+        <time datetime="2025-12-29">2025年12月29日</time>
+        <span class="blog-tag">Web</span>
+      </div>
+      <h2>
+        <a href="posts/2025-12-29-site-open.html">GitHub Pagesでウェブサイトを開設</a>
+      </h2>
+      <p>このホームページを開設したときの記録です。</p>
+      <a class="read-more" href="posts/2025-12-29-site-open.html">続きを読む</a>
+    </article>
+  </section>
+
+  <p id="blog-empty" class="blog-empty" hidden>条件に一致する記事はありません。</p>
+</main>
+<footer>
+  <span>© 2026 ひろかわびーち</span>
+</footer>
+</body>
+</html>

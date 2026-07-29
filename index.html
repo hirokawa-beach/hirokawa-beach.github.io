@@ -2,35 +2,194 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>ひろかわびーちの物置｜ほーむ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ひろかわびーちの個人HPです。制作したツールや活動のメモをまとめています。">
+  <title>ひろかわびーちのホームページ</title>
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-
-<nav class="global-nav">
-  <a href="index.html">Home</a>
-  <a href="tools.html">Tools/Projects</a>
-  <a href="memo.html">Memo</a>
-  <a href="https://github.com/hirokawa-beach" target="_blank">GitHub</a>
+<nav class="global-nav" aria-label="メインナビゲーション">
+  <a class="site-name" href="index.html">ひろかわびーち</a>
+  <div class="nav-links">
+    <a class="active" href="index.html" aria-current="page">ホーム</a>
+    <a href="tools.html">制作物</a>
+    <a href="blog.html">ブログ</a>
+  </div>
 </nav>
-
 <header class="hero">
-  <h1>ひろかわびーちの物置</h1>
-  <p>
-    ひろかわびーちが開発したプログラムやウェブサイトなどへのお乗り換えができる、<br>いわゆるハブ駅的なサイトです。
-  </p>
+  <div class="hero-inner">
+    <h1>ひろかわびーちのホームページ</h1>
+    <p class="hero-copy">作ったものや、日々の活動についてまとめています。</p>
+  </div>
 </header>
-<main>
-    <div class="card">
-        <h2>そもそも誰やねん(自己紹介)</h2>
-        <p>京阪神アーバンネットワーク圏内在住のプログラミング好きな学生。<br>HTML/CSS/Python書けます。JavaScriptは勉強中。<br>wplace沖ノ鳥島開発 技術局長(2025.8~)</p>
+<main class="content home-content">
+  <section class="section about-section" aria-labelledby="about-title">
+    <div class="section-heading">
+      <h2 id="about-title">自己紹介</h2>
     </div>
+    <div class="about-grid">
+      <div class="card about-card">
+        <dl class="profile-list">
+          <div class="profile-item">
+            <dt>立場</dt>
+            <dd>学生</dd>
+          </div>
+          <div class="profile-item">
+            <dt>地域</dt>
+            <dd>アーバンネットワーク在住</dd>
+          </div>
+          <div class="profile-item">
+            <dt>活動</dt>
+            <dd>
+              Wplace沖ノ鳥島開発
+              <span class="profile-sub">技術局長（2025年8月〜）</span>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+    <div class="card social-card">
+      <h3>リンク</h3>
+      <!-- REPLACE_ME の部分を自分のユーザー名・招待コードに置き換えてください -->
+      <ul class="social-links">
+        <li>
+          <a href="https://github.com/hirokawa-beach" target="_blank" rel="noopener noreferrer" title="GitHub">
+            <img src="img/github-mark.png" alt="">
+            <span class="visually-hidden">GitHub</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://twitter.com/Hirokawa_beach" target="_blank" rel="noopener noreferrer" title="Twitter">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@9/icons/twitter.svg" alt="">
+            <span class="visually-hidden">Twitter</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.youtube.com/@hirokawabeach_283" target="_blank" rel="noopener noreferrer" title="YouTube">
+            <img src="https://cdn.simpleicons.org/youtube" alt="">
+            <span class="visually-hidden">YouTube</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://discord.com/users/1362403452436746461" target="_blank" rel="noopener noreferrer" title="Discord">
+            <img src="https://cdn.simpleicons.org/discord" alt="">
+            <span class="visually-hidden">Discord</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section class="section projects-section" aria-labelledby="featured-title">
+    <div class="section-heading heading-with-link">
+      <h2 id="featured-title">制作物</h2>
+      <a class="text-link" href="tools.html">すべて見る</a>
+    </div>
+    <div class="project-grid">
+      <article class="project-card">
+        <h3>StudyCoPi</h3>
+        <p>勉強スケジュールの管理を支援するWebアプリ。(β版)</p>
+        <a class="card-link" href="https://hirokawa-beach.github.io/StudyCoPi/">Webアプリを開く</a>
+      </article>
+      <article class="project-card">
+        <h3>OkiMAP</h3>
+        <p>Leafletを使用した、wplace沖ノ鳥周辺のアーカイブマップ。</p>
+        <a class="card-link" href="https://okimap.wplaceoki.com/">マップを開く</a>
+      </article>
+      <article class="project-card">
+        <h3>Oki Archive Bot</h3>
+        <p>Discordからアーカイブ取得や差分画像の生成ができるBot。</p>
+        <a class="card-link" href="botinfo.html">使い方を見る</a>
+      </article>
+    </div>
+  </section>
+  <section class="section skills-section" aria-labelledby="skills-title">
+    <div class="section-heading">
+      <h2 id="skills-title">使っているもの</h2>
+    </div>
+    <div class="card skills-card">
+      <section class="tech-group" aria-labelledby="languages-title">
+        <h3 id="languages-title">言語</h3>
+        <ul class="tag-list">
+          <li>
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="">
+            <span>HTML</span>
+          </li>
+          <li>
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="">
+            <span>CSS</span>
+          </li>
+          <li>
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="">
+            <span>Python</span>
+          </li>
+          <li class="learning">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="">
+            <span>JavaScript</span>
+            <small>勉強中</small>
+          </li>
+          <li class="learning">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt="">
+            <span>C#</span>
+            <small>勉強中</small>
+          </li>
+        </ul>
+      </section>
+      <section class="tech-group" aria-labelledby="os-title">
+        <h3 id="os-title">OS</h3>
+        <ul class="tag-list">
+          <li>
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/windows11/windows11-original.svg" alt="">
+            <span>Windows</span>
+          </li>
+          <li>
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/android/android-original.svg" alt="">
+            <span>Android</span>
+          </li>
+          <li>
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/raspberrypi/raspberrypi-original.svg" alt="">
+            <span>Raspberry Pi OS</span>
+          </li>
+          <li>
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ubuntu/ubuntu-original.svg" alt="">
+            <span>Ubuntu</span>
+          </li>
+          <li>
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/archlinux/archlinux-original.svg" alt="">
+            <span>Arch Linux</span>
+          </li>
+        </ul>
+      </section>
+      <section class="tech-group" aria-labelledby="devices-title">
+        <h3 id="devices-title">機器</h3>
+        <ul class="tag-list">
+          <li>
+            <img src="https://cdn.simpleicons.org/hp/0096D6" alt="">
+            <span>HP</span>
+          </li>
+          <li>
+            <img src="https://cdn.simpleicons.org/samsung/1428A0" alt="">
+            <span>Galaxy</span>
+          </li>
+          <li>
+            <img src="https://cdn.simpleicons.org/raspberrypi/A22846" alt="">
+            <span>Raspberry Pi</span>
+          </li>
+          <li>
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg" alt="">
+            <span>Arduino</span>
+          </li>
+          <li>
+            <img src="https://cdn.simpleicons.org/stmicroelectronics/03234B" alt="">
+            <span>STM32</span>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </section>
 </main>
-
-
 <footer>
-  © 2025 ひろかわびーち All Rights Reserved.
+  <p class="brand-disclaimer">掲載している会社名・製品名・サービス名およびロゴは、識別・紹介のみを目的として使用しています。これらの名称・ロゴは各社の商標または登録商標であり、本サイトが各社の公式サイトであることや、提携・承認関係を示すものではありません。</p>
+  <span>© 2026 ひろかわびーち</span>
 </footer>
-
 </body>
 </html>

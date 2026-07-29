@@ -2,69 +2,88 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>ひろかわびーちの物置 | Tools/Projects</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ひろかわびーちが制作したWebアプリ、地図、Discord Bot、開発ツールの一覧です。">
+  <title>制作物 | ひろかわびーち</title>
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-
-<nav class="global-nav">
-  <a href="index.html">Home</a>
-  <a href="tools.html">Tools/Projects</a>
-  <a href="memo.html">Memo</a>
-  <a href="https://github.com/hirokawa-beach" target="_blank">GitHub</a>
+<nav class="global-nav" aria-label="メインナビゲーション">
+  <a class="site-name" href="index.html">ひろかわびーち</a>
+  <div class="nav-links">
+    <a href="index.html">ホーム</a>
+    <a class="active" href="tools.html" aria-current="page">制作物</a>
+    <a href="blog.html">ブログ</a>
+  </div>
 </nav>
-
 <main class="content">
-  <h1>Tools / Projects</h1>
-  <h3>生活補助関連</h3>
+  <header class="page-header">
+    <h1>制作物</h1>
+    <p>これまでに作ったWebアプリやツールをまとめています。</p>
+  </header>
+
+  <div class="category-heading">
+    <span>01</span>
+    <h2>生活補助</h2>
+  </div>
   <article class="tool">
-    <h2>StudyCoPi(スタディコパイ)</h2>
-    <p>勉強スケジュールの管理を支援する、副操縦士役を果たすWebアプリ。</p>
-    <a class="button" href="https://hirokawa-beach.github.io/StudyCoPi/">
-      <img src="" alt="">
-      <span>ウェブサイト</span>
-    </a>
-    <a class="github-button" href="https://github.com/hirokawa-beach/StudyCoPi">
-      <img src="img\github-mark-white.png" alt="Github">
-      <span>リポジトリ</span>
-    </a>
+    <h2>StudyCoPi <small>スタディコパイ</small></h2>
+    <p>勉強スケジュールの管理を支援する、副操縦士役を果たすWebアプリ。(β版)</p>
+    <div class="button-row">
+      <a class="button" href="https://hirokawa-beach.github.io/StudyCoPi/">
+        <span>ウェブサイト ↗</span>
+      </a>
+      <a class="github-button" href="https://github.com/hirokawa-beach/StudyCoPi" target="_blank" rel="noopener noreferrer">
+        <img src="img/github-mark-white.png" alt="">
+        <span>リポジトリ</span>
+      </a>
+    </div>
   </article>
-  <h3>Wplace関連</h3>
+
+  <div class="category-heading">
+    <span>02</span>
+    <h2>Wplace関連</h2>
+  </div>
   <article class="tool">
     <h2>OkiMAP</h2>
-    <p>沖ノ鳥周辺のアーカイブマップ。leafletを使用しています。</p>
-    <a class="button" href="https://okimap.wplaceoki.com/">
-      <img src="" alt="">
-      <span>ウェブサイト</span>
-    </a>
-    <a class="github-button" href="https://github.com/hirokawa-beach/OkiMAP">
-      <img src="img\github-mark-white.png" alt="Github">
-      <span>リポジトリ</span>
-    </a>
+    <p>Wplaceでの沖ノ鳥島周辺の記録を確認できるアーカイブマップ。Leafletを使用しています。</p>
+    <div class="button-row">
+      <a class="button" href="https://okimap.wplaceoki.com/">
+        <span>ウェブサイト ↗</span>
+      </a>
+      <a class="github-button" href="https://github.com/hirokawa-beach/OkiMAP" target="_blank" rel="noopener noreferrer">
+        <img src="img/github-mark-white.png" alt="">
+        <span>リポジトリ</span>
+      </a>
+    </div>
   </article>
-
   <article class="tool">
     <h2>Oki Archive Bot</h2>
-    <p>Discord上で沖ノ鳥周辺のアーカイブの呼び出し、差分画像の生成ができるbot</p>
+    <p>Discord上で沖ノ鳥周辺のアーカイブの呼び出しや、差分画像の生成ができるBot。</p>
     <a class="info-button" href="botinfo.html">
-      <img src="img\info.png" alt="Github">
+      <img src="img/info.png" alt="">
       <span>説明書</span>
     </a>
   </article>
 
-  <h3>AviUtl2関連</h3>
+  <div class="category-heading">
+    <span>03</span>
+    <h2>AviUtl2関連</h2>
+  </div>
   <article class="tool">
     <h2>AviUtl2-IntelliSense</h2>
-    <p>AviUtl2のカスタムオブジェクト(.obj2)等の制作時に便利なVSCodeの拡張機能。(更新停止中)</p>
-    <a class="github-button" href="https://github.com/hirokawa-beach/AviUtl2-IntelliSense">
-      <img src="img\github-mark-white.png" alt="Github">
-      <span>リポジトリ</span>
-    </a>
+    <p>AviUtl2のカスタムオブジェクト（.obj2）などの制作を補助するVS Code拡張機能。現在は更新を停止しています。</p>
+    <div class="button-row">
+      <span class="status-label">更新停止中</span>
+      <a class="github-button" href="https://github.com/hirokawa-beach/AviUtl2-IntelliSense" target="_blank" rel="noopener noreferrer">
+        <img src="img/github-mark-white.png" alt="">
+        <span>リポジトリ</span>
+      </a>
+    </div>
   </article>
-
 </main>
-
-<footer>© 2025 ひろかわびーち All Rights Reserved.</footer>
-
+<footer>
+  <span>© 2026 ひろかわびーち</span>
+</footer>
 </body>
 </html>

@@ -2,70 +2,92 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>hirokawa-beach | Tools</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Oki Archive Botの利用方法とコマンド一覧です。">
+  <title>Oki Archive Bot｜説明書</title>
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-
-<nav class="global-nav">
-  <a href="index.html">Home</a>
-  <a href="tools.html">Tools/Projects</a>
-  <a href="memo.html">Memo</a>
-  <a href="https://github.com/hirokawa-beach" target="_blank">GitHub</a>
+<nav class="global-nav" aria-label="メインナビゲーション">
+  <a class="site-name" href="index.html">ひろかわびーち</a>
+  <div class="nav-links">
+    <a href="index.html">ホーム</a>
+    <a class="active" href="tools.html">制作物</a>
+    <a href="blog.html">ブログ</a>
+  </div>
 </nav>
-
 <main class="content">
-  <h1>Oki Archive Bot</h1>
-  <h3>このページではbotの利用方法を説明しています。</h3>
+  <header class="page-header">
+    <h1>Oki Archive Bot</h1>
+    <p>Discordから沖ノ鳥周辺のアーカイブを呼び出したり、2つの時点の差分画像を生成したりできるBotです。</p>
+    <a class="text-link" href="tools.html">← 制作物一覧に戻る</a>
+  </header>
+
   <article class="tool">
-    <h2>(沖ノ鳥鯖での)大まかな利用方法</h2>
-    <p>基本的に「oki-archive-bot用」チャンネルで使用してください<br>"/"を入力して"Oki Archive Bot"を選択するとコマンド一覧が表示され、選択できます</p>
+    <h2>大まかな利用方法</h2>
+    <p>沖ノ鳥サーバーでは、基本的に「oki-archive-bot用」チャンネルで使用してください。「/」を入力して「Oki Archive Bot」を選択すると、利用できるコマンドの一覧が表示されます。</p>
     <div class="img">
-      <img src="img/botimg1.png" alt="bot一覧が表示されます">
+      <img src="img/botimg1.png" alt="DiscordでOki Archive Botのコマンド一覧を表示した画面" loading="lazy">
     </div>
   </article>
+
   <article class="tool">
     <h2>コマンド一覧</h2>
-    <h3>/archive tile</h3>
-    <p>アーカイブをタイル座標指定で取得します。<br>
-      <code>/archive tile x: y: [time:]</code><br>
-      ●x, y…タイルX座標、Y座標(マーブル系に表示されます)<br>
-      ●time…時間指定。なにも指定しない場合は3時間前。*時間前→*h、*日前→*d、*か月前→*m
-    </p>
-    <h3>/archive url</h3>
-    <p>アーカイブをURL指定で取得します。<br>
-      <code>/archive url url: [time:]</code><br>
-      ●url…wplaceのURL(ｈttps//wplace.live/?lat=...&lng=...&zoom=...)。wplaceでpx選択時にShareから取得できます。<br>
-      ●time…上記参照
-    </p>
-    <h3>/diff tile</h3>
-    <p>差分画像をタイル座標指定で生成します。<br>
-      <code>/diff tile x: y: time1: time2:</code><br>
-      ●x, y…上記参照<br>
-      ●time1, time2…前者が比較元、後者が比較先のそれぞれ時間を指定。入力形式はtimeと同じ
-    </p>
-    <h3>/diff url</h3>
-    <p>差分画像をURL指定で生成します。<br>
-      <code>/diff url url: time1: time2:</code><br>
-      ●url…上記参照<br>
-      ●time1, time2…上記参照
-    </p>
-    <h4>ここより下は開発者専用</h4>
-    <h3>/divmode</h3>
-    <p>開発者モードの切り替えをします。(トグル式)<br>
-      <code>/divmode</code><br>
-      ＊ひろかわびーちのみが実行権限をもっていますが、権限が欲しい方はお知らせください。
-    </p>
-    <h3>/test</h3>
-    <p>開発者モードONの時のみ使用できる簡易テストコマンド。<br>
-      <code>/test x: y: [time:]</code><br>
-    </p>
-
+    <section class="command">
+      <h3>/archive tile</h3>
+      <p>タイル座標を指定してアーカイブを取得します。</p>
+      <p><code>/archive tile x: y: [time:]</code></p>
+      <p>
+        <strong>x, y</strong> — タイルX座標・Y座標（マーブル系に表示）<br>
+        <strong>time</strong> — 時間指定。未指定の場合は3時間前。時間前は <code>*h</code>、日前は <code>*d</code>、か月前は <code>*m</code>
+      </p>
+    </section>
+    <section class="command">
+      <h3>/archive url</h3>
+      <p>wplaceのURLを指定してアーカイブを取得します。</p>
+      <p><code>/archive url url: [time:]</code></p>
+      <p>
+        <strong>url</strong> — wplaceでピクセル選択時に「Share」から取得できるURL<br>
+        <strong>time</strong> — 上記と同じ形式で時間を指定
+      </p>
+    </section>
+    <section class="command">
+      <h3>/diff tile</h3>
+      <p>タイル座標を指定して、2つの時点の差分画像を生成します。</p>
+      <p><code>/diff tile x: y: time1: time2:</code></p>
+      <p>
+        <strong>x, y</strong> — タイルX座標・Y座標<br>
+        <strong>time1, time2</strong> — 比較元と比較先の時間。入力形式はtimeと同じ
+      </p>
+    </section>
+    <section class="command">
+      <h3>/diff url</h3>
+      <p>wplaceのURLを指定して、2つの時点の差分画像を生成します。</p>
+      <p><code>/diff url url: time1: time2:</code></p>
+      <p>
+        <strong>url</strong> — wplaceの共有URL<br>
+        <strong>time1, time2</strong> — 比較元と比較先の時間
+      </p>
+    </section>
   </article>
 
+  <article class="tool">
+    <h2>開発者専用コマンド</h2>
+    <p class="notice">これらのコマンドは開発者向けです。実行権限はひろかわびーちのみが持っています。権限が必要な場合はお知らせください。</p>
+    <section class="command">
+      <h3>/divmode</h3>
+      <p>開発者モードのON / OFFを切り替えます。</p>
+      <p><code>/divmode</code></p>
+    </section>
+    <section class="command">
+      <h3>/test</h3>
+      <p>開発者モードがONのときだけ使える簡易テストコマンドです。</p>
+      <p><code>/test x: y: [time:]</code></p>
+    </section>
+  </article>
 </main>
-
-<footer>© 2025 ひろかわびーち All Rights Reserved.</footer>
-
+<footer>
+  <span>© 2026 ひろかわびーち</span>
+</footer>
 </body>
 </html>
