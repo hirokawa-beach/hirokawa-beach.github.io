@@ -8,7 +8,7 @@
 
 - `index.html`: 機能紹介、使い方、比較、APK導入、FAQ。APKリンクと配布バージョン・容量はリリース時に更新してください。`releases/latest` へのリンクも用意しています。
 - `style.css`: 自動ライト・ダークテーマ、スマホ表示、縮小アニメーション設定。
-- `site.js`: アクセシブルな機能紹介タブ。左右矢印、Home、Endキーに対応。
+- `site.js`: アクセシブルな機能紹介タブ、スクロールで進む使い方、スクショ拡大。タブは左右矢印・Home・Endキーに対応。
 - ビルド不要。リポジトリルートで `python -m http.server 8767` を起動し、`http://localhost:8767/studycopi-guide/` で確認できます。mainにpushすると既存のGitHub Pagesが公開します。
 - アカウント、計測用スクリプト、Cookie、サービスワーカーは追加していません。
 
@@ -23,6 +23,7 @@
 - `assets/icon.png`: StudyCoPiで使用しているユーザー提供のアプリアイコン。
 - `assets/action-icons.svg`: [Tabler Icons](https://github.com/tabler/tabler-icons)公式のexternal-link・download。文字の矢印ではなくSVGを使い、フォントに依存しない形で表示します。MITライセンス、同梱の`ICON-LICENSE.txt`参照。
 - `today.webp`, `exams.webp`, `stats.webp`, `timetable.webp`, `timer.webp`: 実際のWeb版をサンプルデータで表示し、ブラウザでキャプチャ。利用実績の主張ではありません。
+- `howto-*.webp`: 実際のWeb版を操作して撮影した予定追加・タイマー・記録・統計のスクショ。ライト・ダークの両方を用意。タイマーを20分進めて一時停止・終了した実際の状態を使っています。
 - `wake.webp`, `widget.webp`: Android版の実装をRobolectricのネイティブ描画でキャプチャ。
 - `noto-sans-jp.woff2`: StudyCoPiのNoto Sans JPからページ内の文字をサブセット化。SIL OFL 1.1、同梱の`FONT-LICENSE.txt`参照。文章に新しい文字を追加した場合は元のフォントから再生成してください。
 - `desk.webp`, `share.jpg`: 内蔵image_genによる新規生成の写真素材（photorealistic-natural）。元画像は保持し、配信用にWebP変換・OG画像サイズへの書き出しのみ実施しました。人物・サービス画面・利用者の実績を表すものではありません。
@@ -33,6 +34,10 @@
 
 ## 検証
 
+使い方はCSSのstickyとIntersectionObserverで手順に合わせて画面を切り替えます。スクロールの速度・位置はユーザーが操作します。上へ戻れば前の手順へ戻ります。スマホでは画面が上、説明が下。手順ボタンで移動でき、スクショはネイティブdialogで拡大可能。動きを減らす設定では切り替えを即時にし、JavaScriptが無効でも各手順のスクショと文章を表示します。
+
+320×568 / 390×844 / 844×390 / 1440×900でスクロールの往復、ライト・ダーク、手順移動、拡大・Escape終了・フォーカス復帰、画面サイズ変更、JavaScript無効時の案内を確認。
+
 320 / 390 / 768 / 1440pxのライト・ダーク両テーマで横はみ出し、開始ボタンの初期表示、タブ・キーボード操作、APK導入・FAQの開閉、素材の読み込みを確認。
 
-2026-10-04のローカル検証: Lighthouse（スマホ）速度98 / アクセシビリティ100 / 基本品質100 / SEO100。LCP約2.5秒、CLS 0。実際の速度は通信環境によって変わります。
+2026-10-04のスクロール案内追加後のローカル検証: Lighthouse（スマホ）速度97 / アクセシビリティ100 / 基本品質100 / SEO100。LCP約2.6秒、CLS 0。実際の速度は通信環境によって変わります。
