@@ -21,6 +21,7 @@
 ## 素材とライセンス
 
 - `assets/icon.png`: StudyCoPiで使用しているユーザー提供のアプリアイコン。
+- `assets/action-icons.svg`: [Tabler Icons](https://github.com/tabler/tabler-icons)公式のexternal-link・download。文字の矢印ではなくSVGを使い、フォントに依存しない形で表示します。MITライセンス、同梱の`ICON-LICENSE.txt`参照。
 - `today.webp`, `exams.webp`, `stats.webp`, `timetable.webp`, `timer.webp`: 実際のWeb版をサンプルデータで表示し、ブラウザでキャプチャ。利用実績の主張ではありません。
 - `wake.webp`, `widget.webp`: Android版の実装をRobolectricのネイティブ描画でキャプチャ。
 - `noto-sans-jp.woff2`: StudyCoPiのNoto Sans JPからページ内の文字をサブセット化。SIL OFL 1.1、同梱の`FONT-LICENSE.txt`参照。文章に新しい文字を追加した場合は元のフォントから再生成してください。
