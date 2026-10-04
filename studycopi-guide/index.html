@@ -107,7 +107,7 @@
     <section class="section wrap android" aria-labelledby="android-title">
       <div class="android-intro"><div class="section-heading"><p class="eyebrow">ANDROID</p><h2 id="android-title">机に向かう前も。<br>勉強している間も。</h2><p>スマホならではの機能で、勉強する毎日を支えます。</p><a class="text-link" href="#android-howto">Android版の使い方</a></div><img class="desk-photo" src="assets/desk.webp" width="1536" height="1024" alt="問題集とノートを開いた、窓辺の勉強机" loading="lazy"></div>
       <div class="native-grid">
-        <article class="native-feature alarm-feature"><div><h3>二段階の目覚まし</h3><p>数学・英語・世界史の問題を解いて解除。二段階目は、別の場所に置いたNFCタグを読みに行く設定にもできます。</p><p class="small-note">NFC解除には対応スマホと実物のNFCタグが必要です。</p></div><img src="assets/wake.webp" width="320" height="740" alt="目覚まし解除の英語問題。borrowの意味を四択から選ぶ" loading="lazy"></article>
+        <article class="native-feature alarm-feature"><div><h3>二段階の目覚まし</h3><p>数学・英語・世界史の問題を解いて解除。二段階目は、別の場所に置いたNFCタグや対応するICカードを読みに行く設定にもできます。</p><p class="small-note">NFC対応スマホが必要です。交通系ICカードなども、毎回同じ識別IDを読み取れるものなら使えます。</p></div><img src="assets/wake.webp" width="320" height="740" alt="目覚まし解除の英語問題。borrowの意味を四択から選ぶ" loading="lazy"></article>
         <article class="native-feature widget-feature"><h3>ホーム画面で、すぐ確認</h3><p>今日の予定、勉強時間、累積時間、次の予定、目覚まし。6種類のウィジェットを、置きたい大きさで選べます。</p><img src="assets/widget.webp" width="350" height="320" alt="今日の予定と勉強時間を表示するAndroidウィジェット" loading="lazy"></article>
         <article class="native-feature focus-feature"><h3>勉強中の画面固定</h3><p>Androidの画面固定で、ほかのアプリに移りにくく。予定時刻に集中画面へ案内するモードも選べます。</p><p class="small-note">画面固定はAndroidの確認操作が必要です。タイマーは自分で開始します。バックグラウンドでは通知で案内します。</p></article>
         <article class="native-feature sound-feature"><h3>音も、自分に合わせて</h3><p>ベル・パルス・チャイムの音源を選択。Androidの目覚ましでは、端末のアラーム音や音声ファイルも使えます。</p></article>
@@ -130,7 +130,7 @@
             <figure class="walkthrough-shot"><button class="screenshot-button" type="button" aria-label="Androidの目覚まし設定画面を拡大"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/android-guide-alarm-dark.webp"><img src="assets/android-guide-alarm-light.webp" width="390" height="844" alt="Android版の目覚まし設定。名前、時刻、アラーム音を入力する画面" loading="lazy"></picture></button><figcaption>「その他 → 目覚まし → 追加」で設定します。</figcaption></figure>
           </li>
           <li class="walkthrough-step" id="android-guide-nfc" data-guide-step="1">
-            <div class="walkthrough-copy"><span class="step-number">手順 2</span><h3>問題を解いて、<br>もう一段階で解除。</h3><p>同じ設定画面で「問題の教科」と「問題の数（各ステップ）」を選びます。数学・英語・世界史・おまかせ（3教科）から選択できます。</p><p>「ステップ2の解除方法」は、追加の問題か登録したNFCタグ。NFCを使う場合は「タグを置く場所」を入力し、「NFCタグを読み取って登録」で実物のタグを読み取ってから保存します。</p><p class="step-example">タグは1階など、起きたら行く場所へ。アラームが鳴ったら最初の問題を解き、登録したタグをスマホで読み取ると解除されます。NFC対応スマホとNFCタグが必要です。</p></div>
+            <div class="walkthrough-copy"><span class="step-number">手順 2</span><h3>問題を解いて、<br>もう一段階で解除。</h3><p>同じ設定画面で「問題の教科」と「問題の数（各ステップ）」を選びます。数学・英語・世界史・おまかせ（3教科）から選択できます。</p><p>「ステップ2の解除方法」は、追加の問題か登録したNFCタグ。交通系ICカードなど、NFC対応のICカードも毎回同じ識別IDを読み取れるものなら使えます。「タグを置く場所」を入力し、「NFCタグを読み取って登録」でタグやカードを読み取って保存します。</p><p class="step-example">タグやカードは1階など、起きたら行く場所へ。アラームが鳴ったら最初の問題を解き、登録したものをスマホで読み取ると解除されます。登録後は目覚まし一覧の「今すぐテスト」で解除を確認してください。</p></div>
             <figure class="walkthrough-shot"><button class="screenshot-button" type="button" aria-label="Androidの問題とNFC解除の設定画面を拡大"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/android-guide-nfc-dark.webp"><img src="assets/android-guide-nfc-light.webp" width="390" height="844" alt="Android版の目覚まし設定。問題の教科、ステップ2のNFC解除、タグの登録ボタン" loading="lazy"></picture></button><figcaption>解除方法を選び、NFCタグを登録して保存します。</figcaption></figure>
           </li>
           <li class="walkthrough-step" id="android-guide-focus" data-guide-step="2">
@@ -170,12 +170,14 @@
       <details class="install-details"><summary>Androidへのインストール・更新方法</summary><div><ol><li>スマホで「APKをダウンロード」を押します。</li><li>ダウンロードしたファイルを開きます。許可を求められたら、そのブラウザなどに「この提供元のアプリを許可」を設定します。</li><li>インストールを押したら完了です。</li></ol><p>更新するときは、最新リリースから新しいAPKをダウンロードし、そのまま上書きインストールしてください。データを残すため、先にアプリをアンインストールしないでください。更新前にバックアップを保存しておくと安心です。</p></div></details>
     </section>
 
-    <section class="section wrap faq" aria-labelledby="faq-title">
+    <section class="section wrap faq" id="faq" aria-labelledby="faq-title">
       <h2 id="faq-title">使う前に知っておきたいこと。</h2>
       <div class="faq-items">
         <details><summary>Webとアプリのデータは自動で同期される？</summary><p>自動同期はありません。「その他 → バックアップ」でJSONファイルを保存し、移したい端末で読み込んでください。別のブラウザで使うときも同じです。</p></details>
         <details><summary>バックアップはどこから保存する？</summary><p>「その他 → バックアップ」から保存できます。ブラウザのデータ削除、機種変更、アプリの削除をする前に、ファイルを端末外にも保管してください。</p></details>
         <details><summary>アラームはWeb版でも使える？</summary><p>Web版ではタイマー終了時の音を選べます。スマホの目覚ましとして使う二段階アラームやNFC解除は、Android版の機能です。</p></details>
+        <details><summary>NFCタグを買わなくても、ICカードで解除できる？</summary><p>NFC対応のICカード（交通系ICカードなど）も、毎回同じ識別IDを読み取れるものなら使えます。登録時に「NFCタグを読み取って登録」を押し、スマホの背面にカードを近づけてください。</p><p>すべてのカードで使えるわけではありません。IDを読めないカードや、読み取るたびにIDが変わるカードは使えません。登録後は目覚まし一覧の「今すぐテスト」で、同じカードで解除できるか確認してください。</p></details>
+        <details><summary>ICカードの個人情報や残高を抜き取られない？</summary><p>氏名・残高・利用履歴など、カードに保存された情報は読み取りません。登録したカードか確認するための識別IDだけを読み取り、カードへの書き込みや決済も行いません。</p><p>識別IDは端末内のアプリに保存し、外部サーバーへ送信しません。自分で書き出すバックアップのJSONファイルには、設定を引き継ぐためにこのIDも含まれます。</p></details>
         <details><summary>使い方が分からなくなったら？</summary><p>「その他 → 使い方」から操作チュートリアルを見直せます。不具合や要望は<a href="https://github.com/hirokawa-beach/StudyCoPi/issues">GitHubのIssues</a>へ。報告の際は、個人の予定やバックアップファイルをそのまま公開しないでください。</p></details>
       </div>
     </section>
