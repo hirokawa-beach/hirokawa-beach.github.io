@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#245d67">
+  <title>StudyCoPi | 今日の勉強から、試験の準備まで。</title>
+  <meta name="description" content="StudyCoPiは、勉強の予定・タイマー・実績を試験ごとにまとめる学習管理ツール。WebとAndroidで使えます。画面でわかる使い方、Android版のダウンロードはこちら。">
+  <link rel="canonical" href="https://hirokawa-beach.github.io/studycopi-guide/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:title" content="StudyCoPi | 今日の勉強から、試験の準備まで。">
+  <meta property="og:description" content="予定を立てる。時間を測る。試験ごとに振り返る。WebとAndroidで使える学習管理ツール。">
+  <meta property="og:url" content="https://hirokawa-beach.github.io/studycopi-guide/">
+  <meta property="og:image" content="https://hirokawa-beach.github.io/studycopi-guide/assets/share.jpg">
+  <meta property="og:image:alt" content="ノートと問題集を開いた勉強机">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/icon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/icon.png">
+  <link rel="preload" href="assets/noto-sans-jp.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/today.webp" as="image" fetchpriority="high">
+  <link rel="stylesheet" href="style.css">
+  <script src="site.js" defer></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"StudyCoPi","applicationCategory":"EducationalApplication","operatingSystem":"Web, Android 8.0 or later","url":"https://hirokawa-beach.github.io/StudyCoPi/","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"author":{"@type":"Person","name":"hirokawa-beach","url":"https://hirokawa-beach.github.io/"}}</script>
+</head>
+<body>
+  <a class="skip" href="#main">本文へ移動</a>
+  <header class="site-header">
+    <div class="header-inner wrap">
+      <a class="brand" href="#" aria-label="StudyCoPi 案内サイトの先頭へ"><img src="assets/icon.png" width="38" height="38" alt=""><span>StudyCoPi</span></a>
+      <nav class="desktop-nav" aria-label="ページ内の案内"><a href="#features">できること</a><a href="#howto">使い方</a><a href="#download">ダウンロード</a></nav>
+      <a class="button small primary" href="https://hirokawa-beach.github.io/StudyCoPi/">Web版を開く<span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <h1 id="hero-title">今日の勉強から、<br>試験の準備まで。</h1>
+        <p>予定を立てる。時間を測る。振り返る。<br>勉強の流れを、StudyCoPiひとつで。</p>
+        <div class="actions"><a class="button primary" href="https://hirokawa-beach.github.io/StudyCoPi/">Web版を開く<span aria-hidden="true">↗</span></a><a class="button secondary" href="#download">Android版を入れる<span aria-hidden="true">↓</span></a></div>
+      </div>
+      <figure class="hero-visual">
+        <div class="screen-shell"><img src="assets/today.webp" width="780" height="1688" alt="今日の勉強画面。勉強時間、数学と英語の予定、開始ボタンが並んでいる" fetchpriority="high"></div>
+        <figcaption>実際のWeb版の画面 · サンプルデータ</figcaption>
+      </figure>
+    </section>
+
+    <section class="section wrap features" id="features" aria-labelledby="features-title">
+      <div class="section-heading"><h2 id="features-title">予定と記録が、<br class="mobile-break">つながる。</h2><p>考査も、模試も、日々の復習も。<br>必要な画面を選んで、できることを見てみよう。</p></div>
+      <div class="feature-tabs" role="tablist" aria-label="紹介する機能">
+        <button type="button" role="tab" id="tab-plans" aria-controls="panel-plans" aria-selected="true">週間の予定</button>
+        <button type="button" role="tab" id="tab-exams" aria-controls="panel-exams" aria-selected="false" tabindex="-1">試験ごとの管理</button>
+        <button type="button" role="tab" id="tab-timer" aria-controls="panel-timer" aria-selected="false" tabindex="-1">集中タイマー</button>
+        <button type="button" role="tab" id="tab-stats" aria-controls="panel-stats" aria-selected="false" tabindex="-1">勉強の振り返り</button>
+      </div>
+      <div class="feature-panel wide-panel" role="tabpanel" id="panel-plans" aria-labelledby="tab-plans" tabindex="0">
+        <div class="feature-copy"><h3>一週間を見渡して、<br>今日やることを決める。</h3><p>教科・日時・勉強時間を決めて予定を追加。一覧と時間割を切り替えて、空いている時間を探せます。</p><p>短い予定にも教科名を表示。予定を押すと、内容の確認や編集ができます。</p></div>
+        <figure class="feature-shot desktop-shot"><img src="assets/timetable.webp" width="2048" height="1536" alt="縦軸が時間の週間タイムテーブル。数学、英語、国語の予定を表示" loading="lazy"><figcaption>実際のWeb版の画面 · サンプルデータ</figcaption></figure>
+      </div>
+      <div class="feature-panel" role="tabpanel" id="panel-exams" aria-labelledby="tab-exams" tabindex="0" hidden>
+        <div class="feature-copy"><h3>何回ある試験も、<br>ひとつずつ管理。</h3><p>中間考査、期末考査、模試を別々に登録。教科ごとの日程や範囲、準備に使った勉強時間をまとめられます。</p><p>予定を追加するときに「対象の試験」を選ぶと、その試験の実績につながります。</p></div>
+        <figure class="feature-shot phone-shot"><img src="assets/exams.webp" width="780" height="1688" alt="試験ごとの管理画面。2学期中間考査の予定時間と準備の実績" loading="lazy"><figcaption>実際のWeb版の画面 · サンプルデータ</figcaption></figure>
+      </div>
+      <div class="feature-panel" role="tabpanel" id="panel-timer" aria-labelledby="tab-timer" tabindex="0" hidden>
+        <div class="feature-copy"><h3>「開始」を押して、<br>目の前の勉強に集中。</h3><p>予定からそのままタイマーを開始。休憩は「一時停止」、終わったら「終了して記録」。測った時間を実績に残せます。</p><p>予定を作っていない勉強も、「その他 → 集中タイマー」から始められます。</p></div>
+        <figure class="feature-shot phone-shot"><img src="assets/timer.webp" width="752" height="1584" alt="数学の集中タイマー画面。一時停止と終了して記録のボタン" loading="lazy"><figcaption>実際のWeb版の画面 · サンプルデータ</figcaption></figure>
+      </div>
+      <div class="feature-panel" role="tabpanel" id="panel-stats" aria-labelledby="tab-stats" tabindex="0" hidden>
+        <div class="feature-copy"><h3>頑張った時間を、<br>次の予定につなげる。</h3><p>教科・期間・試験で絞り込み、実際に勉強した時間を確認。予定と実績を見比べて、次の一週間を調整できます。</p><p>タイマーを使わなかった日も、「記録」から時間を手入力できます。</p></div>
+        <figure class="feature-shot phone-shot"><img src="assets/stats.webp" width="780" height="1688" alt="勉強時間の統計画面。数学、英語、国語の実績を教科別に表示" loading="lazy"><figcaption>実際のWeb版の画面 · サンプルデータ</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="section wrap howto" id="howto" aria-labelledby="howto-title">
+      <div class="section-heading"><h2 id="howto-title">最初は、ひとつの予定から。</h2><p>試験を登録せず、今日の勉強だけでも始められます。</p></div>
+      <div class="walkthrough">
+        <ol class="steps">
+          <li><h3>「今日」の「追加」を押す</h3><p>教科と日時、予定時間を選んで保存。試験対策なら「対象の試験」も選びます。</p></li>
+          <li><h3>予定の「開始」を押す</h3><p>タイマーが動いたら勉強を開始。休憩するときは一時停止します。</p></li>
+          <li><h3>「終了して記録」で残す</h3><p>測った時間が実績に。後から予定カードの「記録」で調整もできます。</p></li>
+          <li><h3>「統計」で振り返る</h3><p>教科ごとの時間を確認。こまめにバックアップを保存しておきましょう。</p></li>
+        </ol>
+        <div class="guide-note"><span class="note-mark" aria-hidden="true">?</span><h3>操作する場所も、<br>画面で案内します。</h3><p>初回起動のチュートリアルは、ボタンの位置を示しながら進みます。見直すときは「その他 → 使い方」へ。</p><a class="text-link" href="https://hirokawa-beach.github.io/StudyCoPi/">Web版を開く <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </section>
+
+    <section class="section wrap android" aria-labelledby="android-title">
+      <div class="android-intro"><div class="section-heading"><p class="eyebrow">ANDROID</p><h2 id="android-title">机に向かう前も。<br>勉強している間も。</h2><p>スマホならではの機能で、勉強する毎日を支えます。</p></div><img class="desk-photo" src="assets/desk.webp" width="1536" height="1024" alt="問題集とノートを開いた、窓辺の勉強机" loading="lazy"></div>
+      <div class="native-grid">
+        <article class="native-feature alarm-feature"><div><h3>二段階の目覚まし</h3><p>数学・英語・世界史の問題を解いて解除。二段階目は、別の場所に置いたNFCタグを読みに行く設定にもできます。</p><p class="small-note">NFC解除には対応スマホと実物のNFCタグが必要です。</p></div><img src="assets/wake.webp" width="320" height="740" alt="目覚まし解除の英語問題。borrowの意味を四択から選ぶ" loading="lazy"></article>
+        <article class="native-feature widget-feature"><h3>ホーム画面で、すぐ確認</h3><p>今日の予定、勉強時間、累積時間、次の予定、目覚まし。6種類のウィジェットを、置きたい大きさで選べます。</p><img src="assets/widget.webp" width="350" height="320" alt="今日の予定と勉強時間を表示するAndroidウィジェット" loading="lazy"></article>
+        <article class="native-feature focus-feature"><h3>勉強中の画面固定</h3><p>Androidの画面固定で、ほかのアプリに移りにくく。予定時刻に集中画面へ案内するモードも選べます。</p><p class="small-note">画面固定はAndroidの確認操作が必要です。タイマーは自分で開始します。バックグラウンドでは通知で案内します。</p></article>
+        <article class="native-feature sound-feature"><h3>音も、自分に合わせて</h3><p>ベル・パルス・チャイムの音源を選択。Androidの目覚ましでは、端末のアラーム音や音声ファイルも使えます。</p></article>
+      </div>
+    </section>
+
+    <section class="section wrap platforms" aria-labelledby="platform-title">
+      <div class="section-heading"><h2 id="platform-title">ブラウザでも、Androidでも。</h2><p>基本の使い方は共通。自分の使いやすい方で始めよう。</p></div>
+      <div class="table-wrap"><table><caption class="sr-only">Web版とAndroid版の機能比較</caption><thead><tr><th scope="col">できること</th><th scope="col">Web</th><th scope="col">Android</th></tr></thead><tbody>
+        <tr><th scope="row">予定・試験・勉強時間の管理</th><td>対応</td><td>対応</td></tr>
+        <tr><th scope="row">タイマー・操作チュートリアル</th><td>対応</td><td>対応</td></tr>
+        <tr><th scope="row">予定時刻の集中画面</th><td>ページを開いている間</td><td>画面固定の案内・通知</td></tr>
+        <tr><th scope="row">二段階目覚まし・NFC解除</th><td>なし</td><td>対応</td></tr>
+        <tr><th scope="row">ホーム画面ウィジェット</th><td>なし</td><td>6種類</td></tr>
+      </tbody></table></div>
+      <div class="data-note"><h3>データは、使っている端末に。</h3><p>アカウント登録は不要。Web版はブラウザ内、Android版はアプリ内に保存します。自動同期はありませんが、バックアップのJSONファイルでデータを引き継げます。</p><p>Web版は、データに変更があると3日ごとにバックアップ保存を案内します。</p></div>
+    </section>
+
+    <section class="section wrap download" id="download" aria-labelledby="download-title">
+      <div class="section-heading"><h2 id="download-title">さあ、今日の予定をひとつ。</h2><p>無料で使えます。アカウント登録もいりません。</p></div>
+      <div class="download-grid">
+        <article><h3>Web版</h3><p>スマホ・タブレット・PCのブラウザから、そのまま使えます。</p><a class="button primary" href="https://hirokawa-beach.github.io/StudyCoPi/">Web版を開く<span aria-hidden="true">↗</span></a><p class="small-note">ホーム画面に追加すれば、次からすぐ開けます。</p></article>
+        <article><h3>Android版</h3><p>Android 8.0以降に対応。GitHubで配布しているAPKを入れて使います。</p><a class="button secondary" href="https://github.com/hirokawa-beach/StudyCoPi/releases/download/android-v1.4.1/StudyCoPi-Android-1.4.1.apk">APKをダウンロード<span aria-hidden="true">↓</span></a><p class="small-note">配布版 1.4.1 · 約8.7 MB</p><a class="text-link" href="https://github.com/hirokawa-beach/StudyCoPi/releases/latest">最新リリースを確認 <span aria-hidden="true">↗</span></a></article>
+      </div>
+      <details class="install-details"><summary>Androidへのインストール・更新方法</summary><div><ol><li>スマホで「APKをダウンロード」を押します。</li><li>ダウンロードしたファイルを開きます。許可を求められたら、そのブラウザなどに「この提供元のアプリを許可」を設定します。</li><li>インストールを押したら完了です。</li></ol><p>更新するときは、最新リリースから新しいAPKをダウンロードし、そのまま上書きインストールしてください。データを残すため、先にアプリをアンインストールしないでください。更新前にバックアップを保存しておくと安心です。</p></div></details>
+    </section>
+
+    <section class="section wrap faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">使う前に知っておきたいこと。</h2>
+      <div class="faq-items">
+        <details><summary>Webとアプリのデータは自動で同期される？</summary><p>自動同期はありません。「その他 → バックアップ」でJSONファイルを保存し、移したい端末で読み込んでください。別のブラウザで使うときも同じです。</p></details>
+        <details><summary>バックアップはどこから保存する？</summary><p>「その他 → バックアップ」から保存できます。ブラウザのデータ削除、機種変更、アプリの削除をする前に、ファイルを端末外にも保管してください。</p></details>
+        <details><summary>アラームはWeb版でも使える？</summary><p>Web版ではタイマー終了時の音を選べます。スマホの目覚ましとして使う二段階アラームやNFC解除は、Android版の機能です。</p></details>
+        <details><summary>使い方が分からなくなったら？</summary><p>「その他 → 使い方」から操作チュートリアルを見直せます。不具合や要望は<a href="https://github.com/hirokawa-beach/StudyCoPi/issues">GitHubのIssues</a>へ。報告の際は、個人の予定やバックアップファイルをそのまま公開しないでください。</p></details>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer wrap"><a class="brand" href="#"><img src="assets/icon.png" width="32" height="32" alt=""><span>StudyCoPi</span></a><p>ひろかわびーちが開発する学習管理ツール。</p><nav aria-label="開発者と関連リンク"><a href="https://hirokawa-beach.github.io/">開発者サイト</a><a href="https://github.com/hirokawa-beach/StudyCoPi">ソースコード</a><a href="https://github.com/hirokawa-beach/StudyCoPi/issues">不具合・要望</a></nav><small>StudyCoPiはMITライセンスで公開されています。<br>このページは案内サイトです。学習データの入力はWeb版・Android版で行います。</small></footer>
+</body>
+</html>
