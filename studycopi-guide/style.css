@@ -37,6 +37,8 @@
 .walkthrough-caption{text-align:center;font-size:11px;line-height:1.8;margin-top:12px}
 .walkthrough-position{font-weight:600;color:var(--text)}
 .howto-help{margin-top:28px;font-size:14px;max-width:720px}
+.android-howto{border-top:1px solid var(--line)}
+.android-intro .text-link{margin-top:16px}
 .screenshot-dialog{width:min(760px,calc(100% - 32px));max-height:90svh;border:1px solid var(--line);border-radius:16px;padding:0 20px 20px;background:var(--surface);color:var(--text);overflow:auto}
 .screenshot-dialog::backdrop{background:#071318b3}
 .screenshot-dialog-heading{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;background:var(--surface);z-index:1}

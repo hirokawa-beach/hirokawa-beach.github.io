@@ -21,7 +21,7 @@ for (const tab of tabs) {
   });
 }
 
-const walkthrough = document.querySelector('.walkthrough');
+const walkthroughs = [...document.querySelectorAll('.walkthrough')];
 const screenshotDialog = document.querySelector('.screenshot-dialog');
 
 // Native dialog gives keyboard focus trapping and Escape/close focus restoration.
@@ -31,6 +31,8 @@ document.addEventListener('click', event => {
   const picture = button.querySelector('picture').cloneNode(true);
   picture.querySelector('img').loading = 'eager';
   screenshotDialog.querySelector('.screenshot-dialog-content').replaceChildren(picture);
+  const platform = button.closest('.walkthrough')?.dataset.platform || '';
+  screenshotDialog.querySelector('.screenshot-dialog-caption').textContent = `実際の${platform}の画面 · サンプルデータ`;
   screenshotDialog.showModal();
 });
 if (screenshotDialog) screenshotDialog.addEventListener('click', event => {
@@ -41,7 +43,7 @@ if (screenshotDialog) screenshotDialog.addEventListener('click', event => {
 
 // Build the sticky presentation when the guide approaches, not during initial paint.
 // Keep the complete illustrated guide as the fallback.
-function enhanceWalkthrough() {
+function enhanceWalkthrough(walkthrough) {
   const steps = [...walkthrough.querySelectorAll('.walkthrough-step')];
   const visual = walkthrough.querySelector('.walkthrough-visual');
   const stage = walkthrough.querySelector('.walkthrough-stage');
@@ -120,11 +122,11 @@ function enhanceWalkthrough() {
   window.addEventListener('resize', () => observeSteps());
   window.addEventListener('pageshow', () => observeSteps(true));
 }
-if (walkthrough && 'IntersectionObserver' in window) {
+if ('IntersectionObserver' in window) for (const walkthrough of walkthroughs) {
   const setup = new IntersectionObserver(entries => {
     if (!entries.some(entry => entry.isIntersecting)) return;
     setup.disconnect();
-    enhanceWalkthrough();
+    enhanceWalkthrough(walkthrough);
   }, {rootMargin:'500px'});
   setup.observe(walkthrough);
 }
