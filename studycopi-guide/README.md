@@ -21,8 +21,8 @@
 ## 素材とライセンス
 
 - `assets/icon.png`: StudyCoPiで使用しているユーザー提供のアプリアイコン。
-- `assets/developer-avatar.webp`: 開発者[hirokawa-beachのGitHubプロフィール](https://github.com/hirokawa-beach)の公開アイコン。配信用にWebPで圧縮。バナーから開発者サイトへリンクします。
-- `assets/banner.png`（1200×360）, `assets/share.jpg`（1200×630）: 実際のサービス・開発者アイコンと名前をHTML/CSSで配置し、ブラウザから書き出したシンプルなバナー。前者は配布用、後者はOG画像です。サイト内のバナーは同じ素材をレスポンシブに配置しています。
+- `assets/developer-avatar.webp`: 開発者[hirokawa-beachのGitHubプロフィール](https://github.com/hirokawa-beach)の公開アイコン。配信用にWebPで圧縮。ページ最下部の開発者表記から開発者サイトへリンクします。
+- `assets/banner.png`（1200×360）, `assets/share.jpg`（1200×630）: 実際のサービス・開発者アイコンと名前をHTML/CSSで配置し、ブラウザから書き出したシンプルなバナー。前者は配布用、後者はOG画像です。ページ上部のバナー表示は取り除き、開発者のアイコンと名前だけをフッター最下部に掲載しています。
 - `assets/action-icons.svg`: [Tabler Icons](https://github.com/tabler/tabler-icons)公式のexternal-link・download。文字の矢印ではなくSVGを使い、フォントに依存しない形で表示します。MITライセンス、同梱の`ICON-LICENSE.txt`参照。
 - `today.webp`, `exams.webp`, `stats.webp`, `timetable.webp`, `timer.webp`: 実際のWeb版をサンプルデータで表示し、ブラウザでキャプチャ。利用実績の主張ではありません。
 - `howto-*.webp`: 実際のWeb版を操作して撮影した予定追加・タイマー・記録・統計のスクショ。ライト・ダークの両方を用意。タイマーを20分進めて一時停止・終了した実際の状態を使っています。
@@ -48,3 +48,5 @@ ICカードの案内は、`NfcReader.kt`の識別ID取得・`WakeModels.kt`のID
 320 / 390 / 768 / 1440pxのライト・ダーク両テーマで横はみ出し、開始ボタンの初期表示、タブ・キーボード操作、APK導入・FAQの開閉、素材の読み込みを確認。
 
 2026-10-06のバナー・スマホ案内改善後のローカル検証: 320 / 390 / 768 / 1440pxのライト・ダークで素材読み込み、開始ボタンの初期表示、タブ・キーボード操作、Q&Aの開閉、横はみ出しがないことを確認。320×568 / 390×844では見出しが2行に収まり、案内の本文領域が画面の60%以上となること、画像枠が両テーマで2px表示されること、Androidが「限定機能」表記になることも確認。Lighthouse（スマホ）速度96 / アクセシビリティ100 / 基本品質100 / SEO100。LCP約2.7秒、CLS 0。実際の速度は通信環境によって変わります。
+
+同日の開発者表記移動後、320 / 390 / 1440pxのライト・ダークで上部バナーがなく、開発者表記がフッター最後にあること、画像とリンク、横はみ出しがないことを確認。Lighthouse（スマホ）は96 / 100 / 100 / 100。
