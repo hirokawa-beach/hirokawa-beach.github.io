@@ -5,16 +5,18 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#245d67">
-  <title>StudyCoPi | 今日の勉強から、試験の準備まで。</title>
+  <title>StudyCoPi | 今日の「やる」を、「できた」に。</title>
   <meta name="description" content="StudyCoPiは、勉強の予定・タイマー・実績を試験ごとにまとめる学習管理ツール。WebとAndroidで使えます。画面でわかる使い方、Android版のダウンロードはこちら。">
   <link rel="canonical" href="https://hirokawa-beach.github.io/studycopi-guide/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ja_JP">
-  <meta property="og:title" content="StudyCoPi | 今日の勉強から、試験の準備まで。">
+  <meta property="og:title" content="StudyCoPi | 今日の「やる」を、「できた」に。">
   <meta property="og:description" content="予定を立てる。時間を測る。試験ごとに振り返る。WebとAndroidで使える学習管理ツール。">
   <meta property="og:url" content="https://hirokawa-beach.github.io/studycopi-guide/">
   <meta property="og:image" content="https://hirokawa-beach.github.io/studycopi-guide/assets/share.jpg">
-  <meta property="og:image:alt" content="ノートと問題集を開いた勉強机">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="StudyCoPiのアイコンとサービス名、開発者ひろかわびーちのアイコンと名前">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/icon.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/icon.png">
@@ -34,10 +36,14 @@
     </div>
   </header>
   <main id="main">
+    <div class="product-banner wrap" aria-label="StudyCoPiと開発者">
+      <div class="product-banner-brand"><img src="assets/icon.png" width="64" height="64" alt=""><span>StudyCoPi</span></div>
+      <a class="product-banner-developer" href="https://hirokawa-beach.github.io/"><img src="assets/developer-avatar.webp" width="44" height="44" alt=""><span><small>開発</small>ひろかわびーち</span></a>
+    </div>
     <section class="hero wrap" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <h1 id="hero-title">今日の勉強から、<br>試験の準備まで。</h1>
-        <p>予定を立てる。時間を測る。振り返る。<br>勉強の流れを、StudyCoPiひとつで。</p>
+        <h1 id="hero-title">今日の「やる」を、<br>「できた」に。</h1>
+        <p>何を勉強するか決めて、タイマーで集中。<br>積み重ねた時間を、試験ごとに振り返ろう。</p>
         <div class="actions"><a class="button primary" href="https://hirokawa-beach.github.io/StudyCoPi/">Web版を開く<svg class="action-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/action-icons.svg#external-link"></use></svg></a><a class="button secondary" href="#download">Android版を入れる<svg class="action-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/action-icons.svg#download"></use></svg></a></div>
       </div>
       <figure class="hero-visual">
@@ -47,7 +53,7 @@
     </section>
 
     <section class="section wrap features" id="features" aria-labelledby="features-title">
-      <div class="section-heading"><h2 id="features-title">予定と記録が、<br class="mobile-break">つながる。</h2><p>考査も、模試も、日々の復習も。<br>必要な画面を選んで、できることを見てみよう。</p></div>
+      <div class="section-heading"><h2 id="features-title">試験までの勉強を、<br class="mobile-break">今日の予定に。</h2><p>考査も、模試も、日々の復習も。<br>必要な画面を選んで、できることを見てみよう。</p></div>
       <div class="feature-tabs" role="tablist" aria-label="紹介する機能">
         <button type="button" role="tab" id="tab-plans" aria-controls="panel-plans" aria-selected="true">週間の予定</button>
         <button type="button" role="tab" id="tab-exams" aria-controls="panel-exams" aria-selected="false" tabindex="-1">試験ごとの管理</button>
@@ -80,7 +86,7 @@
             <button type="button" data-guide-step="0" aria-current="step" aria-label="手順1 予定を作る">1</button><button type="button" data-guide-step="1" aria-label="手順2 タイマーを使う">2</button><button type="button" data-guide-step="2" aria-label="手順3 勉強を記録する">3</button><button type="button" data-guide-step="3" aria-label="手順4 統計で振り返る">4</button>
           </nav>
           <div class="walkthrough-stage"></div>
-          <p class="walkthrough-caption"><span class="walkthrough-position">手順 1 / 4</span> · 実際のWeb版 · サンプルデータ<br><span>画面を押すと拡大できます</span></p>
+          <p class="walkthrough-caption"><span class="walkthrough-position">手順 1 / 4</span><span class="walkthrough-source">実際のWeb版 · サンプルデータ</span><br><span>画面を押すと拡大できます</span></p>
         </div>
         <ol class="walkthrough-steps">
           <li class="walkthrough-step is-current" id="guide-add" data-guide-step="0">
@@ -105,7 +111,7 @@
     </section>
 
     <section class="section wrap android" aria-labelledby="android-title">
-      <div class="android-intro"><div class="section-heading"><p class="eyebrow">ANDROID</p><h2 id="android-title">机に向かう前も。<br>勉強している間も。</h2><p>スマホならではの機能で、勉強する毎日を支えます。</p><a class="text-link" href="#android-howto">Android版の使い方</a></div><img class="desk-photo" src="assets/desk.webp" width="1536" height="1024" alt="問題集とノートを開いた、窓辺の勉強机" loading="lazy"></div>
+      <div class="android-intro"><div class="section-heading"><p class="eyebrow">Android限定</p><h2 id="android-title">朝の目覚ましから、<br>勉強の集中まで。</h2><p>スマホならではの機能で、勉強する毎日を支えます。</p><a class="text-link" href="#android-howto">Android版の使い方</a></div><img class="desk-photo" src="assets/desk.webp" width="1536" height="1024" alt="問題集とノートを開いた、窓辺の勉強机" loading="lazy"></div>
       <div class="native-grid">
         <article class="native-feature alarm-feature"><div><h3>二段階の目覚まし</h3><p>数学・英語・世界史の問題を解いて解除。二段階目は、別の場所に置いたNFCタグや対応するICカードを読みに行く設定にもできます。</p><p class="small-note">NFC対応スマホが必要です。交通系ICカードなども、毎回同じ識別IDを読み取れるものなら使えます。</p></div><img src="assets/wake.webp" width="320" height="740" alt="目覚まし解除の英語問題。borrowの意味を四択から選ぶ" loading="lazy"></article>
         <article class="native-feature widget-feature"><h3>ホーム画面で、すぐ確認</h3><p>今日の予定、勉強時間、累積時間、次の予定、目覚まし。6種類のウィジェットを、置きたい大きさで選べます。</p><img src="assets/widget.webp" width="350" height="320" alt="今日の予定と勉強時間を表示するAndroidウィジェット" loading="lazy"></article>
@@ -115,34 +121,34 @@
     </section>
 
     <section class="section wrap howto android-howto" id="android-howto" aria-labelledby="android-howto-title">
-      <div class="section-heading"><h2 id="android-howto-title">Androidならではの、使い方。</h2><p>目覚ましも、集中モードも、ホーム画面のウィジェットも。</p></div>
-      <div class="walkthrough" data-step="0" data-platform="Android版">
+      <div class="section-heading"><h2 id="android-howto-title">続けるための、<br class="mobile-break">スマホの使い方。</h2><p>目覚ましも、集中モードも、ホーム画面のウィジェットも。</p></div>
+      <div class="walkthrough" data-step="0" data-platform="Android版" data-item-label="限定機能">
         <div class="walkthrough-visual" hidden>
           <nav class="walkthrough-nav" aria-label="Android限定機能の使い方">
-            <button type="button" data-guide-step="0" aria-current="step" aria-label="手順1 目覚ましを設定">1</button><button type="button" data-guide-step="1" aria-label="手順2 問題とNFCによる解除を設定">2</button><button type="button" data-guide-step="2" aria-label="手順3 勉強中の画面を固定">3</button><button type="button" data-guide-step="3" aria-label="手順4 予定時刻の集中モードを設定">4</button><button type="button" data-guide-step="4" aria-label="手順5 ウィジェットを追加">5</button>
+            <button type="button" data-guide-step="0" aria-current="step" aria-label="限定機能1 目覚ましを設定">1</button><button type="button" data-guide-step="1" aria-label="限定機能2 問題とNFCによる解除を設定">2</button><button type="button" data-guide-step="2" aria-label="限定機能3 勉強中の画面を固定">3</button><button type="button" data-guide-step="3" aria-label="限定機能4 予定時刻の集中モードを設定">4</button><button type="button" data-guide-step="4" aria-label="限定機能5 ウィジェットを追加">5</button>
           </nav>
           <div class="walkthrough-stage"></div>
-          <p class="walkthrough-caption"><span class="walkthrough-position">手順 1 / 5</span> · 実際のAndroid版 · サンプルデータ<br><span>画面を押すと拡大できます</span></p>
+          <p class="walkthrough-caption"><span class="walkthrough-position">限定機能 1 / 5</span><span class="walkthrough-source">実際のAndroid版 · サンプルデータ</span><br><span>画面を押すと拡大できます</span></p>
         </div>
         <ol class="walkthrough-steps">
           <li class="walkthrough-step is-current" id="android-guide-alarm" data-guide-step="0">
-            <div class="walkthrough-copy"><span class="step-number">手順 1</span><h3>起きる時刻と、音を決める。</h3><p>「その他 → 目覚まし」を開き、右上の「追加」を押します。名前・時刻・繰り返す曜日・アラーム音を選びます。</p><p>音はベル・パルス・チャイムのほか、端末の音源や音声ファイルも選択できます。「音を試聴」で確認してください。</p><p class="step-example">初めて使うときは、目覚まし一覧の案内から通知と正確なアラームを許可。ロック中に解除画面を開きたい場合は、全画面通知も許可します。</p></div>
+            <div class="walkthrough-copy"><span class="step-number">限定機能 1</span><h3>起きる時刻と、音を決める。</h3><p>「その他 → 目覚まし」を開き、右上の「追加」を押します。名前・時刻・繰り返す曜日・アラーム音を選びます。</p><p>音はベル・パルス・チャイムのほか、端末の音源や音声ファイルも選択できます。「音を試聴」で確認してください。</p><p class="step-example">初めて使うときは、目覚まし一覧の案内から通知と正確なアラームを許可。ロック中に解除画面を開きたい場合は、全画面通知も許可します。</p></div>
             <figure class="walkthrough-shot"><button class="screenshot-button" type="button" aria-label="Androidの目覚まし設定画面を拡大"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/android-guide-alarm-dark.webp"><img src="assets/android-guide-alarm-light.webp" width="390" height="844" alt="Android版の目覚まし設定。名前、時刻、アラーム音を入力する画面" loading="lazy"></picture></button><figcaption>「その他 → 目覚まし → 追加」で設定します。</figcaption></figure>
           </li>
           <li class="walkthrough-step" id="android-guide-nfc" data-guide-step="1">
-            <div class="walkthrough-copy"><span class="step-number">手順 2</span><h3>問題を解いて、<br>もう一段階で解除。</h3><p>同じ設定画面で「問題の教科」と「問題の数（各ステップ）」を選びます。数学・英語・世界史・おまかせ（3教科）から選択できます。</p><p>「ステップ2の解除方法」は、追加の問題か登録したNFCタグ。交通系ICカードなど、NFC対応のICカードも毎回同じ識別IDを読み取れるものなら使えます。「タグを置く場所」を入力し、「NFCタグを読み取って登録」でタグやカードを読み取って保存します。</p><p class="step-example">タグやカードは1階など、起きたら行く場所へ。アラームが鳴ったら最初の問題を解き、登録したものをスマホで読み取ると解除されます。登録後は目覚まし一覧の「今すぐテスト」で解除を確認してください。</p></div>
+            <div class="walkthrough-copy"><span class="step-number">限定機能 2</span><h3>問題を解いて、<br>もう一段階で解除。</h3><p>同じ設定画面で「問題の教科」と「問題の数（各ステップ）」を選びます。数学・英語・世界史・おまかせ（3教科）から選択できます。</p><p>「ステップ2の解除方法」は、追加の問題か登録したNFCタグ。交通系ICカードなど、NFC対応のICカードも毎回同じ識別IDを読み取れるものなら使えます。「タグを置く場所」を入力し、「NFCタグを読み取って登録」でタグやカードを読み取って保存します。</p><p class="step-example">タグやカードは1階など、起きたら行く場所へ。アラームが鳴ったら最初の問題を解き、登録したものをスマホで読み取ると解除されます。登録後は目覚まし一覧の「今すぐテスト」で解除を確認してください。</p></div>
             <figure class="walkthrough-shot"><button class="screenshot-button" type="button" aria-label="Androidの問題とNFC解除の設定画面を拡大"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/android-guide-nfc-dark.webp"><img src="assets/android-guide-nfc-light.webp" width="390" height="844" alt="Android版の目覚まし設定。問題の教科、ステップ2のNFC解除、タグの登録ボタン" loading="lazy"></picture></button><figcaption>解除方法を選び、NFCタグを登録して保存します。</figcaption></figure>
           </li>
           <li class="walkthrough-step" id="android-guide-focus" data-guide-step="2">
-            <div class="walkthrough-copy"><span class="step-number">手順 3</span><h3>勉強中の画面を固定する。</h3><p>予定の「開始」、または「その他 → 集中タイマー」でタイマーを始めます。実行中の画面で「画面を固定して集中」を押します。</p><p>集中モードに移ったら「画面固定を開始」を押し、Androidの確認画面で許可します。休憩は「一時停止」、終わったら「終了して記録」で固定を解除して戻ります。</p><p class="step-example">画面固定は、ほかのアプリへ移りにくくする機能です。Android所定の操作でも解除できます。</p></div>
+            <div class="walkthrough-copy"><span class="step-number">限定機能 3</span><h3>勉強中の画面を固定する。</h3><p>予定の「開始」、または「その他 → 集中タイマー」でタイマーを始めます。実行中の画面で「画面を固定して集中」を押します。</p><p>集中モードに移ったら「画面固定を開始」を押し、Androidの確認画面で許可します。休憩は「一時停止」、終わったら「終了して記録」で固定を解除して戻ります。</p><p class="step-example">画面固定は、ほかのアプリへ移りにくくする機能です。Android所定の操作でも解除できます。</p></div>
             <figure class="walkthrough-shot"><button class="screenshot-button" type="button" aria-label="Androidの画面固定中の集中モードを拡大"><picture><img src="assets/android-guide-focus.webp" width="320" height="740" alt="Android版の集中モード。画面固定中、一時停止したタイマーと終了して記録ボタン" loading="lazy"></picture></button><figcaption>実際の画面固定中の集中モード。</figcaption></figure>
           </li>
           <li class="walkthrough-step" id="android-guide-scheduled" data-guide-step="3">
-            <div class="walkthrough-copy"><span class="step-number">手順 4</span><h3>予定の時刻に、集中画面へ。</h3><p>「その他 → 通知設定」で「予定時刻に画面固定」をオンにします。未完了の予定の開始時刻になると、集中画面へ案内します。</p><p>アプリを開いているときはAndroidの画面固定を確認。ほかのアプリを使っている間は通知を押して開きます。</p><p class="step-example">この時点ではタイマーは動きません。集中画面の「勉強を始める」を押して開始します。その回を見送るときは「今回は解除する」を選びます。</p></div>
+            <div class="walkthrough-copy"><span class="step-number">限定機能 4</span><h3>予定の時刻に、集中画面へ。</h3><p>「その他 → 通知設定」で「予定時刻に画面固定」をオンにします。未完了の予定の開始時刻になると、集中画面へ案内します。</p><p>アプリを開いているときはAndroidの画面固定を確認。ほかのアプリを使っている間は通知を押して開きます。</p><p class="step-example">この時点ではタイマーは動きません。集中画面の「勉強を始める」を押して開始します。その回を見送るときは「今回は解除する」を選びます。</p></div>
             <figure class="walkthrough-shot"><button class="screenshot-button" type="button" aria-label="Androidの予定時刻に画面固定する設定を拡大"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/android-guide-settings-dark.webp"><img src="assets/android-guide-settings-light.webp" width="390" height="844" alt="Android版の通知設定。予定時刻に画面固定のスイッチと説明" loading="lazy"></picture></button><figcaption>「その他 → 通知設定」でオンにします。</figcaption></figure>
           </li>
           <li class="walkthrough-step" id="android-guide-widget" data-guide-step="4">
-            <div class="walkthrough-copy"><span class="step-number">手順 5</span><h3>ホーム画面から、すぐ確認。</h3><p>スマホのホーム画面の空いた場所を長押しし、「ウィジェット → StudyCoPi」を選びます。表示したい種類を選んでホーム画面へ追加します。</p><p>今日の予定・今日の勉強時間・両方の表示・予定時間と累積勉強時間・目覚ましの設定時間・次の予定の6種類。追加後は長押しして大きさを調整できます。</p><p class="step-example">「その他 → ウィジェット」では種類とサイズの目安を確認できます。記録済みの時間を表示し、保存時や更新ボタンで反映します。追加方法やマス数はホームアプリによって異なります。</p></div>
+            <div class="walkthrough-copy"><span class="step-number">限定機能 5</span><h3>ホーム画面から、すぐ確認。</h3><p>スマホのホーム画面の空いた場所を長押しし、「ウィジェット → StudyCoPi」を選びます。表示したい種類を選んでホーム画面へ追加します。</p><p>今日の予定・今日の勉強時間・両方の表示・予定時間と累積勉強時間・目覚ましの設定時間・次の予定の6種類。追加後は長押しして大きさを調整できます。</p><p class="step-example">「その他 → ウィジェット」では種類とサイズの目安を確認できます。記録済みの時間を表示し、保存時や更新ボタンで反映します。追加方法やマス数はホームアプリによって異なります。</p></div>
             <figure class="walkthrough-shot"><button class="screenshot-button" type="button" aria-label="Androidのウィジェット一覧を拡大"><picture><img src="assets/android-guide-widget.webp" width="390" height="844" alt="Android版のウィジェット一覧。今日の学習、今日の予定、今日の勉強時間とサイズの目安" loading="lazy"></picture></button><figcaption>アプリ内で種類とサイズを確認できます。</figcaption></figure>
           </li>
         </ol>

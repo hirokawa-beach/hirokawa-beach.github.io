@@ -48,6 +48,8 @@ function enhanceWalkthrough(walkthrough) {
   const visual = walkthrough.querySelector('.walkthrough-visual');
   const stage = walkthrough.querySelector('.walkthrough-stage');
   const buttons = [...visual.querySelectorAll('[data-guide-step]')];
+  const itemLabel = walkthrough.dataset.itemLabel || '手順';
+  walkthrough.style.setProperty('--guide-count', String(steps.length));
   const slides = steps.map(step => {
     const slide = step.querySelector('.walkthrough-shot').cloneNode(true);
     stage.append(slide);
@@ -61,7 +63,7 @@ function enhanceWalkthrough(walkthrough) {
     if (index === current) return;
     current = index;
     walkthrough.dataset.step = String(index);
-    visual.querySelector('.walkthrough-position').textContent = `手順 ${index + 1} / ${steps.length}`;
+    visual.querySelector('.walkthrough-position').textContent = `${itemLabel} ${index + 1} / ${steps.length}`;
     slides.forEach((slide, i) => {
       const active = i === index;
       slide.classList.toggle('is-current', active);
