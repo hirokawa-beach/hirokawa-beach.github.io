@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" content="#245d67">
+  <meta name="theme-color" content="#1255c7">
   <title>StudyCoPi | 今日の「やる」を、「できた」に。</title>
   <meta name="description" content="StudyCoPiは、勉強の予定・タイマー・実績を試験ごとにまとめる学習管理ツール。WebとAndroidで使えます。画面でわかる使い方、Android版のダウンロードはこちら。">
   <link rel="canonical" href="https://hirokawa-beach.github.io/studycopi-guide/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:title" content="StudyCoPi | 今日の「やる」を、「できた」に。">
-  <meta property="og:description" content="予定を立てる。時間を測る。試験ごとに振り返る。WebとAndroidで使える学習管理ツール。">
+  <meta property="og:description" content="予定と範囲チェックを管理し、タイマーで集中。棒グラフと年間ヒートマップで学習を振り返る。Web・Android対応。">
   <meta property="og:url" content="https://hirokawa-beach.github.io/studycopi-guide/">
   <meta property="og:image" content="https://hirokawa-beach.github.io/studycopi-guide/assets/share.jpg">
   <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
   <link rel="preload" href="assets/today.webp" as="image" fetchpriority="high">
   <link rel="stylesheet" href="style.css">
   <script src="site.js" defer></script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"StudyCoPi","applicationCategory":"EducationalApplication","operatingSystem":"Web, Android 8.0 or later","url":"https://hirokawa-beach.github.io/StudyCoPi/","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"author":{"@type":"Person","name":"hirokawa-beach","url":"https://hirokawa-beach.github.io/"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"StudyCoPi","softwareVersion":"1.5.1","applicationCategory":"EducationalApplication","operatingSystem":"Web, Android 8.0 or later","url":"https://hirokawa-beach.github.io/StudyCoPi/","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"author":{"@type":"Person","name":"hirokawa-beach","url":"https://hirokawa-beach.github.io/"}}</script>
 </head>
 <body>
   <a class="skip" href="#main">本文へ移動</a>
@@ -39,7 +39,7 @@
     <section class="hero wrap" aria-labelledby="hero-title">
       <div class="hero-copy">
         <h1 id="hero-title">今日の「やる」を、<br>「できた」に。</h1>
-        <p>何を勉強するか決めて、タイマーで集中。<br>積み重ねた時間を、試験ごとに振り返ろう。</p>
+        <p>何を勉強するか決めて、タイマーで集中。<br>範囲の進み具合と、積み重ねた時間を見渡そう。</p>
         <div class="actions"><a class="button primary" href="https://hirokawa-beach.github.io/StudyCoPi/">Web版を開く<svg class="action-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/action-icons.svg#external-link"></use></svg></a><a class="button secondary" href="#download">Android版を入れる<svg class="action-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/action-icons.svg#download"></use></svg></a></div>
       </div>
       <figure class="hero-visual">
@@ -61,17 +61,23 @@
         <figure class="feature-shot desktop-shot"><img src="assets/timetable.webp" width="2048" height="1536" alt="縦軸が時間の週間タイムテーブル。数学、英語、国語の予定を表示" loading="lazy"><figcaption>実際のWeb版の画面 · サンプルデータ</figcaption></figure>
       </div>
       <div class="feature-panel" role="tabpanel" id="panel-exams" aria-labelledby="tab-exams" tabindex="0" hidden>
-        <div class="feature-copy"><h3>何回ある試験も、<br>ひとつずつ管理。</h3><p>中間考査、期末考査、模試を別々に登録。教科ごとの日程や範囲、準備に使った勉強時間をまとめられます。</p><p>予定を追加するときに「対象の試験」を選ぶと、その試験の実績につながります。</p></div>
+        <div class="feature-copy"><h3>何回ある試験も、<br>ひとつずつ管理。</h3><p>中間考査、期末考査、模試を別々に登録。教科ごとの日程や範囲、準備に使った勉強時間をまとめられます。</p><p>教科ごとの「範囲チェック」で、未着手・途中・要復習・完了を管理。上部の進捗は固定し、「残り」「要復習」だけに絞って確認できます。</p></div>
         <figure class="feature-shot phone-shot"><img src="assets/exams.webp" width="780" height="1688" alt="試験ごとの管理画面。2学期中間考査の予定時間と準備の実績" loading="lazy"><figcaption>実際のWeb版の画面 · サンプルデータ</figcaption></figure>
       </div>
       <div class="feature-panel" role="tabpanel" id="panel-timer" aria-labelledby="tab-timer" tabindex="0" hidden>
-        <div class="feature-copy"><h3>「開始」を押して、<br>目の前の勉強に集中。</h3><p>予定からそのままタイマーを開始。休憩は「一時停止」、終わったら「終了して記録」。測った時間を実績に残せます。</p><p>予定を作っていない勉強も、「その他 → 集中タイマー」から始められます。</p></div>
+        <div class="feature-copy"><h3>「開始」を押して、<br>目の前の勉強に集中。</h3><p>予定からそのままタイマーを開始。休憩は「一時停止」、終わったら「終了して記録」。測った時間を実績に残せます。</p><p>予定を作っていない勉強も、「その他 → 集中タイマー」から始められます。終了時は短い勉強でも「完了」で記録します。</p></div>
         <figure class="feature-shot phone-shot"><img src="assets/timer.webp" width="752" height="1584" alt="数学の集中タイマー画面。一時停止と終了して記録のボタン" loading="lazy"><figcaption>実際のWeb版の画面 · サンプルデータ</figcaption></figure>
       </div>
       <div class="feature-panel" role="tabpanel" id="panel-stats" aria-labelledby="tab-stats" tabindex="0" hidden>
-        <div class="feature-copy"><h3>頑張った時間を、<br>次の予定につなげる。</h3><p>教科・期間・試験で絞り込み、実際に勉強した時間を確認。予定と実績を見比べて、次の一週間を調整できます。</p><p>タイマーを使わなかった日も、「記録」から時間を手入力できます。</p></div>
-        <figure class="feature-shot phone-shot"><img src="assets/stats.webp" width="780" height="1688" alt="勉強時間の統計画面。数学、英語、国語の実績を教科別に表示" loading="lazy"><figcaption>実際のWeb版の画面 · サンプルデータ</figcaption></figure>
+        <div class="feature-copy"><h3>頑張った時間を、<br>次の予定につなげる。</h3><p>日・週・月の棒グラフで予定と実績を比較。GitHubのような学習ヒートマップで、直近1年や年ごとの積み重ねを見渡せます。教科・期間・試験でも絞り込めます。</p><p>タイマーを使わなかった日も、「記録」から時間を手入力できます。</p></div>
+        <figure class="feature-shot desktop-shot"><img src="assets/heatmap.webp" width="1800" height="682" alt="学習ヒートマップ。7行の曜日と週の列で直近1年の勉強時間を緑の濃淡で表示" loading="lazy"><figcaption>実際のWeb版の画面 · サンプルデータ</figcaption></figure>
       </div>
+    </section>
+
+    <section class="wrap release-update" aria-labelledby="release-title">
+      <h2 id="release-title">範囲の全体像を、ひと目で。</h2>
+      <p>範囲チェックは進捗と絞り込みを上部に固定。項目だけをスクロールするので、残りがどれくらいあるか見失いません。チェックや状態の変更も一覧からできます。</p>
+      <img class="checklist-shot" src="assets/checklist.webp" width="780" height="1688" alt="範囲チェックの画面。進捗とすべて・残り・要復習の切り替えを固定し、項目をコンパクトに表示" loading="lazy">
     </section>
 
     <section class="section wrap howto" id="howto" aria-labelledby="howto-title">
@@ -110,7 +116,7 @@
       <div class="android-intro"><div class="section-heading"><p class="eyebrow">Android限定</p><h2 id="android-title">朝の目覚ましから、<br>勉強の集中まで。</h2><p>スマホならではの機能で、勉強する毎日を支えます。</p><a class="text-link" href="#android-howto">Android版の使い方</a></div><img class="desk-photo" src="assets/desk.webp" width="1536" height="1024" alt="問題集とノートを開いた、窓辺の勉強机" loading="lazy"></div>
       <div class="native-grid">
         <article class="native-feature alarm-feature"><div><h3>二段階の目覚まし</h3><p>数学・英語・世界史の問題を解いて解除。二段階目は、別の場所に置いたNFCタグや対応するICカードを読みに行く設定にもできます。</p><p class="small-note">NFC対応スマホが必要です。交通系ICカードなども、毎回同じ識別IDを読み取れるものなら使えます。</p></div><img src="assets/wake.webp" width="320" height="740" alt="目覚まし解除の英語問題。borrowの意味を四択から選ぶ" loading="lazy"></article>
-        <article class="native-feature widget-feature"><h3>ホーム画面で、すぐ確認</h3><p>今日の予定、勉強時間、累積時間、次の予定、目覚まし。6種類のウィジェットを、置きたい大きさで選べます。</p><img src="assets/widget.webp" width="350" height="320" alt="今日の予定と勉強時間を表示するAndroidウィジェット" loading="lazy"></article>
+        <article class="native-feature widget-feature"><h3>ホーム画面で、すぐ確認</h3><p>今日の予定、勉強時間、累積時間、次の予定、目覚まし。6種類のウィジェットを、置きたい大きさで選べます。小さい表示でも種類と時間が分かり、グラフは画面密度に合わせて鮮明に描画します。</p><img src="assets/widget.webp" width="1080" height="1590" alt="今日の予定と勉強時間を表示するAndroidウィジェット" loading="lazy"></article>
         <article class="native-feature focus-feature"><h3>勉強中の画面固定</h3><p>Androidの画面固定で、ほかのアプリに移りにくく。予定時刻に集中画面へ案内するモードも選べます。</p><p class="small-note">画面固定はAndroidの確認操作が必要です。タイマーは自分で開始します。バックグラウンドでは通知で案内します。</p></article>
         <article class="native-feature sound-feature"><h3>音も、自分に合わせて</h3><p>ベル・パルス・チャイムの音源を選択。Androidの目覚ましでは、端末のアラーム音や音声ファイルも使えます。</p></article>
       </div>
@@ -167,7 +173,7 @@
       <div class="section-heading"><h2 id="download-title">さあ、今日の予定をひとつ。</h2><p>無料で使えます。アカウント登録もいりません。</p></div>
       <div class="download-grid">
         <article><h3>Web版</h3><p>スマホ・タブレット・PCのブラウザから、そのまま使えます。</p><a class="button primary" href="https://hirokawa-beach.github.io/StudyCoPi/">Web版を開く<svg class="action-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/action-icons.svg#external-link"></use></svg></a><p class="small-note">ホーム画面に追加すれば、次からすぐ開けます。</p></article>
-        <article><h3>Android版</h3><p>Android 8.0以降に対応。GitHubで配布しているAPKを入れて使います。</p><a class="button secondary" href="https://github.com/hirokawa-beach/StudyCoPi/releases/download/android-v1.4.1/StudyCoPi-Android-1.4.1.apk">APKをダウンロード<svg class="action-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/action-icons.svg#download"></use></svg></a><p class="small-note">配布版 1.4.1 · 約8.7 MB</p><a class="text-link" href="https://github.com/hirokawa-beach/StudyCoPi/releases/latest">最新リリースを確認 <svg class="action-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/action-icons.svg#external-link"></use></svg></a></article>
+        <article><h3>Android版</h3><p>Android 8.0以降に対応。GitHubで配布しているAPKを入れて使います。</p><a class="button secondary" href="https://github.com/hirokawa-beach/StudyCoPi/releases/download/android-v1.5.1/StudyCoPi-Android-1.5.1.apk">APKをダウンロード<svg class="action-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/action-icons.svg#download"></use></svg></a><p class="small-note">配布版 1.5.1 · Android 8.0以降</p><a class="text-link" href="https://github.com/hirokawa-beach/StudyCoPi/releases/latest">最新リリースを確認 <svg class="action-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/action-icons.svg#external-link"></use></svg></a></article>
       </div>
       <details class="install-details"><summary>Androidへのインストール・更新方法</summary><div><ol><li>スマホで「APKをダウンロード」を押します。</li><li>ダウンロードしたファイルを開きます。許可を求められたら、そのブラウザなどに「この提供元のアプリを許可」を設定します。</li><li>インストールを押したら完了です。</li></ol><p>更新するときは、最新リリースから新しいAPKをダウンロードし、そのまま上書きインストールしてください。データを残すため、先にアプリをアンインストールしないでください。更新前にバックアップを保存しておくと安心です。</p></div></details>
     </section>

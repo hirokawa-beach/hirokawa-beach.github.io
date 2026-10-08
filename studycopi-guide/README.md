@@ -14,15 +14,15 @@
 
 ## デザイン
 
-学生が実画面から使い方を理解するための、落ち着いた製品案内。DESIGN_VARIANCE=6 / MOTION_INTENSITY=3 / VISUAL_DENSITY=4。素材と余白で構成し、ボタンやタブの操作に必要な動きだけ使用します。静的GitHub Pagesに合わせ、HTML・CSS・少量のJavaScriptで実装しました。
+学生が実画面から使い方を理解するための、落ち着いた製品案内。DESIGN_VARIANCE=4 / MOTION_INTENSITY=2 / VISUAL_DENSITY=4。素材と余白で構成し、ボタンやタブの操作に必要な動きだけ使用します。静的GitHub Pagesに合わせ、HTML・CSS・少量のJavaScriptで実装しました。
 
-アクセントはアプリに合わせた青緑。ボタン12px、コンテンツ16px、画面枠32pxの角丸。日本語はNoto Sans JPをローカル配信します。
+アクセントは新しい本・時計アイコンに合わせた青。紺・白をベースに、明暗テーマを統一しました。ボタン12px、コンテンツ16px、画面枠32pxの角丸。日本語はNoto Sans JPをローカル配信します。
 
 ## 素材とライセンス
 
 - `assets/icon.png`: StudyCoPiで使用しているユーザー提供のアプリアイコン。
 - `assets/developer-avatar.webp`: 開発者[hirokawa-beachのGitHubプロフィール](https://github.com/hirokawa-beach)の公開アイコン。配信用にWebPで圧縮。ページ最下部の開発者表記から開発者サイトへリンクします。
-- `assets/banner.png`（1200×360）, `assets/share.jpg`（1200×630）: 実際のサービス・開発者アイコンと名前をHTML/CSSで配置し、ブラウザから書き出したシンプルなバナー。前者は配布用、後者はOG画像です。ページ上部のバナー表示は取り除き、開発者のアイコンと名前だけをフッター最下部に掲載しています。
+- `assets/banner.png`（1200×400）, `assets/share.jpg`（1200×630）: 実際のサービス・開発者アイコンと名前をHTML/CSSで配置し、ブラウザから書き出したシンプルなバナー。前者は配布用、後者はOG画像です。ページ上部のバナー表示は取り除き、開発者のアイコンと名前だけをフッター最下部に掲載しています。
 - `assets/action-icons.svg`: [Tabler Icons](https://github.com/tabler/tabler-icons)公式のexternal-link・download。文字の矢印ではなくSVGを使い、フォントに依存しない形で表示します。MITライセンス、同梱の`ICON-LICENSE.txt`参照。
 - `today.webp`, `exams.webp`, `stats.webp`, `timetable.webp`, `timer.webp`: 実際のWeb版をサンプルデータで表示し、ブラウザでキャプチャ。利用実績の主張ではありません。
 - `howto-*.webp`: 実際のWeb版を操作して撮影した予定追加・タイマー・記録・統計のスクショ。ライト・ダークの両方を用意。タイマーを20分進めて一時停止・終了した実際の状態を使っています。
