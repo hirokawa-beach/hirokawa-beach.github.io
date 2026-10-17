@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projects } from '../data/projects';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('blog')).sort((a,b)=>b.data.date.getTime()-a.data.date.getTime()).slice(0,2);
+---
+<Base title="Home">
+  <section class="hero">
+    <div class="eyebrow">HIROKAWA BEACH / DEVELOPER</div>
+    <h1>Hi, I'm Hirokawa Beach.</h1>
+    <p class="lead">Webアプリケーションや開発ツールを制作しています。興味のある技術を探究しながら、日常を少し便利にするものを作っています。</p>
+    <div class="actions"><a class="button primary" href="/projects/">Explore projects ↗</a><a class="button" href="https://github.com/hirokawa-beach" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+  </section>
+  <section class="section">
+    <div class="section-head"><h2>Featured projects</h2><a href="/projects/">View all ↗</a></div>
+    <div class="grid">{projects.slice(0,4).map(project => <ProjectCard project={project}/>)}</div>
+  </section>
+  <section class="section">
+    <div class="section-head"><h2>Latest writing</h2><a href="/blog/">All posts ↗</a></div>
+    <div class="post-list">{posts.map(post=><article class="post-row"><time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString('ja-JP')}</time><h2><a href={'/blog/'+post.id+'/'}>{post.data.title} ↗</a></h2><p>{post.data.description}</p></article>)}</div>
+  </section>
+  <section class="section">
+    <div class="section-head"><h2>Homelab</h2><a href="/status/">System status ↗</a></div>
+    <p class="muted">Raspberry Piのリソース情報を表示するためのステータスページを準備しています。</p>
+  </section>
+</Base>

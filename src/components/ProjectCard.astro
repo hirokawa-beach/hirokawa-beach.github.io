@@ -1,0 +1,15 @@
+---
+import type { Project } from '../data/projects';
+const { project } = Astro.props as { project: Project };
+---
+<article class="card">
+  <span class="meta">{project.category}{project.archived ? ' · MAINTENANCE STOPPED' : ''}</span>
+  <h3>{project.name}</h3>
+  <p>{project.description}</p>
+  <div class="tagline">{project.tags.map(tag => <span class="tag">{tag}</span>)}</div>
+  <div class="card-links">
+    {project.href && <a href={project.href} target="_blank" rel="noopener noreferrer">Live ↗</a>}
+    {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer">Source ↗</a>}
+    {project.detail && <a href={project.detail}>Details →</a>}
+  </div>
+</article>

@@ -1,0 +1,9 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('blog')).sort((a,b)=>b.data.date.getTime()-a.data.date.getTime());
+---
+<Base title="Blog" active="blog">
+  <header class="page-header"><div class="eyebrow">NOTES / WRITING</div><h1 class="page-title">Blog</h1><p>開発やサイト更新について書いています。</p><a class="inline-link" href="/feed.xml">RSS ↗</a></header>
+  <div class="post-list" style="margin-bottom:70px">{posts.map(post=><article class="post-row"><time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString('ja-JP')} · {post.data.tags.join(', ')}</time><h2><a href={'/blog/'+post.id+'/'}>{post.data.title} ↗</a></h2><p>{post.data.description}</p></article>)}</div>
+</Base>

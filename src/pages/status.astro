@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+const apiUrl = import.meta.env.PUBLIC_STATUS_API_URL ?? '';
+---
+<Base title="System Status" active="status">
+  <header class="page-header"><div class="eyebrow">HOMELAB / TELEMETRY</div><h1 class="page-title">System Status</h1><p>Raspberry Piの稼働状況。現在の値はAPI接続時のみ表示します。</p></header>
+  <section aria-label="Raspberry Pi status" style="margin-bottom:40px">
+    <div class="section-head"><h2>Raspberry Pi</h2><span class="muted" id="connection">Not configured</span></div>
+    <div class="status-grid">
+      <div class="metric"><span>CPU usage</span><strong id="cpu">—</strong></div>
+      <div class="metric"><span>Memory usage</span><strong id="memory">—</strong></div>
+      <div class="metric"><span>CPU temperature</span><strong id="temperature">—</strong></div>
+      <div class="metric"><span>Uptime</span><strong id="uptime">—</strong></div>
+    </div>
+    <p class="muted" id="updated" style="font-size:13px">テレメトリデータは未取得です。</p>
+    <p class="notice">APIから公開されるのはリソース利用状況のみ。ネットワークアドレスや管理用情報は表示しません。</p>
+  </section>
+  <script define:vars={{ apiUrl }}>
+    const text = (id, value) => { const element = document.getElementById(id); if (element) element.textContent = value; };
+    const number = (v, min, max) => typeof v === 'number' && Number.isFinite(v) && v >= min && v <= max;
+    async function refresh() {
+      if (!apiUrl) return;
+      try {
+        const response = await fetch(apiUrl, { cache: 'no-store', signal: AbortSignal.timeout(8000) });
+        if (!response.ok) throw new Error('Bad status');
+        const data = await response.json();
+        if (!number(data.cpu,0,100) || !number(data.memory,0,100) || !number(data.temperature,-40,150) || !number(data.uptime,0,1e10)) throw new Error('Invalid response');
+        text('cpu', data.cpu.toFixed(1)+'%'); text('memory',data.memory.toFixed(1)+'%');
+        text('temperature',data.temperature.toFixed(1)+'°C'); text('uptime',Math.floor(data.uptime/3600)+'h');
+        text('connection','Online'); text('updated','最終取得: '+new Date().toLocaleTimeString('ja-JP'));
+      } catch {
+        text('connection','Unavailable');
+        ['cpu','memory','temperature','uptime'].forEach(id=>text(id,'—'));
+        text('updated','最新データを取得できませんでした。');
+      }
+    }
+    refresh();
+    if(apiUrl) setInterval(refresh, 60000);
+  </script>
+</Base>

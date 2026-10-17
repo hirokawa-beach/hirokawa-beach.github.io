@@ -1,0 +1,9 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { projects } from '../../data/projects';
+---
+<Base title="Projects" active="projects">
+  <header class="page-header"><div class="eyebrow">WORK / PROJECTS</div><h1 class="page-title">Projects</h1><p>制作したWebアプリ、開発ツール、Botなどを紹介します。</p></header>
+  <div class="grid" style="margin-bottom:70px">{projects.map(project=><ProjectCard project={project}/>)}</div>
+</Base>
