@@ -1,0 +1,25 @@
+name: Astro build
+on:
+  pull_request:
+  push:
+    branches:
+      - feat/astro-portfolio-rebuild
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install
+      - run: npm run check
+      - run: npm run build
+      - name: Verify generated pages and legacy guide
+        run: |
+          test -f dist/index.html
+          test -f dist/projects/index.html
+          test -f dist/blog/index.html
+          test -f dist/status/index.html
+          test -f dist/studycopi-guide/index.html
+          test -f dist/img/botimg1.png
