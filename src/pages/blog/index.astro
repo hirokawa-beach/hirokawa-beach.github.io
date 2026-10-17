@@ -5,12 +5,11 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.date.getTime()
 ---
 <Base title="ブログ" active="blog">
   <header class="page-header">
-    <div class="eyebrow">Blog</div>
     <h1 class="page-title">ブログ</h1>
     <p>開発の記録や、このサイトの更新について。</p>
-    <a class="inline-link" href="/feed.xml">RSSフィード ↗</a>
+    <a class="text-link" href="/feed.xml">RSSフィード ↗</a>
   </header>
-  <div class="content-narrow post-list" style="padding: 9px 0 70px">
+  <div class="narrow post-list post-list--page">
     {posts.map(post => <article class="post-row">
       <time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString('ja-JP')} · {post.data.tags.join(' / ')}</time>
       <h2><a href={'/blog/' + post.id + '/'}>{post.data.title} →</a></h2>

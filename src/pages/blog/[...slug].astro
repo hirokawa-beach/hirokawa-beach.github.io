@@ -9,11 +9,10 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 <Base title={post.data.title} description={post.data.description} active="blog">
-  <article class="prose">
+  <article class="article prose">
     <header class="page-header">
-      <div class="eyebrow">Blog / {post.data.tags.join(' · ')}</div>
       <h1 class="page-title">{post.data.title}</h1>
-      <p><time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString('ja-JP')}</time></p>
+      <p class="article-date"><time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString('ja-JP')}</time> · {post.data.tags.join(' / ')}</p>
     </header>
     <Content />
     <p style="margin-top: 45px"><a href="/blog/">← ブログ一覧に戻る</a></p>

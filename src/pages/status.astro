@@ -4,9 +4,8 @@ const apiUrl = import.meta.env.PUBLIC_STATUS_API_URL ?? '';
 ---
 <Base title="稼働状況" active="status">
   <header class="page-header">
-    <div class="eyebrow">Homelab / System status</div>
     <h1 class="page-title">稼働状況</h1>
-    <p>自宅のRaspberry Piから取得したリソース情報を表示するページです。</p>
+    <p>Raspberry Piのリソース情報を表示します。API接続時のみ実測値を表示します。</p>
   </header>
   <section class="status-board" aria-label="Raspberry Pi のステータス">
     <div class="status-head">
@@ -20,7 +19,7 @@ const apiUrl = import.meta.env.PUBLIC_STATUS_API_URL ?? '';
       <div class="metric"><dt>稼働時間</dt><dd id="uptime">—</dd></div>
     </dl>
     <p id="updated" class="status-note" aria-live="polite">現在、計測データは公開していません。</p>
-    <p class="status-note">※ このページには公開可能な利用率・温度等のみを掲載し、内部ネットワークや管理情報は表示しません。</p>
+    <p class="status-note">このページには公開可能な利用率・温度等のみを掲載し、内部ネットワークや管理情報は表示しません。</p>
   </section>
   <script define:vars={{ apiUrl }}>
     const setText = (id, value) => {
@@ -36,14 +35,12 @@ const apiUrl = import.meta.env.PUBLIC_STATUS_API_URL ?? '';
         if (!response.ok) throw new Error('API unavailable');
         const data = await response.json();
         if (!data || !validNumber(data.cpu, 0, 100) || !validNumber(data.memory, 0, 100)
-          || !validNumber(data.temperature, -40, 150) || !validNumber(data.uptime, 0, 1e10)) {
-          throw new Error('Invalid telemetry');
-        }
+          || !validNumber(data.temperature, -40, 150) || !validNumber(data.uptime, 0, 1e10)) throw new Error('Invalid telemetry');
         setText('cpu', data.cpu.toFixed(1) + '%');
         setText('memory', data.memory.toFixed(1) + '%');
         setText('temperature', data.temperature.toFixed(1) + '°C');
         const hours = Math.floor(data.uptime / 3600);
-        setText('uptime', Math.floor(hours / 24) + '日 ' + (hours % 24) + '時間');
+        setText('uptime', Math.floor(hours / 24) + '日 ' + hours % 24 + '時間');
         setText('connection', 'オンライン');
         document.getElementById('connection')?.setAttribute('data-state','online');
         setText('updated', '最終更新: ' + new Date().toLocaleTimeString('ja-JP'));
@@ -51,7 +48,7 @@ const apiUrl = import.meta.env.PUBLIC_STATUS_API_URL ?? '';
         setText('connection', '取得できません');
         document.getElementById('connection')?.removeAttribute('data-state');
         ['cpu', 'memory', 'temperature', 'uptime'].forEach(id => setText(id, '—'));
-        setText('updated', '現在の値を取得できませんでした。しばらくしてから再度ご確認ください。');
+        setText('updated', '現在の値を取得できませんでした。');
       }
     }
     refresh();

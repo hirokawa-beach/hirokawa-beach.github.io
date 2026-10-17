@@ -3,14 +3,15 @@ import type { Project } from '../data/projects';
 const { project } = Astro.props as { project: Project };
 ---
 <article class="project-entry">
-  <div class="project-entry__heading">
-    <h3>{project.name}{project.archived && <span class="project-entry__archived">更新停止中</span>}</h3>
-    <span class="meta">{project.category}</span>
+  <div>
+    <h3>{project.name}</h3>
+    <span class="project-type">{project.category}</span>
+    {project.archived && <span class="archived">更新停止中</span>}
   </div>
   <p>{project.description}</p>
   <div class="project-entry__links">
-    {project.href && <a href={project.href} target="_blank" rel="noopener noreferrer" aria-label={project.name + ' の公開サイトを開く'}>公開サイト ↗</a>}
-    {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={project.name + ' のGitHubリポジトリを開く'}>ソースコード ↗</a>}
-    {project.detail && <a href={project.detail} aria-label={project.name + ' の説明を見る'}>使い方を見る →</a>}
+    {project.href && <a href={project.href} target="_blank" rel="noopener noreferrer">公開サイト ↗</a>}
+    {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
+    {project.detail && <a href={project.detail}>使い方 →</a>}
   </div>
 </article>

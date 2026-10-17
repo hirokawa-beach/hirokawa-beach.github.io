@@ -2,17 +2,22 @@
 import Base from '../layouts/Base.astro';
 ---
 <Base title="Oki Archive Bot" active="projects">
-  <header class="page-header"><div class="eyebrow">PROJECT / DISCORD BOT</div><h1 class="page-title">Oki Archive Bot</h1><p>Discordから沖ノ鳥島周辺のアーカイブを取得し、2時点の差分画像を生成するBot。</p><a class="inline-link" href="/projects/">← Projects</a></header>
-  <article class="prose">
+  <header class="page-header">
+    <h1 class="page-title">Oki Archive Bot</h1>
+    <p>Discordから沖ノ鳥島周辺のアーカイブを取得し、2時点の差分画像を生成するBot。</p>
+    <a class="text-link" href="/projects/">← 制作物一覧に戻る</a>
+  </header>
+  <article class="article prose" style="padding-top: 34px">
     <h2>使い方</h2>
     <p>沖ノ鳥サーバーでは基本的に「oki-archive-bot用」チャンネルで使用してください。「/」を入力して「Oki Archive Bot」を選択するとコマンド一覧が表示されます。</p>
-    <img src="/img/botimg1.png" alt="Discordで表示されるコマンドの一覧" style="width:100%;height:auto;border-radius:8px" loading="lazy" />
-    <h2>Commands</h2>
+    <img src="/img/botimg1.png" alt="Discordで表示されるコマンドの一覧" loading="lazy" />
+    <h2>コマンド</h2>
     <h3>/archive tile</h3><p>タイル座標でアーカイブを取得。<code>/archive tile x: y: [time:]</code></p>
     <h3>/archive url</h3><p>Wplaceの共有URLで取得。<code>/archive url url: [time:]</code></p>
     <h3>/diff tile</h3><p>2時点の差分画像を生成。<code>/diff tile x: y: time1: time2:</code></p>
     <h3>/diff url</h3><p>共有URLから差分画像を生成。<code>/diff url url: time1: time2:</code></p>
     <p>時間指定は<code>*h</code>（時間前）、<code>*d</code>（日前）、<code>*m</code>（か月前）。アーカイブ取得で省略した場合は3時間前。</p>
-    <h2>開発者専用</h2><p><code>/divmode</code> は開発者モードの切り替え、<code>/test x: y: [time:]</code> は簡易テスト用です。権限のない利用者は実行できません。</p>
+    <h2>開発者専用</h2>
+    <p><code>/divmode</code> は開発者モードの切り替え、<code>/test x: y: [time:]</code> は簡易テスト用です。権限のない利用者は実行できません。</p>
   </article>
 </Base>
