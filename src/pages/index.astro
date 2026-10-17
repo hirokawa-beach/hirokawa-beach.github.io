@@ -7,6 +7,11 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime()).slice(0, 2);
 const featured = projects[0];
+const featuredScreens = [
+  { label: '今日', title: '今日の学習', src: '/studycopi-guide/assets/today.webp', width: 780, height: 1688 },
+  { label: '統計', title: '学習の統計', src: '/studycopi-guide/assets/stats.webp', width: 768, height: 1664 },
+  { label: '週間', title: '週間の予定', src: '/studycopi-guide/assets/timetable.webp', width: 2048, height: 1536 }
+];
 ---
 <Base title="Home">
   <section class="hero" aria-label="自己紹介">
@@ -56,8 +61,26 @@ const featured = projects[0];
       <a href="/projects/">すべて見る →</a>
     </div>
     <article class="spotlight" aria-labelledby="spotlight-heading">
-      <div class="spotlight-thumb">
-        <img src="/studycopi-guide/assets/today.webp" alt="StudyCoPiの学習管理画面" width="900" height="530" loading="lazy" decoding="async" />
+      <div class="spotlight-preview" data-flip-preview>
+        <div class="flip-stage" aria-hidden="true">
+          {featuredScreens.map((screen, index) => (
+            <div class="flip-window" data-flip-window data-position={index}>
+              <div class="flip-titlebar">{featured.name}<span>{screen.title}</span></div>
+              <img src={screen.src} alt="" width={screen.width} height={screen.height} loading="lazy" decoding="async" />
+            </div>
+          ))}
+        </div>
+        <div class="flip-controls" role="group" aria-label="StudyCoPiの表示画面" hidden>
+          {featuredScreens.map((screen, index) => (
+            <button type="button" data-flip-select={index} data-screen-title={screen.title} data-screen-src={screen.src} aria-pressed={index === 0}>
+              {screen.label}
+            </button>
+          ))}
+        </div>
+        <p class="flip-caption">
+          <span role="status" aria-atomic="true" data-flip-status>今日の学習（画面の一部）</span>
+          <a href={featuredScreens[0].src} target="_blank" rel="noopener noreferrer" data-flip-link aria-label="画面を開く ↗（今日の学習、新しいタブ）">画面を開く ↗</a>
+        </p>
       </div>
       <div>
         <span class="spotlight-kind">Web App · PWA</span>
@@ -86,3 +109,43 @@ const featured = projects[0];
     </div>
   </section>
 </Base>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-flip-preview]').forEach(preview => {
+    const windows = [...preview.querySelectorAll<HTMLElement>('[data-flip-window]')];
+    const controls = preview.querySelector<HTMLElement>('.flip-controls');
+    const buttons = [...preview.querySelectorAll<HTMLButtonElement>('[data-flip-select]')];
+    const status = preview.querySelector<HTMLElement>('[data-flip-status]');
+    const link = preview.querySelector<HTMLAnchorElement>('[data-flip-link]');
+    if (!controls || !status || !link || buttons.length !== windows.length || buttons.length < 2) return;
+
+    const select = (selected: number) => {
+      windows.forEach((window, index) => {
+        window.dataset.position = String((index - selected + windows.length) % windows.length);
+      });
+      buttons.forEach((button, index) => button.setAttribute('aria-pressed', String(index === selected)));
+      const { screenTitle, screenSrc } = buttons[selected].dataset;
+      status.textContent = `${screenTitle}（画面の一部）`;
+      link.href = screenSrc!;
+      link.setAttribute('aria-label', `画面を開く ↗（${screenTitle}、新しいタブ）`);
+    };
+
+    buttons.forEach((button, index) => {
+      button.addEventListener('click', () => select(index));
+      button.addEventListener('keydown', event => {
+        let next: number;
+        switch (event.key) {
+          case 'ArrowRight': next = (index + 1) % buttons.length; break;
+          case 'ArrowLeft': next = (index - 1 + buttons.length) % buttons.length; break;
+          case 'Home': next = 0; break;
+          case 'End': next = buttons.length - 1; break;
+          default: return;
+        }
+        event.preventDefault();
+        buttons[next].focus();
+        select(next);
+      });
+    });
+    controls.hidden = false;
+  });
+</script>

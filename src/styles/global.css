@@ -7,7 +7,7 @@
   --ink: #252729;
   --text: #44494d;
   --muted: #666d72;
-  --faint: #7a8186;
+  --faint: #686f74;
   --border: #dcdfdf;
   --border-strong: #c5cbd0;
   --link: #405f75;
@@ -63,7 +63,7 @@ img { max-width: 100%; }
 [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 .hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(275px, .85fr); gap: clamp(38px, 6vw, 85px); align-items: start; padding: 75px 0 76px; }
 .hero h1 { color: var(--ink); font-size: clamp(34px, 4.1vw, 49px); font-weight: 720; letter-spacing: -.058em; line-height: 1.25; margin: 0 0 21px; }
-.hero-headline { color: var(--ink); font-size: clamp(19px, 2.3vw, 24px); line-height: 1.6; font-weight: 650; letter-spacing: -.035em; margin: 0 0 16px; }
+.hero-headline { color: var(--ink); font-size: clamp(16px, 1.8vw, 20px); line-height: 1.7; font-weight: 630; letter-spacing: -.02em; margin: 0 0 14px; }
 .hero-description { font-size: 14px; line-height: 2; color: var(--muted); max-width: 440px; margin: 0; }
 .hero-links { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; margin-top: 31px; }
 .button { display: inline-flex; justify-content: center; align-items: center; gap: 12px; border-radius: 5px; border: 1px solid var(--border-strong); padding: 10px 17px; font-size: 13px; font-weight: 650; min-height: 43px; }
@@ -88,16 +88,40 @@ img { max-width: 100%; }
 .profile-actions a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .profile-actions svg { width: 15px; height: 15px; }
 
-/* Featured project is a compact highlight rather than a second hero. */
-.spotlight { display: grid; grid-template-columns: 236px minmax(0, 1fr); gap: 25px; align-items: center; padding: 17px 0 24px; border-bottom: 1px solid var(--border); }
-.spotlight-thumb { width: 236px; height: 137px; display: grid; place-items: center; background: var(--soft); overflow: hidden; border: 1px solid var(--border); border-radius: 5px; }
-.spotlight-thumb img { width: 100%; height: 100%; display: block; object-fit: contain; }
+/* A compact, Vista Flip 3D-inspired stack using the existing app screenshots. */
+.spotlight { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 28px; align-items: center; padding: 6px 0 24px; border-bottom: 1px solid var(--border); }
+.spotlight-preview { min-width: 0; width: 100%; max-width: 320px; }
+.flip-stage { position: relative; height: 190px; perspective: 850px; pointer-events: none; }
+.flip-window {
+  position: absolute; top: 50%; left: 50%; width: 224px; height: 148px;
+  display: flex; flex-direction: column; overflow: hidden;
+  border: 1px solid var(--border-strong); border-radius: 5px;
+  background: var(--paper); box-shadow: 0 5px 14px rgb(0 0 0 / 10%);
+  /* These three layers are local to the isolated preview. */
+}
+.spotlight-preview { isolation: isolate; }
+.flip-window[data-position="0"] { z-index: 3; transform: translate(-50%, -50%) translate3d(33px, 20px, 35px) rotateX(8deg) rotateY(-25deg); }
+.flip-window[data-position="1"] { z-index: 2; transform: translate(-50%, -50%) translate3d(-15px, -2px, -45px) rotateX(8deg) rotateY(-25deg); }
+.flip-window[data-position="2"] { z-index: 1; transform: translate(-50%, -50%) translate3d(-65px, -24px, -125px) rotateX(8deg) rotateY(-25deg); }
+.flip-titlebar { display: flex; justify-content: space-between; gap: 8px; padding: 3px 8px; border-bottom: 1px solid var(--border); background: var(--soft); color: var(--ink); font-size: 9px; line-height: 1.5; white-space: nowrap; }
+.flip-titlebar span { color: var(--text); }
+.flip-window img { display: block; width: 100%; flex: 1; min-height: 0; object-fit: cover; object-position: top; }
+.flip-controls { display: flex; justify-content: center; gap: 6px; margin-top: 9px; }
+.flip-controls[hidden] { display: none; }
+.flip-controls button { min-width: 58px; min-height: 44px; padding: 5px 12px; border: 1px solid var(--border); border-radius: 5px; background: transparent; color: var(--muted); font-size: 12px; }
+.flip-controls button:hover { color: var(--ink); border-color: var(--border-strong); background: var(--soft); }
+.flip-controls button[aria-pressed="true"] { background: var(--button); border-color: var(--button); color: var(--button-text); }
+.spotlight .flip-caption { display: flex; flex-wrap: wrap; justify-content: center; column-gap: 12px; margin: 7px 0 0; color: var(--muted); font-size: 10px; }
+.flip-caption a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; }
+@media (prefers-reduced-motion: no-preference) {
+  .flip-window { transition: transform 320ms cubic-bezier(.2, .7, .2, 1); }
+}
 .spotlight h3 { color: var(--ink); font-size: 20px; letter-spacing: -.025em; margin: 0 0 6px; line-height: 1.5; font-weight: 670; }
 .spotlight p { margin: 0 0 11px; color: var(--muted); font-size: 13px; line-height: 1.8; }
 .spotlight-links { display: flex; flex-wrap: wrap; gap: 10px 21px; align-items: center; }
 .spotlight-links a { color: var(--link); font-size: 13px; }
 .spotlight-links a:hover { text-decoration: underline; text-underline-offset: 4px; }
-.spotlight-kind { color: var(--faint); font-size: 11px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+.spotlight-kind { color: var(--muted); font-size: 11px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
 
 /* Site-wide small monochrome icons. */
 .line-icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
@@ -164,8 +188,7 @@ img { max-width: 100%; }
   .hero { grid-template-columns: 1fr; gap: 35px; padding: 62px 0; }
   .hero-copy { max-width: 680px; }
   .hero-profile { max-width: 660px; border-left: 0; border-top: 1px solid var(--border); padding: 23px 0 0; }
-  .spotlight { grid-template-columns: 216px minmax(0,1fr); }
-  .spotlight-thumb { width: 216px; height: 125px; }
+  .spotlight { grid-template-columns: 300px minmax(0,1fr); gap: 24px; }
   .project-entry { grid-template-columns: minmax(150px, .8fr) minmax(0, 1.2fr); gap: 8px 26px; }
   .project-entry__links { grid-column: 2; justify-content: flex-start; min-width: 0; }
 }
@@ -178,10 +201,10 @@ img { max-width: 100%; }
   .nav-links a { font-size: 12px; padding: 10px 0 12px; }
   .hero { gap: 27px; padding: 51px 0 48px; }
   .hero h1 { font-size: 35px; margin-bottom: 20px; }
-  .hero-headline { font-size: 21px; }
   .hero-description { font-size: 14px; }
-  .spotlight { grid-template-columns: 130px minmax(0,1fr); gap: 14px; padding: 15px 0 23px; }
-  .spotlight-thumb { width: 130px; height: 83px; }
+  .spotlight { grid-template-columns: minmax(0, 1fr); gap: 17px; padding: 0 0 23px; }
+  .spotlight-preview { margin-inline: auto; }
+  .flip-window { width: 70%; }
   .spotlight h3 { font-size: 17px; margin-bottom: 3px; }
   .spotlight p { font-size: 12px; margin-bottom: 6px; }
   .spotlight-links { gap: 5px 13px; }
