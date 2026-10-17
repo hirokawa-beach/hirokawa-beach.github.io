@@ -2,39 +2,59 @@
 import Base from '../layouts/Base.astro';
 const apiUrl = import.meta.env.PUBLIC_STATUS_API_URL ?? '';
 ---
-<Base title="System Status" active="status">
-  <header class="page-header"><div class="eyebrow">HOMELAB / TELEMETRY</div><h1 class="page-title">System Status</h1><p>Raspberry Piの稼働状況。現在の値はAPI接続時のみ表示します。</p></header>
-  <section aria-label="Raspberry Pi status" style="margin-bottom:40px">
-    <div class="section-head"><h2>Raspberry Pi</h2><span class="muted" id="connection">Not configured</span></div>
-    <div class="status-grid">
-      <div class="metric"><span>CPU usage</span><strong id="cpu">—</strong></div>
-      <div class="metric"><span>Memory usage</span><strong id="memory">—</strong></div>
-      <div class="metric"><span>CPU temperature</span><strong id="temperature">—</strong></div>
-      <div class="metric"><span>Uptime</span><strong id="uptime">—</strong></div>
+<Base title="稼働状況" active="status">
+  <header class="page-header">
+    <div class="eyebrow">Homelab / System status</div>
+    <h1 class="page-title">稼働状況</h1>
+    <p>自宅のRaspberry Piから取得したリソース情報を表示するページです。</p>
+  </header>
+  <section class="status-board" aria-label="Raspberry Pi のステータス">
+    <div class="status-head">
+      <h2>Raspberry Pi</h2>
+      <span class="connection" id="connection" role="status" aria-live="polite">接続準備中</span>
     </div>
-    <p class="muted" id="updated" style="font-size:13px">テレメトリデータは未取得です。</p>
-    <p class="notice">APIから公開されるのはリソース利用状況のみ。ネットワークアドレスや管理用情報は表示しません。</p>
+    <dl class="metric-grid">
+      <div class="metric"><dt>CPU使用率</dt><dd id="cpu">—</dd></div>
+      <div class="metric"><dt>メモリ使用率</dt><dd id="memory">—</dd></div>
+      <div class="metric"><dt>CPU温度</dt><dd id="temperature">—</dd></div>
+      <div class="metric"><dt>稼働時間</dt><dd id="uptime">—</dd></div>
+    </dl>
+    <p id="updated" class="status-note" aria-live="polite">現在、計測データは公開していません。</p>
+    <p class="status-note">※ このページには公開可能な利用率・温度等のみを掲載し、内部ネットワークや管理情報は表示しません。</p>
   </section>
   <script define:vars={{ apiUrl }}>
-    const text = (id, value) => { const element = document.getElementById(id); if (element) element.textContent = value; };
-    const number = (v, min, max) => typeof v === 'number' && Number.isFinite(v) && v >= min && v <= max;
+    const setText = (id, value) => {
+      const node = document.getElementById(id);
+      if (node) node.textContent = value;
+    };
+    const validNumber = (value, min, max) =>
+      typeof value === 'number' && Number.isFinite(value) && value >= min && value <= max;
     async function refresh() {
       if (!apiUrl) return;
       try {
         const response = await fetch(apiUrl, { cache: 'no-store', signal: AbortSignal.timeout(8000) });
-        if (!response.ok) throw new Error('Bad status');
+        if (!response.ok) throw new Error('API unavailable');
         const data = await response.json();
-        if (!number(data.cpu,0,100) || !number(data.memory,0,100) || !number(data.temperature,-40,150) || !number(data.uptime,0,1e10)) throw new Error('Invalid response');
-        text('cpu', data.cpu.toFixed(1)+'%'); text('memory',data.memory.toFixed(1)+'%');
-        text('temperature',data.temperature.toFixed(1)+'°C'); text('uptime',Math.floor(data.uptime/3600)+'h');
-        text('connection','Online'); text('updated','最終取得: '+new Date().toLocaleTimeString('ja-JP'));
+        if (!data || !validNumber(data.cpu, 0, 100) || !validNumber(data.memory, 0, 100)
+          || !validNumber(data.temperature, -40, 150) || !validNumber(data.uptime, 0, 1e10)) {
+          throw new Error('Invalid telemetry');
+        }
+        setText('cpu', data.cpu.toFixed(1) + '%');
+        setText('memory', data.memory.toFixed(1) + '%');
+        setText('temperature', data.temperature.toFixed(1) + '°C');
+        const hours = Math.floor(data.uptime / 3600);
+        setText('uptime', Math.floor(hours / 24) + '日 ' + (hours % 24) + '時間');
+        setText('connection', 'オンライン');
+        document.getElementById('connection')?.setAttribute('data-state','online');
+        setText('updated', '最終更新: ' + new Date().toLocaleTimeString('ja-JP'));
       } catch {
-        text('connection','Unavailable');
-        ['cpu','memory','temperature','uptime'].forEach(id=>text(id,'—'));
-        text('updated','最新データを取得できませんでした。');
+        setText('connection', '取得できません');
+        document.getElementById('connection')?.removeAttribute('data-state');
+        ['cpu', 'memory', 'temperature', 'uptime'].forEach(id => setText(id, '—'));
+        setText('updated', '現在の値を取得できませんでした。しばらくしてから再度ご確認ください。');
       }
     }
     refresh();
-    if(apiUrl) setInterval(refresh, 60000);
+    if (apiUrl) setInterval(refresh, 60000);
   </script>
 </Base>

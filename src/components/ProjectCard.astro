@@ -2,14 +2,15 @@
 import type { Project } from '../data/projects';
 const { project } = Astro.props as { project: Project };
 ---
-<article class="card">
-  <span class="meta">{project.category}{project.archived ? ' · MAINTENANCE STOPPED' : ''}</span>
-  <h3>{project.name}</h3>
+<article class="project-entry">
+  <div class="project-entry__heading">
+    <h3>{project.name}{project.archived && <span class="project-entry__archived">更新停止中</span>}</h3>
+    <span class="meta">{project.category}</span>
+  </div>
   <p>{project.description}</p>
-  <div class="tagline">{project.tags.map(tag => <span class="tag">{tag}</span>)}</div>
-  <div class="card-links">
-    {project.href && <a href={project.href} target="_blank" rel="noopener noreferrer">Live ↗</a>}
-    {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer">Source ↗</a>}
-    {project.detail && <a href={project.detail}>Details →</a>}
+  <div class="project-entry__links">
+    {project.href && <a href={project.href} target="_blank" rel="noopener noreferrer" aria-label={project.name + ' の公開サイトを開く'}>公開サイト ↗</a>}
+    {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={project.name + ' のGitHubリポジトリを開く'}>ソースコード ↗</a>}
+    {project.detail && <a href={project.detail} aria-label={project.name + ' の説明を見る'}>使い方を見る →</a>}
   </div>
 </article>

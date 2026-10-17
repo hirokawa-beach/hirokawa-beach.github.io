@@ -3,25 +3,61 @@ import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { projects } from '../data/projects';
 import { getCollection } from 'astro:content';
-const posts = (await getCollection('blog')).sort((a,b)=>b.data.date.getTime()-a.data.date.getTime()).slice(0,2);
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 2);
 ---
 <Base title="Home">
-  <section class="hero">
-    <div class="eyebrow">HIROKAWA BEACH / DEVELOPER</div>
-    <h1>Hi, I'm Hirokawa Beach.</h1>
-    <p class="lead">Webアプリケーションや開発ツールを制作しています。興味のある技術を探究しながら、日常を少し便利にするものを作っています。</p>
-    <div class="actions"><a class="button primary" href="/projects/">Explore projects ↗</a><a class="button" href="https://github.com/hirokawa-beach" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+  <section class="home-intro" aria-labelledby="intro-title">
+    <div class="eyebrow">Hirokawa Beach / Personal website</div>
+    <h1 id="intro-title">ひろかわびーち</h1>
+    <p class="hero-role">Webアプリやツールを作っています。</p>
+    <p class="hero-description">個人開発の制作物、技術について書いたこと、試していることをまとめたサイトです。Web開発のほか、LinuxやRaspberry Piなどにも取り組んでいます。</p>
+    <div class="hero-links">
+      <a href="/projects/">制作物を見る →</a>
+      <a href="https://github.com/hirokawa-beach" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+    </div>
   </section>
-  <section class="section">
-    <div class="section-head"><h2>Featured projects</h2><a href="/projects/">View all ↗</a></div>
-    <div class="grid">{projects.slice(0,4).map(project => <ProjectCard project={project}/>)}</div>
-  </section>
-  <section class="section">
-    <div class="section-head"><h2>Latest writing</h2><a href="/blog/">All posts ↗</a></div>
-    <div class="post-list">{posts.map(post=><article class="post-row"><time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString('ja-JP')}</time><h2><a href={'/blog/'+post.id+'/'}>{post.data.title} ↗</a></h2><p>{post.data.description}</p></article>)}</div>
-  </section>
-  <section class="section">
-    <div class="section-head"><h2>Homelab</h2><a href="/status/">System status ↗</a></div>
-    <p class="muted">Raspberry Piのリソース情報を表示するためのステータスページを準備しています。</p>
-  </section>
+  <div class="home-columns">
+    <div class="home-primary">
+      <section class="section" aria-labelledby="projects-title">
+        <div class="section-head">
+          <h2 id="projects-title">制作物 <span class="section-en">Projects</span></h2>
+          <a href="/projects/">一覧を見る →</a>
+        </div>
+        <div class="project-list">{projects.slice(0, 3).map(project => <ProjectCard project={project} />)}</div>
+      </section>
+      <section class="section" aria-labelledby="blog-title">
+        <div class="section-head">
+          <h2 id="blog-title">ブログ <span class="section-en">Blog</span></h2>
+          <a href="/blog/">記事一覧 →</a>
+        </div>
+        <div class="post-list">
+          {posts.map(post => <article class="post-row">
+            <time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString('ja-JP')}</time>
+            <h2><a href={'/blog/' + post.id + '/'}>{post.data.title} →</a></h2>
+            <p>{post.data.description}</p>
+          </article>)}
+        </div>
+      </section>
+    </div>
+    <aside class="home-sidebar" aria-label="補足情報">
+      <section class="sidebar-block">
+        <h2>プロフィール</h2>
+        <p>学生。Webアプリ・ツールの個人開発や、電子工作をしています。</p>
+        <a href="/about/">詳しく見る →</a>
+      </section>
+      <section class="sidebar-block">
+        <h2>関心のある技術</h2>
+        <div class="sidebar-keywords">
+          <span>Web</span><span>Python</span><span>Linux</span><span>Raspberry Pi</span><span>Arduino</span>
+        </div>
+      </section>
+      <section class="sidebar-block">
+        <h2>Raspberry Pi の稼働状況</h2>
+        <p>CPUやメモリなどの状態を公開するページを用意しています。現在はデータ接続の準備中です。</p>
+        <a href="/status/">ステータスページ →</a>
+      </section>
+    </aside>
+  </div>
 </Base>
