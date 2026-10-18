@@ -9,6 +9,7 @@ const {
   active
 } = Astro.props;
 const navigation = [
+  { label: 'ホーム', href: '/', id: 'home' },
   { label: '制作物', href: '/projects/', id: 'projects' },
   { label: 'ブログ', href: '/blog/', id: 'blog' },
   { label: '稼働状況', href: '/status/', id: 'status' }
@@ -34,7 +35,11 @@ const navigation = [
     <header class="site-header">
       <nav class="wrap nav" aria-label="メインナビゲーション">
         <AnimatedBrand />
-        <div class="nav-links">
+        <button class="nav-toggle" type="button" data-navigation-toggle hidden aria-label="メニューを開く" aria-expanded="false" aria-controls="site-navigation">
+          <span class="nav-toggle-open"><Icon name="menu" /></span>
+          <span class="nav-toggle-close"><Icon name="close" /></span>
+        </button>
+        <div class="nav-links" id="site-navigation">
           {navigation.map(item => <a href={item.href} aria-current={active === item.id ? 'page' : undefined}>{item.label}</a>)}
         </div>
         <button class="theme-toggle" type="button" id="theme-toggle" aria-label="ダークモードに切り替える" aria-pressed="false" title="テーマを切り替える">
@@ -53,6 +58,9 @@ const navigation = [
         </div>
       </div>
     </footer>
+    <script>
+      import '../scripts/navigation';
+    </script>
     <script is:inline>
       (() => {
         const button = document.getElementById('theme-toggle');
