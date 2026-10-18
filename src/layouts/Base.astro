@@ -1,5 +1,6 @@
 ---
 import Icon from '../components/Icon.astro';
+import AnimatedBrand from '../components/AnimatedBrand.astro';
 import '../styles/global.css';
 interface Props { title: string; description?: string; active?: string; }
 const {
@@ -32,7 +33,7 @@ const navigation = [
     <a class="skip-link" href="#main">本文へ移動</a>
     <header class="site-header">
       <nav class="wrap nav" aria-label="メインナビゲーション">
-        <a class="brand" href="/" aria-label="hb283.dev ホーム">hb283<span class="brand-tld">.dev</span></a>
+        <AnimatedBrand />
         <div class="nav-links">
           {navigation.map(item => <a href={item.href} aria-current={active === item.id ? 'page' : undefined}>{item.label}</a>)}
         </div>
