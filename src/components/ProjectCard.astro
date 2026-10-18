@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import type { Project } from '../data/projects';
 const { project } = Astro.props as { project: Project };
 ---
@@ -12,9 +13,9 @@ const { project } = Astro.props as { project: Project };
     {project.archived && <span class="archived">更新停止中</span>}
     <p>{project.description}</p>
     <div class="project-entry__links">
-      {project.href && <a href={project.href} target="_blank" rel="noopener noreferrer">公開サイト ↗</a>}
-      {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
-      {project.detail && <a href={project.detail}>使い方 →</a>}
+      {project.href && <a href={project.href} target="_blank" rel="noopener noreferrer">公開サイト<Icon name="external" /></a>}
+      {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer">GitHub<Icon name="external" /></a>}
+      {project.detail && <a href={project.detail}>使い方<Icon name="right" /></a>}
     </div>
   </div>
 </article>

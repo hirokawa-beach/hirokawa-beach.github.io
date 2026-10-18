@@ -44,6 +44,14 @@ a { color: inherit; text-decoration: none; }
 a:hover { color: var(--link); }
 button { font: inherit; cursor: pointer; }
 img { max-width: 100%; }
+.ui-icon { display: inline-flex; flex: 0 0 auto; width: 14px; height: 14px; vertical-align: -2px; }
+.ui-icon > svg, .ui-icon > img { display: block; width: 100%; height: 100%; }
+.ui-icon--external, .ui-icon--right, .ui-icon--rss { margin-inline-start: 4px; }
+.ui-icon--left { margin-inline-end: 4px; }
+.button .ui-icon, .profile-actions .ui-icon { margin: 0; }
+.github-mark .github-mark--dark { display: none; }
+[data-theme="dark"] .github-mark .github-mark--light { display: none; }
+[data-theme="dark"] .github-mark .github-mark--dark { display: block; }
 :where(a, button):focus-visible { outline: 2px solid var(--link); outline-offset: 4px; }
 .skip-link { position: absolute; z-index: 10; top: -100px; left: 20px; background: var(--paper); padding: 10px 16px; }
 .skip-link:focus { top: 10px; }
@@ -86,7 +94,6 @@ img { max-width: 100%; }
 .profile-actions { display: flex; align-items: center; gap: 21px; flex-wrap: wrap; }
 .profile-actions a { font-size: 12px; color: var(--link); display: inline-flex; align-items: center; gap: 6px; }
 .profile-actions a:hover { text-decoration: underline; text-underline-offset: 4px; }
-.profile-actions svg { width: 15px; height: 15px; }
 
 /* A compact, Vista Flip 3D-inspired stack using the existing app screenshots. */
 .spotlight { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 28px; align-items: center; padding: 6px 0 0; }
@@ -110,7 +117,7 @@ img { max-width: 100%; }
 .flip-window img { display: block; width: 100%; flex: 1; min-height: 0; object-fit: contain; background: var(--soft); }
 .flip-controls { display: flex; justify-content: center; gap: 6px; margin-top: 9px; }
 .flip-controls[hidden] { display: none; }
-.flip-controls button { min-width: 58px; min-height: 44px; padding: 5px 12px; border: 1px solid var(--border); border-radius: 5px; background: transparent; color: var(--muted); font-size: 12px; }
+.flip-controls button { display: inline-flex; align-items: center; justify-content: center; min-width: 58px; min-height: 44px; padding: 5px 12px; border: 1px solid var(--border); border-radius: 5px; background: transparent; color: var(--muted); font-size: 12px; }
 .flip-controls button:hover { color: var(--ink); border-color: var(--border-strong); background: var(--soft); }
 .spotlight-copy[hidden] { display: none; }
 .spotlight-copy { min-width: 0; }

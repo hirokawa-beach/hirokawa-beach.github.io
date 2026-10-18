@@ -1,0 +1,10 @@
+---
+import external from '@phosphor-icons/core/assets/regular/arrow-square-out.svg?raw';
+import right from '@phosphor-icons/core/assets/regular/arrow-right.svg?raw';
+import left from '@phosphor-icons/core/assets/regular/arrow-left.svg?raw';
+import rss from '@phosphor-icons/core/assets/regular/rss.svg?raw';
+const icons = { external, right, left, rss };
+interface Props { name: keyof typeof icons; }
+const { name } = Astro.props;
+---
+<span class={`ui-icon ui-icon--${name}`} aria-hidden="true"><Fragment set:html={icons[name]} /></span>
