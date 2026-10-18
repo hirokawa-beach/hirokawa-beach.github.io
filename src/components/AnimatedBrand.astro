@@ -1,5 +1,4 @@
 ---
-import Icon from './Icon.astro';
 const name = 'hirokawabeach283';
 const kept = new Map([[0, 0], [8, 1], [13, 2], [14, 3], [15, 4]]);
 ---
@@ -9,16 +8,12 @@ const kept = new Map([[0, 0], [8, 1], [13, 2], [14, 3], [15, 4]]);
     <span class="brand-sequence" data-brand-sequence aria-hidden="true" hidden>
       {[...name].map((letter, index) => (
         <span class:list={['brand-char', kept.has(index) ? 'brand-char--kept' : 'brand-char--drop',
-          { 'brand-char--initial': index === 0 || index === 8, 'brand-char--number': index >= 13 }]}
+          { 'brand-char--number': index >= 13 }]}
           style={`--from:${index};--to:${kept.get(index) ?? index}`}>{letter}</span>
       ))}
       <span class="brand-tld">.dev</span>
     </span>
   </a>
-  <button class="brand-motion" type="button" data-brand-motion hidden aria-label="タイトルのアニメーションを一時停止" aria-pressed="false">
-    <span data-brand-icon="pause"><Icon name="pause" /></span>
-    <span data-brand-icon="play" hidden><Icon name="play" /></span>
-  </button>
 </div>
 <script>
   import '../scripts/brand';

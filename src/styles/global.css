@@ -312,15 +312,9 @@ img { max-width: 100%; }
 .brand-char--kept { animation-name: brand-keep; }
 .brand-char--drop { animation-name: brand-drop; }
 .brand-char--number { animation-name: brand-keep, brand-number; }
-.brand-char--initial::after { content: ''; position: absolute; left: 0; right: .04em; bottom: -.08em; height: 2px; background: currentColor; opacity: 0; animation: brand-emphasis 12s ease-in-out infinite; }
 .brand-sequence .brand-tld { position: absolute; top: 0; left: 2.7em; line-height: 1.2; letter-spacing: -.07em; opacity: 0; animation: brand-domain 12s cubic-bezier(.22, .7, .22, 1) infinite; }
-.brand-motion { display: grid; place-items: center; width: 44px; height: 44px; flex: 0 0 auto; padding: 0; border: 0; border-radius: 5px; background: transparent; color: var(--muted); }
-.brand-motion > span { display: grid; place-items: center; }
-.brand-motion .ui-icon { width: 14px; height: 14px; }
-.brand-motion:hover { color: var(--ink); background: var(--soft); }
-.brand-sequence[hidden], .brand-static[hidden], .brand-motion[hidden], .brand-motion [hidden] { display: none; }
+.brand-sequence[hidden], .brand-static[hidden] { display: none; }
 .brand-group[data-brand-paused="true"] .brand-char,
-.brand-group[data-brand-paused="true"] .brand-char--initial::after,
 .brand-group[data-brand-paused="true"] .brand-sequence .brand-tld { animation-play-state: paused; }
 @keyframes brand-keep {
   0%, 24%, 83%, 100% { transform: translateX(0); }
@@ -335,17 +329,13 @@ img { max-width: 100%; }
   0%, 12%, 34%, 100% { color: var(--ink); }
   22%, 24% { color: var(--muted); }
 }
-@keyframes brand-emphasis {
-  0%, 12%, 35%, 100% { opacity: 0; }
-  20%, 28% { opacity: 1; }
-}
 @keyframes brand-domain {
   0%, 34%, 72%, 100% { opacity: 0; transform: translateX(.45em); }
   40%, 66% { opacity: 1; transform: translateX(0); }
 }
 @media (max-width: 650px) { .nav { column-gap: 12px; } }
 @media (prefers-reduced-motion: reduce) {
-  .brand-sequence, .brand-motion { display: none !important; }
+  .brand-sequence { display: none !important; }
   .brand-static { display: inline !important; }
-  .brand-char, .brand-char--initial::after, .brand-sequence .brand-tld { animation: none; }
+  .brand-char, .brand-sequence .brand-tld { animation: none; }
 }
