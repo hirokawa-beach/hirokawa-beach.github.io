@@ -2,12 +2,18 @@
 import Icon from '../components/Icon.astro';
 import AnimatedBrand from '../components/AnimatedBrand.astro';
 import '../styles/global.css';
-interface Props { title: string; description?: string; active?: string; }
+import socialImage from '../assets/hb283-ogp.png';
+import { siteMetadata } from '../data/site';
+interface Props { title: string; description?: string; active?: string; ogType?: 'website' | 'article'; }
 const {
   title,
-  description = 'ひろかわびーちの個人サイト。制作物や開発の記録を公開しています。',
-  active
+  description = siteMetadata.description,
+  active,
+  ogType = 'website'
 } = Astro.props;
+const pageTitle = title === 'Home' ? siteMetadata.title : `${title} | hb283.dev`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const imageURL = new URL(socialImage.src, Astro.site);
 const navigation = [
   { label: 'ホーム', href: '/', id: 'home' },
   { label: '制作物', href: '/projects/', id: 'projects' },
@@ -22,8 +28,24 @@ const navigation = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#f8f8f6" />
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
-    <title>{title === 'Home' ? 'ひろかわびーち | hb283.dev' : title + ' | hb283.dev'}</title>
+    <link rel="canonical" href={canonicalURL} />
+    <title>{pageTitle}</title>
+    <meta property="og:site_name" content={siteMetadata.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:image" content={imageURL} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content={String(socialImage.width)} />
+    <meta property="og:image:height" content={String(socialImage.height)} />
+    <meta property="og:image:alt" content={siteMetadata.imageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageURL} />
+    <meta name="twitter:image:alt" content={siteMetadata.imageAlt} />
     <script is:inline>
       try {
         if (localStorage.getItem('hb283-theme') === 'dark') document.documentElement.dataset.theme = 'dark';

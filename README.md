@@ -32,6 +32,12 @@ GitHubリポジトリをPagesへ連携し、Build command: `npm run build`, Outp
 
 GitHub PagesからCloudflare Pagesへの本番切替は、このPRでは行いません。`main` のGitHub Pages公開設定を調整する前に、新サイトのDNSと旧URLからの誘導を確認してください。
 
+## SNS共有画像（OGP）
+
+サイト名・共通の説明文・共有画像の代替テキストは `src/data/site.ts`、画像は `src/assets/hb283-ogp.png` で変更します。アップロードされたPNGをそのまま使用し、画像の寸法と配信用URLはAstroが生成します。画像を差し替えた場合は再ビルドしてください。
+
+全AstroページにOGPとXの大きい画像カード用メタ情報を出力します。タイトル・説明文は各ページの設定を引き継ぎ、ブログ記事では記事自身のタイトル・説明文を表示します。本番の共有URLと画像URLは `astro.config.mjs` の `site`（`https://hb283.dev`）を基準にします。独立したStudyCoPiガイドは従来の共有設定を維持します。
+
 ## Raspberry Pi System Status
 
 `raspberry-pi/` にRaspberry Pi OS用の読み取り専用計測APIとsystemdの自動起動設定があります。CPU・メモリ・温度・稼働時間を2秒ごとに計測し、直近10分をメモリに保持します。OS・機種・アーキテクチャも表示します。
