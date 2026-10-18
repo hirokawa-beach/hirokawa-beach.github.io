@@ -1,57 +1,65 @@
 ---
 import Base from '../layouts/Base.astro';
 const apiUrl = import.meta.env.PUBLIC_STATUS_API_URL ?? '';
+const charts = [
+  { key: 'cpu', name: 'CPU', maximum: '100%', minimum: '0%' },
+  { key: 'memory', name: 'メモリ', maximum: '100%', minimum: '0%' },
+  { key: 'temperature', name: 'CPU温度', maximum: '100°C', minimum: '0°C' }
+];
 ---
 <Base title="稼働状況" active="status">
   <header class="page-header">
     <h1 class="page-title">稼働状況</h1>
-    <p>Raspberry Piのリソース情報を表示します。API接続時のみ実測値を表示します。</p>
+    <p>Raspberry Piの使用率と温度の推移を表示します。</p>
   </header>
-  <section class="status-board" aria-label="Raspberry Pi のステータス">
+  <section class="status-board" data-status-board data-api-url={apiUrl} aria-label="Raspberry Pi のステータス">
     <div class="status-head">
       <h2>Raspberry Pi</h2>
-      <span class="connection" id="connection" role="status" aria-live="polite">接続準備中</span>
+      <span class="connection" id="connection" role="status" aria-live="polite">{apiUrl ? '接続中' : '未接続'}</span>
     </div>
     <dl class="metric-grid">
-      <div class="metric"><dt>CPU使用率</dt><dd id="cpu">—</dd></div>
-      <div class="metric"><dt>メモリ使用率</dt><dd id="memory">—</dd></div>
-      <div class="metric"><dt>CPU温度</dt><dd id="temperature">—</dd></div>
-      <div class="metric"><dt>稼働時間</dt><dd id="uptime">—</dd></div>
+      <div class="metric"><dt>CPU使用率</dt><dd id="cpu">--</dd></div>
+      <div class="metric"><dt>メモリ使用率</dt><dd id="memory">--</dd></div>
+      <div class="metric"><dt>CPU温度</dt><dd id="temperature">--</dd></div>
+      <div class="metric"><dt>稼働時間</dt><dd id="uptime">--</dd></div>
     </dl>
-    <p id="updated" class="status-note" aria-live="polite">現在、計測データは公開していません。</p>
-    <p class="status-note">このページには公開可能な利用率・温度等のみを掲載し、内部ネットワークや管理情報は表示しません。</p>
+    <div class="status-toolbar">
+      <div class="status-range" role="group" aria-label="グラフの表示範囲">
+        <button type="button" data-history-range="120" aria-pressed="true">2分</button>
+        <button type="button" data-history-range="600" aria-pressed="false">10分</button>
+      </div>
+      <label class="status-cadence">更新間隔
+        <select data-status-interval aria-label="更新間隔">
+          <option value="3000" selected>3秒</option>
+          <option value="10000">10秒</option>
+          <option value="30000">30秒</option>
+        </select>
+      </label>
+      <button class="status-pause" type="button" data-status-pause disabled={!apiUrl}>更新を停止</button>
+    </div>
+    <div class="status-charts">
+      {charts.map(chart => (
+        <figure class={`history-chart history-chart--${chart.key}`} data-chart={chart.key}>
+          <figcaption><h3>{chart.name}</h3><span data-chart-value>未取得</span></figcaption>
+          <div class="history-plot">
+            <span class="history-scale history-scale--max">{chart.maximum}</span>
+            <svg viewBox="0 0 1000 200" preserveAspectRatio="none" role="img" aria-label={`${chart.name}の推移。計測データはまだありません。`}>
+              <path class="history-grid" d="M0,1 H1000 M0,50 H1000 M0,100 H1000 M0,150 H1000 M0,199 H1000 M1,0 V200 M200,0 V200 M400,0 V200 M600,0 V200 M800,0 V200 M999,0 V200" />
+              <path class="history-fill" data-chart-area d="" />
+              <path class="history-line" data-chart-line d="" />
+            </svg>
+            <span class="history-empty" data-chart-empty>{apiUrl ? '計測データを取得中' : '計測APIの接続後に表示します'}</span>
+            <span class="history-scale history-scale--min">{chart.minimum}</span>
+          </div>
+          <div class="history-time"><span data-chart-start>2分前</span><span data-chart-end>現在</span></div>
+        </figure>
+      ))}
+    </div>
+    <p id="updated" class="status-note">{apiUrl ? '計測APIへ接続しています。' : '計測APIは未設定です。接続後に実測値を表示します。'}</p>
+    <p class="status-note status-note--small">グラフは直近10分の実測値です。計測開始直後や取得できなかった期間は空白になります。</p>
+    <noscript><p class="status-note">稼働状況の取得とグラフ表示にはJavaScriptを有効にしてください。</p></noscript>
   </section>
-  <script define:vars={{ apiUrl }}>
-    const setText = (id, value) => {
-      const node = document.getElementById(id);
-      if (node) node.textContent = value;
-    };
-    const validNumber = (value, min, max) =>
-      typeof value === 'number' && Number.isFinite(value) && value >= min && value <= max;
-    async function refresh() {
-      if (!apiUrl) return;
-      try {
-        const response = await fetch(apiUrl, { cache: 'no-store', signal: AbortSignal.timeout(8000) });
-        if (!response.ok) throw new Error('API unavailable');
-        const data = await response.json();
-        if (!data || !validNumber(data.cpu, 0, 100) || !validNumber(data.memory, 0, 100)
-          || !validNumber(data.temperature, -40, 150) || !validNumber(data.uptime, 0, 1e10)) throw new Error('Invalid telemetry');
-        setText('cpu', data.cpu.toFixed(1) + '%');
-        setText('memory', data.memory.toFixed(1) + '%');
-        setText('temperature', data.temperature.toFixed(1) + '°C');
-        const hours = Math.floor(data.uptime / 3600);
-        setText('uptime', Math.floor(hours / 24) + '日 ' + hours % 24 + '時間');
-        setText('connection', 'オンライン');
-        document.getElementById('connection')?.setAttribute('data-state','online');
-        setText('updated', '最終更新: ' + new Date().toLocaleTimeString('ja-JP'));
-      } catch {
-        setText('connection', '取得できません');
-        document.getElementById('connection')?.removeAttribute('data-state');
-        ['cpu', 'memory', 'temperature', 'uptime'].forEach(id => setText(id, '—'));
-        setText('updated', '現在の値を取得できませんでした。');
-      }
-    }
-    refresh();
-    if (apiUrl) setInterval(refresh, 60000);
-  </script>
 </Base>
+<script>
+  import '../scripts/status';
+</script>

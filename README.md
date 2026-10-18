@@ -34,15 +34,20 @@ GitHub PagesからCloudflare Pagesへの本番切替は、このPRでは行い�
 
 ## Raspberry Pi System Status
 
-`PUBLIC_STATUS_API_URL` に **読み取り専用・公開可能な** JSONエンドポイント（例: `https://status-api.hb283.dev/metrics`）を指定。未設定ならサイトに未接続表示を出します。公開ブラウザから取得できるCORS設定と、Cloudflare Tunnel経由でのHTTPS配信が必要です。APIに秘密情報や管理操作を実装しないでください。
+`raspberry-pi/` にRaspberry Pi OS用の読み取り専用計測APIとsystemdの自動起動設定があります。CPU・メモリ・温度・稼働時間を2秒ごとに計測し、直近10分をメモリに保持します。
 
-期待するJSON:
+HPではCPU・メモリ・温度のグラフを表示します。更新間隔は **3秒（初期値）／10秒／30秒**、表示範囲は2分／10分で切り替えられます。更新停止・再開にも対応します。未接続時や欠測期間は架空の値を補いません。
 
-```json
-{"cpu":18.2,"memory":31.1,"temperature":48.5,"uptime":172800}
+**ラズパイへの配置、自動起動、Cloudflare Tunnel、CORS、HPへの接続は [raspberry-pi/README.md](raspberry-pi/README.md) を参照してください。**
+
+HPの環境変数 `PUBLIC_STATUS_API_URL` に公開可能なAPIのURL（例 `https://status-api.hb283.dev/metrics`）を設定し、再ビルドします。未設定なら未接続表示です。この変数にAPIキーやTunnelトークンは入れません。
+
+```sh
+npm test
+python -m unittest discover -s raspberry-pi/tests -v
 ```
 
-数値はCPU/メモリが%、温度が摂氏、uptimeが秒。値は表示前に検証されます。設定変更後は再ビルドが必要です。Python側のエージェントは後日追加可能です。
+Pythonのテストには `raspberry-pi/requirements.txt` の依存パッケージが必要です。
 
 ## 注意
 
