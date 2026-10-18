@@ -9,7 +9,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 ---
-<Base title={post.data.title} description={post.data.description} active="blog">
+<Base title={post.data.title} description={post.data.description} active="blog" ogType="article">
   <article class="article prose">
     <header class="page-header">
       <h1 class="page-title">{post.data.title}</h1>
