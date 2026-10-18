@@ -1,4 +1,5 @@
 import sys
+import os
 import threading
 import unittest
 from pathlib import Path
@@ -7,7 +8,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from status_api import (HISTORY_SECONDS, SAMPLE_INTERVAL, TelemetryStore,
-                        collect, cpu_temperature, create_app, sample_metrics)
+                        collect, cpu_temperature, create_app, sample_metrics, device_info)
 
 
 def sample(timestamp=1000, temperature=48.5):
@@ -39,7 +40,8 @@ class StatusTests(unittest.TestCase):
     def test_public_response_contains_only_metrics(self):
         self.store.add(sample(temperature=None))
         response = self.client.get("/metrics")
-        self.assertEqual(set(response.json), {"timestamp", "cpu", "memory", "temperature", "uptime", "interval_seconds", "history"})
+        self.assertEqual(set(response.json), {"timestamp", "cpu", "memory", "temperature", "uptime", "interval_seconds", "history", "device"})
+        self.assertEqual(set(response.json["device"]), {"name", "os", "model", "architecture"})
         self.assertIsNone(response.json["temperature"])
         self.assertEqual(response.headers["Cache-Control"], "no-store, max-age=0")
         self.assertEqual(self.client.post("/metrics").status_code, 405)
@@ -84,6 +86,32 @@ class StatusTests(unittest.TestCase):
             cpu.assert_called_once_with(interval=None)
             sampler.assert_called_once()
             self.assertEqual(self.store.snapshot()["cpu"], 12.5)
+
+    @patch.dict(os.environ, {}, clear=True)
+    @patch("status_api.platform.machine", return_value="aarch64")
+    @patch("status_api.platform.freedesktop_os_release", return_value={"PRETTY_NAME": "Debian GNU/Linux 13 (trixie)"}, create=True)
+    @patch("status_api.Path.read_text", return_value="Raspberry Pi 5 Model B Rev 1.0\x00")
+    def test_device_info_detects_actual_model_and_os(self, *_):
+        self.assertEqual(device_info(), {"name": None, "os": "Debian GNU/Linux 13 (trixie)",
+                                       "model": "Raspberry Pi 5 Model B Rev 1.0", "architecture": "aarch64"})
+
+    @patch.dict(os.environ, {"STATUS_DEVICE_NAME": "Pi 5", "STATUS_DEVICE_MODEL": "My model", "STATUS_DEVICE_OS": "Raspberry Pi OS"}, clear=True)
+    @patch("status_api.Path.read_text", side_effect=AssertionError("override should not read model files"))
+    def test_public_labels_can_be_overridden_without_exposing_other_environment(self, _):
+        info = device_info()
+        self.assertEqual(info["name"], "Pi 5")
+        self.assertEqual(info["model"], "My model")
+        self.assertEqual(info["os"], "Raspberry Pi OS")
+        self.assertEqual(set(info), {"name", "os", "model", "architecture"})
+
+    @patch.dict(os.environ, {}, clear=True)
+    @patch("status_api.platform.machine", return_value="aarch64")
+    @patch("status_api.platform.system", return_value="Linux")
+    @patch("status_api.platform.release", return_value="6.12")
+    @patch("status_api.platform.freedesktop_os_release", side_effect=OSError, create=True)
+    @patch("status_api.Path.read_text", side_effect=OSError)
+    def test_missing_model_does_not_invent_hardware(self, *_):
+        self.assertEqual(device_info(), {"name": None, "os": "Linux 6.12", "model": None, "architecture": "aarch64"})
 
 
 if __name__ == "__main__":

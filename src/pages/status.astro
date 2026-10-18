@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-const apiUrl = import.meta.env.PUBLIC_STATUS_API_URL ?? '';
+import { loadStatusDevices } from '../lib/status-devices';
+const devices = loadStatusDevices(import.meta.env.PUBLIC_STATUS_DEVICES, import.meta.env.PUBLIC_STATUS_API_URL);
+const apiUrl = devices[0]?.url ?? '';
 const charts = [
   { key: 'cpu', name: 'CPU', maximum: '100%', minimum: '0%' },
   { key: 'memory', name: 'メモリ', maximum: '100%', minimum: '0%' },
@@ -10,13 +12,24 @@ const charts = [
 <Base title="稼働状況" active="status">
   <header class="page-header">
     <h1 class="page-title">稼働状況</h1>
-    <p>Raspberry Piの使用率と温度の推移を表示します。</p>
+    <p>端末ごとの使用率・温度の推移と、OS・機種情報を表示します。</p>
   </header>
-  <section class="status-board" data-status-board data-api-url={apiUrl} aria-label="Raspberry Pi のステータス">
+  <section class="status-board" data-status-board data-api-url={apiUrl} aria-label="端末の稼働状況">
+    <div class="status-device-picker" hidden={devices.length < 2}>
+      <label for="status-device">表示する端末</label>
+      <select id="status-device" data-status-device>
+        {devices.length ? devices.map(device => <option value={device.id} data-api-url={device.url}>{device.name}</option>) : <option value="" data-api-url="">端末未登録</option>}
+      </select>
+    </div>
     <div class="status-head">
-      <h2>Raspberry Pi</h2>
+      <h2 id="device-name">{devices[0]?.name ?? '端末'}</h2>
       <span class="connection" id="connection" role="status" aria-live="polite">{apiUrl ? '接続中' : '未接続'}</span>
     </div>
+    <dl class="device-details" aria-label="端末情報">
+      <div><dt>OS</dt><dd id="device-os">未取得</dd></div>
+      <div><dt>機種</dt><dd id="device-model">未取得</dd></div>
+      <div><dt>アーキテクチャ</dt><dd id="device-architecture">未取得</dd></div>
+    </dl>
     <dl class="metric-grid">
       <div class="metric"><dt>CPU使用率</dt><dd id="cpu">--</dd></div>
       <div class="metric"><dt>メモリ使用率</dt><dd id="memory">--</dd></div>

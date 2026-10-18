@@ -4,10 +4,25 @@ export interface Sample {
   memory: number;
   temperature: number | null;
 }
+export interface DeviceInfo {
+  name: string | null;
+  os: string | null;
+  model: string | null;
+  architecture: string | null;
+}
 export interface Telemetry extends Sample {
   uptime: number;
   interval_seconds: number;
   history: Sample[];
+  device: DeviceInfo | null;
+}
+
+function parseDeviceInfo(value: unknown): DeviceInfo | null {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  const data = value as Record<string, unknown>;
+  const text = (key: string) => typeof data[key] === 'string' && data[key].trim()
+    && data[key].length <= 160 && !/[\u0000-\u001f\u007f]/.test(data[key]) ? data[key].trim() : null;
+  return { name: text('name'), os: text('os'), model: text('model'), architecture: text('architecture') };
 }
 
 const numberIn = (value: unknown, min: number, max: number): value is number =>
@@ -37,7 +52,8 @@ export function parseTelemetry(value: unknown, now = Date.now() / 1000): Telemet
     throw new Error('Invalid history');
   }
   if (history.some(s => s.timestamp > latest.timestamp)) throw new Error('Future history');
-  return { ...latest, uptime: data.uptime, interval_seconds: interval, history };
+  return { timestamp: latest.timestamp, cpu: latest.cpu, memory: latest.memory, temperature: latest.temperature,
+    uptime: data.uptime, interval_seconds: interval, history, device: parseDeviceInfo(data.device) };
 }
 
 export function mergeHistory(previous: Sample[], data: Telemetry): Sample[] {

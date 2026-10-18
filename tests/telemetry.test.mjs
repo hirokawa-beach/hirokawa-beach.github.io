@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { parseTelemetry, mergeHistory, chartGeometry } from '../src/lib/telemetry.ts';
+import { loadStatusDevices } from '../src/lib/status-devices.ts';
 
 const point = (timestamp, overrides = {}) => ({ timestamp, cpu: 25, memory: 40, temperature: 50, ...overrides });
 const payload = (overrides = {}) => ({ ...point(1000), uptime: 900, interval_seconds: 2, history: [point(998), point(1000)], ...overrides });
@@ -12,6 +13,31 @@ test('accepts the original four-field endpoint', () => {
   const result = parseTelemetry({ cpu: 12, memory: 40, temperature: 50, uptime: 100 }, 1000);
   assert.equal(result.timestamp, 1000);
   assert.deepEqual(result.history, []);
+  assert.equal(result.device, null);
+});
+
+test('device metadata is optional, bounded and limited to public fields', () => {
+  const result = parseTelemetry(payload({ device: { name: ' Pi 5 ', os: 'Raspberry Pi OS', model: 'Raspberry Pi 5 Model B Rev 1.0', architecture: 'aarch64', serial: 'private' } }), 1000);
+  assert.deepEqual(result.device, { name: 'Pi 5', os: 'Raspberry Pi OS', model: 'Raspberry Pi 5 Model B Rev 1.0', architecture: 'aarch64' });
+  const invalid = parseTelemetry(payload({ device: { name: 'x'.repeat(161), os: 'bad\ntext', model: 5 } }), 1000);
+  assert.deepEqual(invalid.device, { name: null, os: null, model: null, architecture: null });
+});
+
+test('device configuration supports legacy URL and explicit multi-device precedence', () => {
+  assert.deepEqual(loadStatusDevices('', 'https://one.example/metrics'), [{ id: 'default', name: 'Raspberry Pi', url: 'https://one.example/metrics' }]);
+  const config = [{ id: 'one', name: 'Existing Pi', url: 'https://one.example/metrics' }, { id: 'pi5', name: 'Raspberry Pi 5', url: 'https://two.example/metrics' }];
+  assert.deepEqual(loadStatusDevices(JSON.stringify(config), 'https://legacy.example/metrics'), config);
+  assert.deepEqual(loadStatusDevices(), []);
+  assert.deepEqual(loadStatusDevices('[]', 'https://legacy.example/metrics'), []);
+});
+
+test('invalid device settings fail at build time instead of polling unsafe or ambiguous endpoints', () => {
+  const device = { id: 'pi5', name: 'Raspberry Pi 5', url: 'https://pi5.example/metrics' };
+  for (const raw of ['oops', '{}', JSON.stringify([device, device]), JSON.stringify([{...device, id:'a'}, {...device, id:'b'}]),
+    ...['javascript:alert(1)', 'file:///etc/passwd', 'http://192.168.1.5/metrics', 'https://user:password@example.com/metrics'].map(url => JSON.stringify([{...device, url}]))]) {
+    assert.throws(() => loadStatusDevices(raw));
+  }
+  assert.equal(loadStatusDevices(JSON.stringify([{...device, url: 'http://127.0.0.1:8765/metrics'}])).length, 1);
 });
 test('rejects stale, future, invalid and excessive responses', () => {
   for (const data of [payload({ timestamp: 900, history: [] }), payload({ timestamp: 1040 }),

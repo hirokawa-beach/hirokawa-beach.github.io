@@ -2,7 +2,8 @@ import { chartGeometry, mergeHistory, parseTelemetry, type Sample, type Telemetr
 
 const board = document.querySelector<HTMLElement>('[data-status-board]');
 if (board) {
-  const apiUrl = board.dataset.apiUrl ?? '';
+  const deviceSelect = board.querySelector<HTMLSelectElement>('[data-status-device]')!;
+  let apiUrl = deviceSelect.selectedOptions[0]?.dataset.apiUrl || board.dataset.apiUrl || '';
   const pauseButton = board.querySelector<HTMLButtonElement>('[data-status-pause]')!;
   const connection = board.querySelector<HTMLElement>('#connection')!;
   const updated = board.querySelector<HTMLElement>('#updated')!;
@@ -65,6 +66,10 @@ if (board) {
       if (version !== generation) return;
       samples = mergeHistory(samples, data);
       latest = data;
+      setText('device-name', data.device?.name ?? deviceSelect.selectedOptions[0]?.textContent ?? '端末');
+      for (const key of ['os', 'model', 'architecture'] as const) {
+        setText(`device-${key}`, data.device?.[key] ?? '取得不可');
+      }
       setText('cpu', data.cpu.toFixed(1) + '%');
       setText('memory', data.memory.toFixed(1) + '%');
       setText('temperature', data.temperature === null ? '取得不可' : data.temperature.toFixed(1) + '°C');
@@ -92,6 +97,30 @@ if (board) {
     request?.abort();
     request = null;
   };
+
+  deviceSelect.addEventListener('change', () => {
+    interrupt();
+    apiUrl = deviceSelect.selectedOptions[0]?.dataset.apiUrl ?? '';
+    // Fetch the selected endpoint's history anew; never join different devices.
+    samples = [];
+    latest = null;
+    setText('device-name', deviceSelect.selectedOptions[0]?.textContent ?? '端末');
+    for (const key of ['os', 'model', 'architecture']) setText(`device-${key}`, '未取得');
+    for (const id of ['cpu', 'memory', 'temperature', 'uptime']) setText(id, '--');
+    for (const figure of board.querySelectorAll<HTMLElement>('[data-chart]')) {
+      figure.querySelector('[data-chart-line]')!.setAttribute('d', '');
+      figure.querySelector('[data-chart-area]')!.setAttribute('d', '');
+      figure.querySelector('[data-chart-value]')!.textContent = '未取得';
+      figure.querySelector('svg')!.setAttribute('aria-label', `${figure.querySelector('h3')!.textContent}の推移。計測データはまだありません。`);
+      figure.querySelector('[data-chart-end]')!.textContent = '現在';
+      const empty = figure.querySelector<HTMLElement>('[data-chart-empty]')!;
+      empty.hidden = false;
+      empty.textContent = paused ? '更新を再開すると表示します' : '計測データを取得中';
+    }
+    state(paused ? 'paused' : 'connecting', paused ? '更新停止中' : '接続中');
+    updated.textContent = paused ? '選択した端末の更新を停止しています。' : '選択した端末へ接続しています。';
+    if (!paused) void refresh();
+  });
 
   board.querySelectorAll<HTMLButtonElement>('[data-history-range]').forEach(button => {
     button.addEventListener('click', () => {

@@ -4,6 +4,7 @@ from __future__ import annotations
 import logging
 import math
 import os
+import platform
 import threading
 import time
 from collections import deque
@@ -16,6 +17,34 @@ from waitress import serve
 SAMPLE_INTERVAL = 2
 HISTORY_SECONDS = 600
 LOGGER = logging.getLogger("hb283-status")
+
+
+def public_text(value: str | None) -> str | None:
+    if not value:
+        return None
+    return "".join(c for c in value if c.isprintable()).strip()[:160] or None
+
+
+def device_info() -> dict:
+    """Read only public OS/model fields, never hostname, serial or network IDs."""
+    model = public_text(os.environ.get("STATUS_DEVICE_MODEL"))
+    if not model:
+        for location in ("/proc/device-tree/model", "/sys/firmware/devicetree/base/model", "/sys/class/dmi/id/product_name"):
+            try:
+                model = public_text(Path(location).read_text())
+                if model:
+                    break
+            except (OSError, UnicodeError):
+                continue
+    os_name = public_text(os.environ.get("STATUS_DEVICE_OS"))
+    if not os_name:
+        try:
+            os_name = public_text(platform.freedesktop_os_release().get("PRETTY_NAME"))
+        except (AttributeError, OSError):
+            pass
+    return {"name": public_text(os.environ.get("STATUS_DEVICE_NAME")),
+            "os": os_name or public_text(f"{platform.system()} {platform.release()}"),
+            "model": model, "architecture": public_text(platform.machine())}
 
 
 def cpu_temperature() -> float | None:
@@ -88,6 +117,7 @@ def collect(store: TelemetryStore, stop: threading.Event) -> None:
 def create_app(store: TelemetryStore, allowed_origins: str = "") -> Flask:
     app = Flask(__name__)
     origins = {origin.strip().rstrip("/") for origin in allowed_origins.split(",") if origin.strip()}
+    info = device_info()
 
     @app.after_request
     def response_headers(response):
@@ -104,7 +134,7 @@ def create_app(store: TelemetryStore, allowed_origins: str = "") -> Flask:
         data = store.snapshot()
         if data is None:
             return jsonify(error="telemetry_unavailable"), 503
-        return jsonify(data)
+        return jsonify(**data, device=info)
 
     return app
 
