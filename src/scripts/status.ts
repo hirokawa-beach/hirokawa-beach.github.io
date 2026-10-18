@@ -2,8 +2,10 @@ import { chartGeometry, mergeHistory, parseTelemetry, type Sample, type Telemetr
 
 const board = document.querySelector<HTMLElement>('[data-status-board]');
 if (board) {
-  const deviceSelect = board.querySelector<HTMLSelectElement>('[data-status-device]')!;
-  let apiUrl = deviceSelect.selectedOptions[0]?.dataset.apiUrl || board.dataset.apiUrl || '';
+  const deviceTabs = [...board.querySelectorAll<HTMLButtonElement>('[data-status-device]')];
+  const devicePanel = board.querySelector<HTMLElement>('#status-device-panel')!;
+  let selectedTab = deviceTabs[0] ?? null;
+  let apiUrl = selectedTab?.dataset.apiUrl || board.dataset.apiUrl || '';
   const pauseButton = board.querySelector<HTMLButtonElement>('[data-status-pause]')!;
   const connection = board.querySelector<HTMLElement>('#connection')!;
   const updated = board.querySelector<HTMLElement>('#updated')!;
@@ -66,7 +68,7 @@ if (board) {
       if (version !== generation) return;
       samples = mergeHistory(samples, data);
       latest = data;
-      setText('device-name', data.device?.name ?? deviceSelect.selectedOptions[0]?.textContent ?? '端末');
+      setText('device-name', data.device?.name ?? selectedTab?.textContent?.trim() ?? '端末');
       for (const key of ['os', 'model', 'architecture'] as const) {
         setText(`device-${key}`, data.device?.[key] ?? '取得不可');
       }
@@ -98,13 +100,20 @@ if (board) {
     request = null;
   };
 
-  deviceSelect.addEventListener('change', () => {
+  const selectDevice = (tab: HTMLButtonElement) => {
+    if (tab === selectedTab) return;
     interrupt();
-    apiUrl = deviceSelect.selectedOptions[0]?.dataset.apiUrl ?? '';
+    selectedTab = tab;
+    for (const button of deviceTabs) {
+      button.setAttribute('aria-selected', String(button === tab));
+      button.tabIndex = button === tab ? 0 : -1;
+    }
+    devicePanel.setAttribute('aria-labelledby', tab.id);
+    apiUrl = tab.dataset.apiUrl ?? '';
     // Fetch the selected endpoint's history anew; never join different devices.
     samples = [];
     latest = null;
-    setText('device-name', deviceSelect.selectedOptions[0]?.textContent ?? '端末');
+    setText('device-name', tab.textContent?.trim() ?? '端末');
     for (const key of ['os', 'model', 'architecture']) setText(`device-${key}`, '未取得');
     for (const id of ['cpu', 'memory', 'temperature', 'uptime']) setText(id, '--');
     for (const figure of board.querySelectorAll<HTMLElement>('[data-chart]')) {
@@ -120,6 +129,26 @@ if (board) {
     state(paused ? 'paused' : 'connecting', paused ? '更新停止中' : '接続中');
     updated.textContent = paused ? '選択した端末の更新を停止しています。' : '選択した端末へ接続しています。';
     if (!paused) void refresh();
+  };
+
+  for (const tab of deviceTabs) {
+    tab.addEventListener('click', () => selectDevice(tab));
+    tab.addEventListener('keydown', event => {
+      const index = deviceTabs.indexOf(tab);
+      const next = event.key === 'ArrowRight' ? (index + 1) % deviceTabs.length
+        : event.key === 'ArrowLeft' ? (index + deviceTabs.length - 1) % deviceTabs.length
+        : event.key === 'Home' ? 0 : event.key === 'End' ? deviceTabs.length - 1 : -1;
+      if (next < 0) return;
+      event.preventDefault();
+      // Network-backed panels activate with Enter/Space, not on focus alone.
+      for (const button of deviceTabs) button.tabIndex = button === deviceTabs[next] ? 0 : -1;
+      deviceTabs[next].focus();
+    });
+  }
+  board.querySelector('[role="tablist"]')?.addEventListener('focusout', event => {
+    if (event.currentTarget instanceof HTMLElement && !event.currentTarget.contains((event as FocusEvent).relatedTarget as Node | null)) {
+      for (const button of deviceTabs) button.tabIndex = button === selectedTab ? 0 : -1;
+    }
   });
 
   board.querySelectorAll<HTMLButtonElement>('[data-history-range]').forEach(button => {

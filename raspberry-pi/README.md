@@ -145,10 +145,10 @@ HP側のCloudflare Pages環境変数に `PUBLIC_STATUS_DEVICES` を追加し、�
 ```
 
 - `id`: 端末ごとに重複しない英小文字・数字・ハイフン・アンダースコアの名前
-- `name`: 端末選択欄の表示名
+- `name`: 端末タブの表示名
 - `url`: その端末の `/metrics` のHTTPS URL
 
-`PUBLIC_STATUS_DEVICES` が設定されている場合、その一覧を使用し、`PUBLIC_STATUS_API_URL` より優先します。未設定なら従来どおり1台用の `PUBLIC_STATUS_API_URL` が使えます。端末が2台以上あると選択欄が表示され、選んだ端末だけを取得します。切り替え時には前の端末の数値・グラフを消し、新たにその端末の実測履歴を取得します。一方のAPIが停止していても別の端末へ切り替えられます。
+`PUBLIC_STATUS_DEVICES` が設定されている場合、その一覧を使用し、`PUBLIC_STATUS_API_URL` より優先します。未設定なら従来どおり1台用の `PUBLIC_STATUS_API_URL` が使えます。端末が2台以上あると下線付きのタブが表示され、選んだ端末だけを取得します。切り替え時には前の端末の数値・グラフを消し、新たにその端末の実測履歴を取得します。一方のAPIが停止していても別の端末へ切り替えられます。タブはクリック／タップで切り替えます。キーボードでは左右キー・Home・Endでフォーカスを移動し、Enter・Spaceで端末を決定します。
 
 すべての端末の `/etc/hb283-status.env` で、HPを開く正確なオリジンを `ALLOWED_ORIGINS` に入れてください。`https://hb283.dev`、`https://hirokawa-beach-github-io.pages.dev`、個別のプレビューURLはそれぞれ別のオリジンです。設定後は各端末で `sudo systemctl restart hb283-status` を実行します。
 

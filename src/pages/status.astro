@@ -15,12 +15,16 @@ const charts = [
     <p>端末ごとの使用率・温度の推移と、OS・機種情報を表示します。</p>
   </header>
   <section class="status-board" data-status-board data-api-url={apiUrl} aria-label="端末の稼働状況">
-    <div class="status-device-picker" hidden={devices.length < 2}>
-      <label for="status-device">表示する端末</label>
-      <select id="status-device" data-status-device>
-        {devices.length ? devices.map(device => <option value={device.id} data-api-url={device.url}>{device.name}</option>) : <option value="" data-api-url="">端末未登録</option>}
-      </select>
+    <div class="status-device-tabs" role="tablist" aria-label="表示する端末" hidden={devices.length < 2}>
+      {devices.map((device, index) => (
+        <button type="button" role="tab" id={`status-device-${device.id}`} aria-controls="status-device-panel"
+          aria-selected={index === 0} tabindex={index === 0 ? 0 : -1} data-status-device={device.id} data-api-url={device.url}>
+          {device.name}
+        </button>
+      ))}
     </div>
+    <div id="status-device-panel" role={devices.length > 1 ? 'tabpanel' : undefined}
+      aria-labelledby={devices.length > 1 ? `status-device-${devices[0].id}` : 'device-name'} tabindex={devices.length > 1 ? 0 : undefined}>
     <div class="status-head">
       <h2 id="device-name">{devices[0]?.name ?? '端末'}</h2>
       <span class="connection" id="connection" role="status" aria-live="polite">{apiUrl ? '接続中' : '未接続'}</span>
@@ -71,6 +75,7 @@ const charts = [
     <p id="updated" class="status-note">{apiUrl ? '計測APIへ接続しています。' : '計測APIは未設定です。接続後に実測値を表示します。'}</p>
     <p class="status-note status-note--small">グラフは直近10分の実測値です。計測開始直後や取得できなかった期間は空白になります。</p>
     <noscript><p class="status-note">稼働状況の取得とグラフ表示にはJavaScriptを有効にしてください。</p></noscript>
+    </div>
   </section>
 </Base>
 <script>

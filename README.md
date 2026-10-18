@@ -42,7 +42,7 @@ HPではCPU・メモリ・温度のグラフを表示します。更新間隔は
 
 HPの環境変数 `PUBLIC_STATUS_API_URL` に公開可能なAPIのURL（例 `https://rpi-status.hb283.dev/metrics`）を設定し、再ビルドします。未設定なら未接続表示です。この変数にAPIキーやTunnelトークンは入れません。
 
-複数端末は `PUBLIC_STATUS_DEVICES` に `[{"id":"pi5","name":"Raspberry Pi 5","url":"https://your-api.example.com/metrics"}]` の形式で追加します（URLは実際のものへ置換）。この設定は1台用URLより優先され、2台以上で端末選択欄が表示されます。各端末で計測APIとTunnelを用意してください。詳しい追加・既存API更新手順は上記の導入手順に記載しています。
+複数端末は `PUBLIC_STATUS_DEVICES` に `[{"id":"pi5","name":"Raspberry Pi 5","url":"https://your-api.example.com/metrics"}]` の形式で追加します（URLは実際のものへ置換）。この設定は1台用URLより優先され、2台以上で端末タブが表示されます。各端末で計測APIとTunnelを用意してください。詳しい追加・既存API更新手順は上記の導入手順に記載しています。
 
 ```sh
 npm test
