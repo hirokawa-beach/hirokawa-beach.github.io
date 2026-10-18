@@ -64,7 +64,7 @@ Pythonファイルを変更した場合は `/opt/hb283-status/` に再配置し�
 
 ## 3. Cloudflare Tunnel
 
-同じラズパイでTunnelが稼働済みなら、そのTunnelへ公開ルートを追加します。`cloudflared service install` を重ねて実行する必要はありません。新しいラズパイで初めて使う場合は、Cloudflare管理画面でTunnelを作成し、Raspberry Pi OSのCPU構成に合う `cloudflared` を導入します。表示されるサービス用のインストールコマンドをラズパイで実行してください。Tunnelのトークンは、このリポジトリや `PUBLIC_` 環境変数には保存しません。
+同じラズパイでTunnelが稼働済みで、そのTunnelへ今回の公開ルートを追加する運用なら、既存Tunnelを使えます。他の用途と分けて運用する場合は、下の「既存Tunnelと別に動かす」を使ってください。`cloudflared service install` を重ねて実行する必要はありません。新しいラズパイで初めて使う場合は、Cloudflare管理画面でTunnelを作成し、Raspberry Pi OSのCPU構成に合う `cloudflared` を導入します。表示されるサービス用のインストールコマンドをラズパイで実行してください。Tunnelのトークンは、このリポジトリや `PUBLIC_` 環境変数には保存しません。
 
 公開ルートを以下のように設定します。
 
@@ -75,6 +75,52 @@ Pythonファイルを変更した場合は `/opt/hb283-status/` に再配置し�
 URLをブラウザーで開き、JSONが表示されることを確認してください。`/metrics` をキャッシュするルールは設定しません。API自体も `Cache-Control: no-store` を返します。
 
 [Cloudflare公式のTunnel作成手順](https://developers.cloudflare.com/tunnel/get-started/)
+
+### 既存Tunnelと別に動かす
+
+他の人向けの公開など、既存のTunnelと管理・起動・停止を分ける場合はこちらを使います。追加するサービス名は `cloudflared-status.service`。設定・トークンは `/etc/cloudflared-status/` に分けます。`/usr/bin/cloudflared` がある環境向けで、`cloudflared` 2025.4.0以降が必要です（2026.10.1では対応）。
+
+Cloudflareで**計測用の新しいTunnel**を作り、そのTunnelのトークンを用意します。既存のTunnelのトークンは使いません。今回は `sudo cloudflared service install ...` を実行しません。
+
+ラズパイのリポジトリを更新し、`raspberry-pi/` で実行します。
+
+```sh
+git pull --ff-only
+sudo install -d -m 0700 /etc/cloudflared-status
+sudo install -m 0600 cloudflared-status.yml.example /etc/cloudflared-status/config.yml
+sudo nano /etc/cloudflared-status/token
+```
+
+エディターには**新しいTunnelのトークンだけを1行で貼り付け**ます。`sudo cloudflared service install` の文字は含めません。Ctrl+O → Enterで保存、Ctrl+Xで終了します。トークンはチャットやGitHubには貼りません。
+
+```sh
+sudo chmod 0600 /etc/cloudflared-status/token
+sudo install -m 0644 cloudflared-status.service /etc/systemd/system/cloudflared-status.service
+sudo systemctl daemon-reload
+sudo systemctl enable --now cloudflared-status
+sudo systemctl status cloudflared-status --no-pager
+```
+
+`active (running)` に加え、Cloudflare管理画面で**新しいTunnelが接続済み**になっていることを確認します。既存の `cloudflared.service` の停止・再起動・アンインストールは行いません。今回のサービスは別の設定ファイルとトークンを使い、診断用ポートも空いている番号を自動で使います。
+
+新しいTunnelに公開ルートを追加します。
+
+- Hostname: その端末用に決めたサブドメイン（例 `pi5-status.hb283.dev`。既存のホスト名と重複させません）
+- Service URL: `http://127.0.0.1:8765`
+- Path: 空欄
+
+計測APIを起動したうえで、`https://そのサブドメイン/metrics` がJSONを返すことを確認します。ホスト名はこのTunnelのルート画面で設定します。OS・機種・グラフのデータは別サービスの `hb283-status` が返します。
+
+計測用Tunnelだけを確認・再起動・停止する場合:
+
+```sh
+sudo journalctl -u cloudflared-status -n 50 --no-pager
+sudo systemctl restart cloudflared-status
+sudo systemctl stop cloudflared-status
+```
+
+[Cloudflare公式の起動パラメーター（token-file）](https://developers.cloudflare.com/tunnel/reference/run-parameters/#token-file)
+
 
 ## 4. HPを接続
 
