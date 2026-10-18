@@ -1,0 +1,20 @@
+---
+const name = 'hirokawabeach283';
+const kept = new Map([[0, 0], [8, 1], [13, 2], [14, 3], [15, 4]]);
+---
+<div class="brand-group" data-brand-animation data-brand-paused="true">
+  <a class="brand" href="/" aria-label="hirokawabeach283 / hb283.dev ホーム">
+    <span class="brand-static" data-brand-static aria-hidden="true">hb283<span class="brand-tld">.dev</span></span>
+    <span class="brand-sequence" data-brand-sequence aria-hidden="true" hidden>
+      {[...name].map((letter, index) => (
+        <span class:list={['brand-char', kept.has(index) ? 'brand-char--kept' : 'brand-char--drop',
+          { 'brand-char--number': index >= 13 }]}
+          style={`--from:${index};--to:${kept.get(index) ?? index}`}>{letter}</span>
+      ))}
+      <span class="brand-tld">.dev</span>
+    </span>
+  </a>
+</div>
+<script>
+  import '../scripts/brand';
+</script>

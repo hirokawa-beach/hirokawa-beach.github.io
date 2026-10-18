@@ -1,0 +1,26 @@
+[Unit]
+Description=Raspberry Pi public read-only status API
+After=network.target
+
+[Service]
+Type=simple
+DynamicUser=yes
+WorkingDirectory=/opt/hb283-status
+EnvironmentFile=/etc/hb283-status.env
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/opt/hb283-status/.venv/bin/python /opt/hb283-status/status_api.py
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

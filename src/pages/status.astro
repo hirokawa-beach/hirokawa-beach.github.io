@@ -1,0 +1,83 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadStatusDevices } from '../lib/status-devices';
+const devices = loadStatusDevices(import.meta.env.PUBLIC_STATUS_DEVICES, import.meta.env.PUBLIC_STATUS_API_URL);
+const apiUrl = devices[0]?.url ?? '';
+const charts = [
+  { key: 'cpu', name: 'CPU', maximum: '100%', minimum: '0%' },
+  { key: 'memory', name: 'メモリ', maximum: '100%', minimum: '0%' },
+  { key: 'temperature', name: 'CPU温度', maximum: '100°C', minimum: '0°C' }
+];
+---
+<Base title="稼働状況" active="status">
+  <header class="page-header">
+    <h1 class="page-title">稼働状況</h1>
+    <p>端末ごとの使用率・温度の推移と、OS・機種情報を表示します。</p>
+  </header>
+  <section class="status-board" data-status-board data-api-url={apiUrl} aria-label="端末の稼働状況">
+    <div class="status-device-tabs" role="tablist" aria-label="表示する端末" hidden={devices.length < 2}>
+      {devices.map((device, index) => (
+        <button type="button" role="tab" id={`status-device-${device.id}`} aria-controls="status-device-panel"
+          aria-selected={index === 0} tabindex={index === 0 ? 0 : -1} data-status-device={device.id} data-api-url={device.url}>
+          {device.name}
+        </button>
+      ))}
+    </div>
+    <div id="status-device-panel" role={devices.length > 1 ? 'tabpanel' : undefined}
+      aria-labelledby={devices.length > 1 ? `status-device-${devices[0].id}` : 'device-name'} tabindex={devices.length > 1 ? 0 : undefined}>
+    <div class="status-head">
+      <h2 id="device-name">{devices[0]?.name ?? '端末'}</h2>
+      <span class="connection" id="connection" role="status" aria-live="polite">{apiUrl ? '接続中' : '未接続'}</span>
+    </div>
+    <dl class="device-details" aria-label="端末情報">
+      <div><dt>OS</dt><dd id="device-os">未取得</dd></div>
+      <div><dt>機種</dt><dd id="device-model">未取得</dd></div>
+      <div><dt>アーキテクチャ</dt><dd id="device-architecture">未取得</dd></div>
+    </dl>
+    <dl class="metric-grid">
+      <div class="metric"><dt>CPU使用率</dt><dd id="cpu">--</dd></div>
+      <div class="metric"><dt>メモリ使用率</dt><dd id="memory">--</dd></div>
+      <div class="metric"><dt>CPU温度</dt><dd id="temperature">--</dd></div>
+      <div class="metric"><dt>稼働時間</dt><dd id="uptime">--</dd></div>
+    </dl>
+    <div class="status-toolbar">
+      <div class="status-range" role="group" aria-label="グラフの表示範囲">
+        <button type="button" data-history-range="120" aria-pressed="true">2分</button>
+        <button type="button" data-history-range="600" aria-pressed="false">10分</button>
+      </div>
+      <label class="status-cadence">更新間隔
+        <select data-status-interval aria-label="更新間隔">
+          <option value="3000" selected>3秒</option>
+          <option value="10000">10秒</option>
+          <option value="30000">30秒</option>
+        </select>
+      </label>
+      <button class="status-pause" type="button" data-status-pause disabled={!apiUrl}>更新を停止</button>
+    </div>
+    <div class="status-charts">
+      {charts.map(chart => (
+        <figure class={`history-chart history-chart--${chart.key}`} data-chart={chart.key}>
+          <figcaption><h3>{chart.name}</h3><span data-chart-value>未取得</span></figcaption>
+          <div class="history-plot">
+            <span class="history-scale history-scale--max">{chart.maximum}</span>
+            <svg viewBox="0 0 1000 200" preserveAspectRatio="none" role="img" aria-label={`${chart.name}の推移。計測データはまだありません。`}>
+              <path class="history-grid" d="M0,1 H1000 M0,50 H1000 M0,100 H1000 M0,150 H1000 M0,199 H1000 M1,0 V200 M200,0 V200 M400,0 V200 M600,0 V200 M800,0 V200 M999,0 V200" />
+              <path class="history-fill" data-chart-area d="" />
+              <path class="history-line" data-chart-line d="" />
+            </svg>
+            <span class="history-empty" data-chart-empty>{apiUrl ? '計測データを取得中' : '計測APIの接続後に表示します'}</span>
+            <span class="history-scale history-scale--min">{chart.minimum}</span>
+          </div>
+          <div class="history-time"><span data-chart-start>2分前</span><span data-chart-end>現在</span></div>
+        </figure>
+      ))}
+    </div>
+    <p id="updated" class="status-note">{apiUrl ? '計測APIへ接続しています。' : '計測APIは未設定です。接続後に実測値を表示します。'}</p>
+    <p class="status-note status-note--small">グラフは直近10分の実測値です。計測開始直後や取得できなかった期間は空白になります。</p>
+    <noscript><p class="status-note">稼働状況の取得とグラフ表示にはJavaScriptを有効にしてください。</p></noscript>
+    </div>
+  </section>
+</Base>
+<script>
+  import '../scripts/status';
+</script>

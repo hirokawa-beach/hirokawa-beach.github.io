@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+
+# Python status API
+.venv/
+__pycache__/
+*.pyc

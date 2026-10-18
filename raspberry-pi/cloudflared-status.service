@@ -1,0 +1,19 @@
+[Unit]
+Description=Cloudflare Tunnel for device status
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/cloudflared --no-autoupdate --config /etc/cloudflared-status/config.yml tunnel --metrics 127.0.0.1:0 run --token-file /etc/cloudflared-status/token
+UnsetEnvironment=TUNNEL_TOKEN TUNNEL_TOKEN_FILE
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
