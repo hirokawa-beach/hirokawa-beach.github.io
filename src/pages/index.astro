@@ -71,6 +71,7 @@ const projectImages = [
         </div>
         <div class="flip-controls" role="group" aria-label="作品を切り替える" hidden>
           <button type="button" data-flip-step="-1">← 前の作品</button>
+          <button type="button" data-flip-autoplay>一時停止</button>
           <button type="button" data-flip-step="1">次の作品 →</button>
         </div>
         <span class="visually-hidden" role="status" aria-atomic="true" data-flip-status>StudyCoPi</span>
@@ -112,26 +113,81 @@ const projectImages = [
     const controls = preview.querySelector<HTMLElement>('.flip-controls');
     const panels = [...preview.querySelectorAll<HTMLElement>('[data-flip-copy]')];
     const status = preview.querySelector<HTMLElement>('[data-flip-status]');
-    if (!controls || !status || panels.length !== windows.length || windows.length < 2) return;
+    const autoplay = preview.querySelector<HTMLButtonElement>('[data-flip-autoplay]');
+    if (!controls || !status || !autoplay || panels.length !== windows.length || windows.length < 2) return;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let current = 0;
+    let playing = !reducedMotion.matches;
+    let hovering = false;
+    let visible = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
 
-    const select = (selected: number) => {
+    const select = (selected: number, announce = true) => {
       current = (selected + windows.length) % windows.length;
       windows.forEach((window, index) => {
         window.dataset.position = String((index - current + windows.length) % windows.length);
         window.setAttribute('aria-pressed', String(index === current));
       });
       panels.forEach((panel, index) => { panel.hidden = index !== current; });
+      // Automatic advances must not repeatedly interrupt screen readers.
+      status.setAttribute('aria-live', announce ? 'polite' : 'off');
       status.textContent = windows[current].textContent?.trim() ?? '';
+    };
+
+    const schedule = () => {
+      clearTimeout(timer);
+      autoplay.textContent = playing ? '一時停止' : '自動再生';
+      autoplay.setAttribute('aria-label', playing ? '自動再生を一時停止' : '自動再生を開始');
+      if (playing && !hovering && visible && !document.hidden) {
+        timer = setTimeout(() => {
+          select(current + 1, false);
+          schedule();
+        }, 5000);
+      }
+    };
+    const manualSelect = (selected: number) => {
+      playing = false;
+      select(selected);
+      schedule();
     };
 
     windows.forEach((button, index) => {
       button.disabled = false;
-      button.addEventListener('click', () => select(index));
+      button.addEventListener('click', () => manualSelect(index));
     });
     controls.querySelectorAll<HTMLButtonElement>('[data-flip-step]').forEach(button => {
-      button.addEventListener('click', () => select(current + Number(button.dataset.flipStep)));
+      button.addEventListener('click', () => manualSelect(current + Number(button.dataset.flipStep)));
     });
+    autoplay.addEventListener('click', () => {
+      playing = !playing;
+      schedule();
+    });
+    preview.addEventListener('pointerenter', event => {
+      if (event.pointerType === 'touch') return;
+      hovering = true;
+      schedule();
+    });
+    preview.addEventListener('pointerleave', event => {
+      if (event.pointerType === 'touch') return;
+      hovering = false;
+      schedule();
+    });
+    preview.addEventListener('focusin', event => {
+      // A pointer click on the pause/play button must keep its original action.
+      if (event.target === autoplay && !autoplay.matches(':focus-visible')) return;
+      playing = false;
+      schedule();
+    });
+    document.addEventListener('visibilitychange', schedule);
+    reducedMotion.addEventListener('change', () => {
+      if (reducedMotion.matches) playing = false;
+      schedule();
+    });
+    const observer = new IntersectionObserver(entries => {
+      visible = entries[0].isIntersecting;
+      schedule();
+    });
+    observer.observe(preview);
     preview.addEventListener('keydown', event => {
       if (!(event.target instanceof HTMLElement) || !event.target.closest('button')) return;
       let next: number;
@@ -143,9 +199,10 @@ const projectImages = [
         default: return;
       }
       event.preventDefault();
-      select(next);
+      manualSelect(next);
       windows[current].focus();
     });
     controls.hidden = false;
+    schedule();
   });
 </script>
