@@ -3,15 +3,18 @@ import type { Project } from '../data/projects';
 const { project } = Astro.props as { project: Project };
 ---
 <article class="project-entry">
-  <div>
-    <h3>{project.name}</h3>
+  <a class="project-entry__image" href={project.image.src} target="_blank" rel="noopener noreferrer" aria-label={`${project.name}の画像を開く（新しいタブ）`}>
+    <img src={project.image.src} alt={project.image.alt} width={project.image.width} height={project.image.height} loading="lazy" decoding="async" />
+  </a>
+  <div class="project-entry__body">
+    <h2>{project.name}</h2>
     <span class="project-type">{project.category}</span>
     {project.archived && <span class="archived">更新停止中</span>}
-  </div>
-  <p>{project.description}</p>
-  <div class="project-entry__links">
-    {project.href && <a href={project.href} target="_blank" rel="noopener noreferrer">公開サイト ↗</a>}
-    {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
-    {project.detail && <a href={project.detail}>使い方 →</a>}
+    <p>{project.description}</p>
+    <div class="project-entry__links">
+      {project.href && <a href={project.href} target="_blank" rel="noopener noreferrer">公開サイト ↗</a>}
+      {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
+      {project.detail && <a href={project.detail}>使い方 →</a>}
+    </div>
   </div>
 </article>

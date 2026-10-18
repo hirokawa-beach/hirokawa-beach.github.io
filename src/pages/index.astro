@@ -5,12 +5,6 @@ import { projects } from '../data/projects';
 import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime()).slice(0, 2);
-const projectImages = [
-  { src: '/studycopi-guide/assets/timetable.webp', width: 2048, height: 1536 },
-  { src: '/images/projects/okimap.png', width: 2172, height: 724 },
-  { src: '/img/botimg1.png', width: 1501, height: 551 },
-  { src: '/images/projects/aviutl2.png', width: 990, height: 302 }
-];
 ---
 <Base title="Home">
   <section class="hero" aria-label="自己紹介">
@@ -65,7 +59,7 @@ const projectImages = [
           {projects.map((project, index) => (
             <button class="flip-window" type="button" data-flip-select={index} data-position={index} aria-pressed={index === 0} aria-controls={`project-preview-${index}`} disabled>
               <span class="flip-titlebar">{project.name}</span>
-              <img src={projectImages[index].src} alt="" width={projectImages[index].width} height={projectImages[index].height} loading="lazy" decoding="async" />
+              <img src={project.image.src} alt="" width={project.image.width} height={project.image.height} loading="lazy" decoding="async" />
             </button>
           ))}
         </div>
@@ -85,7 +79,7 @@ const projectImages = [
             {project.href && <a href={project.href} target="_blank" rel="noopener noreferrer">公開サイト ↗</a>}
             {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
             {project.detail && <a href={project.detail}>使い方 →</a>}
-            <a href={projectImages[index].src} target="_blank" rel="noopener noreferrer" aria-label={`${project.name}の画像を開く ↗（新しいタブ）`}>画像を開く ↗</a>
+            <a href={project.image.src} target="_blank" rel="noopener noreferrer" aria-label={`${project.name}の画像を開く ↗（新しいタブ）`}>画像を開く ↗</a>
           </div>
         </div>
       ))}
