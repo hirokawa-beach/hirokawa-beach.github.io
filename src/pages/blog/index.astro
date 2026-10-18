@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog')).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
-<Base title="ブログ" active="blog">
+<Base title="ブログ" description="開発の記録や、このサイトの更新について。" active="blog">
   <header class="page-header">
     <h1 class="page-title">ブログ</h1>
     <p>開発の記録や、このサイトの更新について。</p>
