@@ -13,7 +13,18 @@ npm run build
 npm run preview
 ```
 
-ローカルのビルド成果物は `dist/`。ビルド終了後に既存の `studycopi-guide/` と `img/`、RSSファイルを `dist/` にコピーするため、既存の案内サイトを残せます。
+ローカルのビルド成果物は `dist/`。ビルド終了後に `studycopi-guide/`、`img/`、`feed.xml` をコピーします。
+
+## フォルダー構成
+
+- `src/`: Astroのページ、共通部品、作品データ、記事、スタイル
+- `public/`: 追加画像と旧URLの転送設定
+- `studycopi-guide/`: 継続公開する独立したStudyCoPiガイド
+- `img/`: 現在も使うBotの画面画像とGitHubロゴ
+- `feed.xml`: 既存のRSS購読URLを維持するフィード
+- `scripts/preserve-legacy.mjs`: ガイド・画像・RSSをビルド成果物へコピー
+
+旧サイト専用のHTML、CSS/SCSS、ブログ用JavaScript、未使用画像は削除済みです。旧記事は `src/content/blog/` に移行しており、旧URLからの転送は `public/_redirects` で維持しています。削除したソースはGitの履歴から参照できます。
 
 ## Cloudflare Pages（本番移行時）
 
