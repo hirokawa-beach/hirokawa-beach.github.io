@@ -89,30 +89,32 @@ img { max-width: 100%; }
 .profile-actions svg { width: 15px; height: 15px; }
 
 /* A compact, Vista Flip 3D-inspired stack using the existing app screenshots. */
-.spotlight { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 28px; align-items: center; padding: 6px 0 24px; border-bottom: 1px solid var(--border); }
+.spotlight { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 28px; align-items: center; padding: 6px 0 0; }
 .spotlight-preview { min-width: 0; width: 100%; max-width: 320px; }
-.flip-stage { position: relative; height: 190px; perspective: 850px; pointer-events: none; }
+.flip-stage { position: relative; height: 210px; perspective: 850px; }
 .flip-window {
   position: absolute; top: 50%; left: 50%; width: 224px; height: 148px;
-  display: flex; flex-direction: column; overflow: hidden;
+  display: flex; flex-direction: column; overflow: hidden; padding: 0; text-align: left; color: var(--ink); opacity: 1;
   border: 1px solid var(--border-strong); border-radius: 5px;
   background: var(--paper); box-shadow: 0 5px 14px rgb(0 0 0 / 10%);
   /* These three layers are local to the isolated preview. */
 }
 .spotlight-preview { isolation: isolate; }
-.flip-window[data-position="0"] { z-index: 3; transform: translate(-50%, -50%) translate3d(33px, 20px, 35px) rotateX(8deg) rotateY(-25deg); }
-.flip-window[data-position="1"] { z-index: 2; transform: translate(-50%, -50%) translate3d(-15px, -2px, -45px) rotateX(8deg) rotateY(-25deg); }
-.flip-window[data-position="2"] { z-index: 1; transform: translate(-50%, -50%) translate3d(-65px, -24px, -125px) rotateX(8deg) rotateY(-25deg); }
+.flip-window[data-position="0"] { z-index: 4; transform: translate(-50%, -50%) translate3d(33px, 20px, 35px) rotateX(8deg) rotateY(-25deg); }
+.flip-window[data-position="1"] { z-index: 3; transform: translate(-50%, -50%) translate3d(-8px, 0, -45px) rotateX(8deg) rotateY(-25deg); }
+.flip-window[data-position="2"] { z-index: 2; transform: translate(-50%, -50%) translate3d(-49px, -20px, -125px) rotateX(8deg) rotateY(-25deg); }
+.flip-window[data-position="3"] { z-index: 1; transform: translate(-50%, -50%) translate3d(-90px, -40px, -205px) rotateX(8deg) rotateY(-25deg); }
+.flip-window:not(:disabled):hover { border-color: var(--link); }
 .flip-titlebar { display: flex; justify-content: space-between; gap: 8px; padding: 3px 8px; border-bottom: 1px solid var(--border); background: var(--soft); color: var(--ink); font-size: 9px; line-height: 1.5; white-space: nowrap; }
 .flip-titlebar span { color: var(--text); }
-.flip-window img { display: block; width: 100%; flex: 1; min-height: 0; object-fit: cover; object-position: top; }
+.flip-window img { display: block; width: 100%; flex: 1; min-height: 0; object-fit: contain; background: var(--soft); }
 .flip-controls { display: flex; justify-content: center; gap: 6px; margin-top: 9px; }
 .flip-controls[hidden] { display: none; }
 .flip-controls button { min-width: 58px; min-height: 44px; padding: 5px 12px; border: 1px solid var(--border); border-radius: 5px; background: transparent; color: var(--muted); font-size: 12px; }
 .flip-controls button:hover { color: var(--ink); border-color: var(--border-strong); background: var(--soft); }
-.flip-controls button[aria-pressed="true"] { background: var(--button); border-color: var(--button); color: var(--button-text); }
-.spotlight .flip-caption { display: flex; flex-wrap: wrap; justify-content: center; column-gap: 12px; margin: 7px 0 0; color: var(--muted); font-size: 10px; }
-.flip-caption a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; }
+.spotlight-copy[hidden] { display: none; }
+.spotlight-copy { min-width: 0; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 @media (prefers-reduced-motion: no-preference) {
   .flip-window { transition: transform 320ms cubic-bezier(.2, .7, .2, 1); }
 }
@@ -202,7 +204,7 @@ img { max-width: 100%; }
   .hero { gap: 27px; padding: 51px 0 48px; }
   .hero h1 { font-size: 35px; margin-bottom: 20px; }
   .hero-description { font-size: 14px; }
-  .spotlight { grid-template-columns: minmax(0, 1fr); gap: 17px; padding: 0 0 23px; }
+  .spotlight { grid-template-columns: minmax(0, 1fr); gap: 17px; padding: 0; }
   .spotlight-preview { margin-inline: auto; }
   .flip-window { width: 70%; }
   .spotlight h3 { font-size: 17px; margin-bottom: 3px; }

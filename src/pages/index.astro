@@ -1,16 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
 import { profileAvatar } from '../data/profileAvatar';
-import ProjectCard from '../components/ProjectCard.astro';
 import { projects } from '../data/projects';
 import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime()).slice(0, 2);
-const featured = projects[0];
-const featuredScreens = [
-  { label: '今日', title: '今日の学習', src: '/studycopi-guide/assets/today.webp', width: 780, height: 1688 },
-  { label: '統計', title: '学習の統計', src: '/studycopi-guide/assets/stats.webp', width: 768, height: 1664 },
-  { label: '週間', title: '週間の予定', src: '/studycopi-guide/assets/timetable.webp', width: 2048, height: 1536 }
+const projectImages = [
+  { src: '/studycopi-guide/assets/timetable.webp', width: 2048, height: 1536 },
+  { src: '/images/projects/okimap.png', width: 2172, height: 724 },
+  { src: '/img/botimg1.png', width: 1501, height: 551 },
+  { src: '/images/projects/aviutl2.png', width: 990, height: 302 }
 ];
 ---
 <Base title="Home">
@@ -60,39 +59,36 @@ const featuredScreens = [
       <h2 id="projects-heading">制作物</h2>
       <a href="/projects/">すべて見る →</a>
     </div>
-    <article class="spotlight" aria-labelledby="spotlight-heading">
-      <div class="spotlight-preview" data-flip-preview>
-        <div class="flip-stage" aria-hidden="true">
-          {featuredScreens.map((screen, index) => (
-            <div class="flip-window" data-flip-window data-position={index}>
-              <div class="flip-titlebar">{featured.name}<span>{screen.title}</span></div>
-              <img src={screen.src} alt="" width={screen.width} height={screen.height} loading="lazy" decoding="async" />
-            </div>
-          ))}
-        </div>
-        <div class="flip-controls" role="group" aria-label="StudyCoPiの表示画面" hidden>
-          {featuredScreens.map((screen, index) => (
-            <button type="button" data-flip-select={index} data-screen-title={screen.title} data-screen-src={screen.src} aria-pressed={index === 0}>
-              {screen.label}
+    <article class="spotlight" aria-label="制作物のハイライト" data-flip-preview>
+      <div class="spotlight-preview">
+        <div class="flip-stage" role="group" aria-label="作品を選択。左右キーでも切り替えられます">
+          {projects.map((project, index) => (
+            <button class="flip-window" type="button" data-flip-select={index} data-position={index} aria-pressed={index === 0} aria-controls={`project-preview-${index}`} disabled>
+              <span class="flip-titlebar">{project.name}</span>
+              <img src={projectImages[index].src} alt="" width={projectImages[index].width} height={projectImages[index].height} loading="lazy" decoding="async" />
             </button>
           ))}
         </div>
-        <p class="flip-caption">
-          <span role="status" aria-atomic="true" data-flip-status>今日の学習（画面の一部）</span>
-          <a href={featuredScreens[0].src} target="_blank" rel="noopener noreferrer" data-flip-link aria-label="画面を開く ↗（今日の学習、新しいタブ）">画面を開く ↗</a>
-        </p>
-      </div>
-      <div>
-        <span class="spotlight-kind">Web App · PWA</span>
-        <h3 id="spotlight-heading">{featured.name}</h3>
-        <p>{featured.description}</p>
-        <div class="spotlight-links">
-          {featured.href && <a href={featured.href} target="_blank" rel="noopener noreferrer">公開サイト ↗</a>}
-          {featured.github && <a href={featured.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
+        <div class="flip-controls" role="group" aria-label="作品を切り替える" hidden>
+          <button type="button" data-flip-step="-1">← 前の作品</button>
+          <button type="button" data-flip-step="1">次の作品 →</button>
         </div>
+        <span class="visually-hidden" role="status" aria-atomic="true" data-flip-status>StudyCoPi</span>
       </div>
+      {projects.map((project, index) => (
+        <div class="spotlight-copy" id={`project-preview-${index}`} data-flip-copy hidden={index !== 0}>
+          <span class="spotlight-kind">{project.category}</span>
+          <h3>{project.name}</h3>
+          <p>{project.description}</p>
+          <div class="spotlight-links">
+            {project.href && <a href={project.href} target="_blank" rel="noopener noreferrer">公開サイト ↗</a>}
+            {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
+            {project.detail && <a href={project.detail}>使い方 →</a>}
+            <a href={projectImages[index].src} target="_blank" rel="noopener noreferrer" aria-label={`${project.name}の画像を開く ↗（新しいタブ）`}>画像を開く ↗</a>
+          </div>
+        </div>
+      ))}
     </article>
-    <div class="project-list">{projects.slice(1).map(project => <ProjectCard project={project} />)}</div>
   </section>
 
   <section class="blog-home" aria-labelledby="blog-heading">
@@ -112,39 +108,43 @@ const featuredScreens = [
 
 <script>
   document.querySelectorAll<HTMLElement>('[data-flip-preview]').forEach(preview => {
-    const windows = [...preview.querySelectorAll<HTMLElement>('[data-flip-window]')];
+    const windows = [...preview.querySelectorAll<HTMLButtonElement>('[data-flip-select]')];
     const controls = preview.querySelector<HTMLElement>('.flip-controls');
-    const buttons = [...preview.querySelectorAll<HTMLButtonElement>('[data-flip-select]')];
+    const panels = [...preview.querySelectorAll<HTMLElement>('[data-flip-copy]')];
     const status = preview.querySelector<HTMLElement>('[data-flip-status]');
-    const link = preview.querySelector<HTMLAnchorElement>('[data-flip-link]');
-    if (!controls || !status || !link || buttons.length !== windows.length || buttons.length < 2) return;
+    if (!controls || !status || panels.length !== windows.length || windows.length < 2) return;
+    let current = 0;
 
     const select = (selected: number) => {
+      current = (selected + windows.length) % windows.length;
       windows.forEach((window, index) => {
-        window.dataset.position = String((index - selected + windows.length) % windows.length);
+        window.dataset.position = String((index - current + windows.length) % windows.length);
+        window.setAttribute('aria-pressed', String(index === current));
       });
-      buttons.forEach((button, index) => button.setAttribute('aria-pressed', String(index === selected)));
-      const { screenTitle, screenSrc } = buttons[selected].dataset;
-      status.textContent = `${screenTitle}（画面の一部）`;
-      link.href = screenSrc!;
-      link.setAttribute('aria-label', `画面を開く ↗（${screenTitle}、新しいタブ）`);
+      panels.forEach((panel, index) => { panel.hidden = index !== current; });
+      status.textContent = windows[current].textContent?.trim() ?? '';
     };
 
-    buttons.forEach((button, index) => {
+    windows.forEach((button, index) => {
+      button.disabled = false;
       button.addEventListener('click', () => select(index));
-      button.addEventListener('keydown', event => {
-        let next: number;
-        switch (event.key) {
-          case 'ArrowRight': next = (index + 1) % buttons.length; break;
-          case 'ArrowLeft': next = (index - 1 + buttons.length) % buttons.length; break;
-          case 'Home': next = 0; break;
-          case 'End': next = buttons.length - 1; break;
-          default: return;
-        }
-        event.preventDefault();
-        buttons[next].focus();
-        select(next);
-      });
+    });
+    controls.querySelectorAll<HTMLButtonElement>('[data-flip-step]').forEach(button => {
+      button.addEventListener('click', () => select(current + Number(button.dataset.flipStep)));
+    });
+    preview.addEventListener('keydown', event => {
+      if (!(event.target instanceof HTMLElement) || !event.target.closest('button')) return;
+      let next: number;
+      switch (event.key) {
+        case 'ArrowRight': next = current + 1; break;
+        case 'ArrowLeft': next = current - 1; break;
+        case 'Home': next = 0; break;
+        case 'End': next = windows.length - 1; break;
+        default: return;
+      }
+      event.preventDefault();
+      select(next);
+      windows[current].focus();
     });
     controls.hidden = false;
   });
