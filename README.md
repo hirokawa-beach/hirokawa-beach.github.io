@@ -47,6 +47,14 @@ GitHubリポジトリと連携し、`main` への変更を本番へデプロイ�
 
 404ページには `noindex, follow` を出力し、canonicalと `og:url` は出力しません。旧URLの転送は引き続き `public/_redirects` で管理します。
 
+## サイトマップと検索エンジン
+
+`@astrojs/sitemap` がビルド時に `/sitemap-index.xml` と `/sitemap-0.xml` を生成します。ホーム・制作物・ブログ・記事・稼働状況・Botの説明ページは自動で収録されます。独立した `/studycopi-guide/` は `astro.config.mjs` の `customPages` で追加し、404ページと旧URLの転送元は含めません。新しいAstroページや記事を追加した場合も、通常のビルドで更新されます。
+
+`/sitemap.xml` はサイトマップインデックスへ301転送します。`src/pages/robots.txt.ts` はビルド時に `robots.txt` を生成し、`astro.config.mjs` の本番URLを使ってサイトマップの場所を案内します。共通レイアウトとStudyCoPiガイドのheadにもサイトマップへのリンクがあります。
+
+本番反映後、Google Search Consoleの「サイトマップ」に `https://hb283.dev/sitemap-index.xml` を送信できます。プレビューで確認するときも、XML内のURLは本番の `https://hb283.dev` です。
+
 ## サイトアイコン
 
 プロフィールと同じ元アイコンを使用します。ブラウザー用は `public/favicon.ico`（16／32／48px）と `public/favicon-32.png`、スマホ用は `public/apple-touch-icon.png` です。`public/favicon.webp` はプロフィールの画像データをそのまま保存した元画像です。
@@ -55,7 +63,7 @@ GitHubリポジトリと連携し、`main` への変更を本番へデプロイ�
 
 サイト名・共通の説明文・共有画像の代替テキストは `src/data/site.ts`、画像は `src/assets/hb283-ogp.png` で変更します。アップロードされたPNGをそのまま使用し、画像の寸法と配信用URLはAstroが生成します。画像を差し替えた場合は再ビルドしてください。
 
-全AstroページにOGPとXの大きい画像カード用メタ情報を出力します。タイトル・説明文は各ページの設定を引き継ぎ、ブログ記事では記事自身のタイトル・説明文を表示します。共有URLとOGP画像URLは、どちらも `astro.config.mjs` の `site`（`https://hb283.dev`）を基準にします。画像も独自ドメインから配信し、ドメイン設定を一か所にまとめています。独立したStudyCoPiガイドは従来の共有設定を維持します。
+全AstroページにOGPとXの大きい画像カード用メタ情報を出力します。タイトル・説明文は各ページの設定を引き継ぎ、ブログ記事では記事自身のタイトル・説明文を表示します。共有URLとOGP画像URLは、どちらも `astro.config.mjs` の `site`（`https://hb283.dev`）を基準にします。画像も独自ドメインから配信し、ドメイン設定を一か所にまとめています。独立したStudyCoPiガイドは専用の共有画像を使い、紹介ページのcanonical・共有URLと開発者へのリンクは独自ドメインへ統一しています。
 
 ## Raspberry Pi System Status
 
