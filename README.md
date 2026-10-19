@@ -4,16 +4,18 @@ Astro + TypeScriptによるHirokawa Beachの個人サイト。旧HTMLサイト�
 
 ## 開発
 
-Node.js 20.3以降（22推奨）。
+Node.js 22.22.0以降、npm 9.6.5以降が必要です。開発・CIの基準は `.node-version` の22.23.2です。
 
 ```sh
-npm install
+npm ci
 npm run dev
 npm run build
 npm run preview
 ```
 
-ローカルのビルド成果物は `dist/`。ビルド終了後に `studycopi-guide/`、`img/`、`feed.xml` をコピーします。
+`package-lock.json` をコミットし、CIも `npm ci` で同じ依存関係を再現します。依存を変更する場合は `npm install` でロックファイルも更新し、`npm audit`・型チェック・ビルドを確認してください。CIはhigh／criticalの脆弱性検出で失敗します。
+
+ローカルのビルド成果物は `dist/`。ビルド終了後に `studycopi-guide/`、`img/` をコピーします。RSSなどの機械可読ファイルはAstroが生成します。
 
 ## フォルダー構成
 
@@ -21,8 +23,8 @@ npm run preview
 - `public/`: 追加画像と旧URLの転送設定
 - `studycopi-guide/`: 継続公開する独立したStudyCoPiガイド
 - `img/`: 現在も使うBotの画面画像とGitHubロゴ
-- `feed.xml`: 既存のRSS購読URLを維持するフィード
-- `scripts/preserve-legacy.mjs`: ガイド・画像・RSSをビルド成果物へコピー
+- `src/pages/feed.xml.ts`: 記事から生成するRSS（購読URLは従来どおり `/feed.xml`）
+- `scripts/preserve-legacy.mjs`: ガイド・画像をビルド成果物へコピー
 
 旧サイト専用のHTML、CSS/SCSS、ブログ用JavaScript、未使用画像は削除済みです。旧記事は `src/content/blog/` に移行しており、旧URLからの転送は `public/_redirects` で維持しています。削除したソースはGitの履歴から参照できます。
 
@@ -37,9 +39,31 @@ GitHubリポジトリと連携し、`main` への変更を本番へデプロイ�
 | 本番ブランチ | `main` |
 | Build command | `npm run build` |
 | Output directory | `dist` |
-| Node.js | `22` |
+| Node.js | `22.23.2`（`.node-version`） |
 
 本番URLは `astro.config.mjs` の `site`（`https://hb283.dev`）で管理します。旧URLの転送は `public/_redirects`、独立したStudyCoPiガイドの配信は `scripts/preserve-legacy.mjs` で維持します。
+
+## 404ページ
+
+`src/pages/404.astro` を編集すると、ビルド時にルートの `dist/404.html` が生成されます。Cloudflare Pagesは、このファイルを使って存在しないURLにHTTP 404を返します。ホーム・制作物・ブログへのリンクを設け、ライト／ダークテーマとスマホ表示に対応しています。
+
+404ページには `noindex, follow` を出力し、canonicalと `og:url` は出力しません。旧URLの転送は引き続き `public/_redirects` で管理します。
+
+## サイトマップと検索エンジン
+
+`@astrojs/sitemap` がビルド時に `/sitemap-index.xml` と `/sitemap-0.xml` を生成します。ホーム・制作物・ブログ・記事・稼働状況・Botの説明ページは自動で収録されます。独立した `/studycopi-guide/` は `astro.config.mjs` の `customPages` で追加し、404ページと旧URLの転送元は含めません。新しいAstroページや記事を追加した場合も、通常のビルドで更新されます。
+
+`/sitemap.xml` はサイトマップインデックスへ301転送します。`src/pages/robots.txt.ts` はビルド時に `robots.txt` を生成し、`astro.config.mjs` の本番URLを使ってサイトマップの場所を案内します。共通レイアウトとStudyCoPiガイドのheadにもサイトマップへのリンクがあります。
+
+本番反映後、Google Search Consoleの「サイトマップ」に `https://hb283.dev/sitemap-index.xml` を送信できます。プレビューで確認するときも、XML内のURLは本番の `https://hb283.dev` です。
+
+## RSSとAI向けの案内
+
+`src/pages/feed.xml.ts` は `src/content/blog/` の記事を新しい順にRSSへ出力します。タイトル・説明・日付・タグを記事と共有し、チャンネルと記事のリンク・GUIDは `astro.config.mjs` の本番URLを使います。`/feed.xml` の購読URLは維持し、共通レイアウトのheadからも案内します。旧GUIDを新しい正規URLへ統一するため、移行時に既存記事が再表示されるRSSリーダーもあります。
+
+`src/pages/llms.txt.ts` はH1・サイト概要・主要ページと記事のリンクを持つMarkdownを `/llms.txt` に生成します。概要は `src/data/site.ts`、主要ページの説明はこのエンドポイントで編集します。これはAIがサイトの内容を理解するための任意の案内で、クロールや学習の許可・拒否を制御するファイルではありません。[llms.txtの提案](https://llmstxt.org/)を参照してください。
+
+`src/pages/.well-known/ai-catalog.json.ts` は画像の監査が参照する `/.well-known/ai-catalog.json` をJSONで返します。[ARDのai-catalogスキーマ](https://github.com/ards-project/ard-spec/blob/main/spec/schemas/ai-catalog.schema.json)に合わせ、公開AIエージェントやAIツールの提供がない現在は `entries: []` です。一般の制作物や稼働状況APIをAI機能として登録しません。共通レイアウトとStudyCoPiガイドのheadから `llms.txt` とカタログへリンクします。
 
 ## サイトアイコン
 
@@ -49,7 +73,7 @@ GitHubリポジトリと連携し、`main` への変更を本番へデプロイ�
 
 サイト名・共通の説明文・共有画像の代替テキストは `src/data/site.ts`、画像は `src/assets/hb283-ogp.png` で変更します。アップロードされたPNGをそのまま使用し、画像の寸法と配信用URLはAstroが生成します。画像を差し替えた場合は再ビルドしてください。
 
-全AstroページにOGPとXの大きい画像カード用メタ情報を出力します。タイトル・説明文は各ページの設定を引き継ぎ、ブログ記事では記事自身のタイトル・説明文を表示します。共有URLとOGP画像URLは、どちらも `astro.config.mjs` の `site`（`https://hb283.dev`）を基準にします。画像も独自ドメインから配信し、ドメイン設定を一か所にまとめています。独立したStudyCoPiガイドは従来の共有設定を維持します。
+全AstroページにOGPとXの大きい画像カード用メタ情報を出力します。タイトル・説明文は各ページの設定を引き継ぎ、ブログ記事では記事自身のタイトル・説明文を表示します。共有URLとOGP画像URLは、どちらも `astro.config.mjs` の `site`（`https://hb283.dev`）を基準にします。画像も独自ドメインから配信し、ドメイン設定を一か所にまとめています。独立したStudyCoPiガイドは専用の共有画像を使い、紹介ページのcanonical・共有URLと開発者へのリンクは独自ドメインへ統一しています。
 
 ## Raspberry Pi System Status
 

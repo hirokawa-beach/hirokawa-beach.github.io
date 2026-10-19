@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+---
+<Base title="ページが見つかりません" description="お探しのページが見つかりませんでした。ホームや制作物一覧、ブログからお探しください。" noIndex>
+  <section class="not-found" aria-labelledby="not-found-heading">
+    <p class="not-found-code">404</p>
+    <h1 id="not-found-heading" class="page-title">ページが見つかりません</h1>
+    <p class="not-found-description">指定されたページは、移動または削除された可能性があります。<br />URLを確認するか、以下のリンクからお探しください。</p>
+    <div class="not-found-actions">
+      <a class="button button-primary" href="/"><Icon name="left" />ホームに戻る</a>
+      <a class="text-link" href="/projects/">制作物を見る<Icon name="right" /></a>
+      <a class="text-link" href="/blog/">ブログを読む<Icon name="right" /></a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .not-found {
+    max-width: 740px;
+    padding: clamp(48px, 8vw, 88px) 0 96px;
+  }
+  .not-found-code {
+    margin: 0 0 22px;
+    color: var(--faint);
+    font: 600 clamp(56px, 9vw, 88px)/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+    letter-spacing: -.06em;
+  }
+  .not-found .page-title {
+    font-size: clamp(24px, 3.4vw, 36px);
+    letter-spacing: -.035em;
+  }
+  .not-found-description {
+    margin: 18px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.95;
+  }
+  .not-found-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    margin-top: 30px;
+  }
+  .not-found-actions .text-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  @media (max-width: 480px) {
+    .not-found-actions .button { flex-basis: 100%; }
+  }
+</style>

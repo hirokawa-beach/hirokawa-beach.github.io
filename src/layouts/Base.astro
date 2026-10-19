@@ -4,12 +4,13 @@ import AnimatedBrand from '../components/AnimatedBrand.astro';
 import '../styles/global.css';
 import socialImage from '../assets/hb283-ogp.png';
 import { siteMetadata } from '../data/site';
-interface Props { title: string; description?: string; active?: string; ogType?: 'website' | 'article'; }
+interface Props { title: string; description?: string; active?: string; ogType?: 'website' | 'article'; noIndex?: boolean; }
 const {
   title,
   description = siteMetadata.description,
   active,
-  ogType = 'website'
+  ogType = 'website',
+  noIndex = false
 } = Astro.props;
 const pageTitle = title === 'Home' ? siteMetadata.title : `${title} | hb283.dev`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -27,17 +28,22 @@ const navigation = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    {noIndex && <meta name="robots" content="noindex, follow" />}
     <meta name="theme-color" content="#f8f8f6" />
     <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
     <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-    <link rel="canonical" href={canonicalURL} />
+    {!noIndex && <link rel="canonical" href={canonicalURL} />}
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${siteMetadata.name}のブログ`} href={new URL('/feed.xml', Astro.site)} />
+    <link rel="describedby" type="text/plain" href="/llms.txt" />
+    <link rel="ai-catalog" type="application/json" href="/.well-known/ai-catalog.json" />
     <title>{pageTitle}</title>
     <meta property="og:site_name" content={siteMetadata.name} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={ogType} />
-    <meta property="og:url" content={canonicalURL} />
+    {!noIndex && <meta property="og:url" content={canonicalURL} />}
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:image" content={imageURL} />
     <meta property="og:image:type" content="image/png" />
