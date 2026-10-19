@@ -41,6 +41,12 @@ GitHubリポジトリと連携し、`main` への変更を本番へデプロイ�
 
 本番URLは `astro.config.mjs` の `site`（`https://hb283.dev`）で管理します。旧URLの転送は `public/_redirects`、独立したStudyCoPiガイドの配信は `scripts/preserve-legacy.mjs` で維持します。
 
+## 404ページ
+
+`src/pages/404.astro` を編集すると、ビルド時にルートの `dist/404.html` が生成されます。Cloudflare Pagesは、このファイルを使って存在しないURLにHTTP 404を返します。ホーム・制作物・ブログへのリンクを設け、ライト／ダークテーマとスマホ表示に対応しています。
+
+404ページには `noindex, follow` を出力し、canonicalと `og:url` は出力しません。旧URLの転送は引き続き `public/_redirects` で管理します。
+
 ## サイトアイコン
 
 プロフィールと同じ元アイコンを使用します。ブラウザー用は `public/favicon.ico`（16／32／48px）と `public/favicon-32.png`、スマホ用は `public/apple-touch-icon.png` です。`public/favicon.webp` はプロフィールの画像データをそのまま保存した元画像です。
