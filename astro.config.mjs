@@ -6,6 +6,7 @@ const site = 'https://hb283.dev';
 export default defineConfig({
   site,
   output: 'static',
+  compressHTML: true,
   trailingSlash: 'always',
   integrations: [
     sitemap({

@@ -4,14 +4,16 @@ Astro + TypeScriptによるHirokawa Beachの個人サイト。旧HTMLサイト�
 
 ## 開発
 
-Node.js 20.3以降（22推奨）。
+Node.js 22.22.0以降、npm 9.6.5以降が必要です。開発・CIの基準は `.node-version` の22.23.2です。
 
 ```sh
-npm install
+npm ci
 npm run dev
 npm run build
 npm run preview
 ```
+
+`package-lock.json` をコミットし、CIも `npm ci` で同じ依存関係を再現します。依存を変更する場合は `npm install` でロックファイルも更新し、`npm audit`・型チェック・ビルドを確認してください。CIはhigh／criticalの脆弱性検出で失敗します。
 
 ローカルのビルド成果物は `dist/`。ビルド終了後に `studycopi-guide/`、`img/`、`feed.xml` をコピーします。
 
@@ -37,7 +39,7 @@ GitHubリポジトリと連携し、`main` への変更を本番へデプロイ�
 | 本番ブランチ | `main` |
 | Build command | `npm run build` |
 | Output directory | `dist` |
-| Node.js | `22` |
+| Node.js | `22.23.2`（`.node-version`） |
 
 本番URLは `astro.config.mjs` の `site`（`https://hb283.dev`）で管理します。旧URLの転送は `public/_redirects`、独立したStudyCoPiガイドの配信は `scripts/preserve-legacy.mjs` で維持します。
 
