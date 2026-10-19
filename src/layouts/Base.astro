@@ -13,7 +13,7 @@ const {
 } = Astro.props;
 const pageTitle = title === 'Home' ? siteMetadata.title : `${title} | hb283.dev`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const imageURL = new URL(socialImage.src, siteMetadata.imageOrigin);
+const imageURL = new URL(socialImage.src, Astro.site);
 const navigation = [
   { label: 'ホーム', href: '/', id: 'home' },
   { label: '制作物', href: '/projects/', id: 'projects' },

@@ -26,11 +26,20 @@ npm run preview
 
 旧サイト専用のHTML、CSS/SCSS、ブログ用JavaScript、未使用画像は削除済みです。旧記事は `src/content/blog/` に移行しており、旧URLからの転送は `public/_redirects` で維持しています。削除したソースはGitの履歴から参照できます。
 
-## Cloudflare Pages（本番移行時）
+## Cloudflare Pages（本番運用）
 
-GitHubリポジトリをPagesへ連携し、Build command: `npm run build`, Output directory: `dist`, Node.js: 22を設定してください。最初に `*.pages.dev` のプレビュー環境でページと `/studycopi-guide/` を確認してから `hb283.dev` をカスタムドメインへ追加してください。
+本番サイトはCloudflare Pagesで公開中です。独自ドメインの接続は完了しており、[https://hb283.dev/](https://hb283.dev/) からアクセスできます。Pagesの標準URLは [https://hirokawa-beach-github-io.pages.dev/](https://hirokawa-beach-github-io.pages.dev/) です。
 
-GitHub PagesからCloudflare Pagesへの本番切替は、このPRでは行いません。`main` のGitHub Pages公開設定を調整する前に、新サイトのDNSと旧URLからの誘導を確認してください。
+GitHubリポジトリと連携し、`main` への変更を本番へデプロイします。変更は作業ブランチのプレビューデプロイで確認してから、PRを `main` へマージして公開します。
+
+| 設定 | 値 |
+| --- | --- |
+| 本番ブランチ | `main` |
+| Build command | `npm run build` |
+| Output directory | `dist` |
+| Node.js | `22` |
+
+本番URLは `astro.config.mjs` の `site`（`https://hb283.dev`）で管理します。旧URLの転送は `public/_redirects`、独立したStudyCoPiガイドの配信は `scripts/preserve-legacy.mjs` で維持します。
 
 ## サイトアイコン
 
@@ -40,7 +49,7 @@ GitHub PagesからCloudflare Pagesへの本番切替は、このPRでは行い�
 
 サイト名・共通の説明文・共有画像の代替テキストは `src/data/site.ts`、画像は `src/assets/hb283-ogp.png` で変更します。アップロードされたPNGをそのまま使用し、画像の寸法と配信用URLはAstroが生成します。画像を差し替えた場合は再ビルドしてください。
 
-全AstroページにOGPとXの大きい画像カード用メタ情報を出力します。タイトル・説明文は各ページの設定を引き継ぎ、ブログ記事では記事自身のタイトル・説明文を表示します。本番の共有URLは `astro.config.mjs` の `site`（`https://hb283.dev`）を基準にします。OGP画像は独自ドメインのDNS状態に依存しないよう、`src/data/site.ts` の `imageOrigin`（本番のPagesドメイン）から配信します。独立したStudyCoPiガイドは従来の共有設定を維持します。
+全AstroページにOGPとXの大きい画像カード用メタ情報を出力します。タイトル・説明文は各ページの設定を引き継ぎ、ブログ記事では記事自身のタイトル・説明文を表示します。共有URLとOGP画像URLは、どちらも `astro.config.mjs` の `site`（`https://hb283.dev`）を基準にします。画像も独自ドメインから配信し、ドメイン設定を一か所にまとめています。独立したStudyCoPiガイドは従来の共有設定を維持します。
 
 ## Raspberry Pi System Status
 
@@ -63,4 +72,4 @@ Pythonのテストには `raspberry-pi/requirements.txt` の依存パッケー�
 
 ## 注意
 
-既存の `studycopi-guide/` は独立サイトとして保持し、コピー用スクリプトで配信します。画像等の既存ファイルやGitHub Pagesの本番ブランチはPRマージまで変更されません。公開用の連絡先メールは実際の受信環境を構築するまで掲載しません。
+既存の `studycopi-guide/` は独立サイトとして保持し、コピー用スクリプトで配信します。公開用の連絡先メールは実際の受信環境を構築するまで掲載しません。
