@@ -1,15 +1,15 @@
 # StudyCoPi 案内サイト
 
-公開先: https://hirokawa-beach.github.io/studycopi-guide/
+公開先: https://hb283.dev/studycopi-guide/
 
-サービス本体 https://hirokawa-beach.github.io/StudyCoPi/ とは別の静的サイトです。このフォルダのみ追加し、個人ホームページやサービスのファイルは変更していません。
+サービス本体 https://hirokawa-beach.github.io/StudyCoPi/ とは別の静的サイトです。個人サイトと一緒にCloudflare Pagesで公開し、アプリ本体の配信先は引き続きGitHub Pagesです。
 
 ## 編集と公開
 
 - `index.html`: 機能紹介、使い方、比較、APK導入、FAQ。APKリンクと配布バージョン・容量はリリース時に更新してください。`releases/latest` へのリンクも用意しています。
 - `style.css`: 自動ライト・ダークテーマ、スマホ表示、縮小アニメーション設定。
 - `site.js`: アクセシブルな機能紹介タブ、スクロールで進む使い方、スクショ拡大。タブは左右矢印・Home・Endキーに対応。
-- ビルド不要。リポジトリルートで `python -m http.server 8767` を起動し、`http://localhost:8767/studycopi-guide/` で確認できます。mainにpushすると既存のGitHub Pagesが公開します。
+- ビルド不要。リポジトリルートで `python -m http.server 8767` を起動し、`http://localhost:8767/studycopi-guide/` で確認できます。サイト全体の確認にはルートで `npm run build` と `npm run preview` を実行します。PRをmainへマージするとCloudflare Pagesが本番へ公開します。
 - アカウント、計測用スクリプト、Cookie、サービスワーカーは追加していません。
 
 ## デザイン

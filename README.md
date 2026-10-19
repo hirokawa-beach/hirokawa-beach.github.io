@@ -15,7 +15,7 @@ npm run preview
 
 `package-lock.json` をコミットし、CIも `npm ci` で同じ依存関係を再現します。依存を変更する場合は `npm install` でロックファイルも更新し、`npm audit`・型チェック・ビルドを確認してください。CIはhigh／criticalの脆弱性検出で失敗します。
 
-ローカルのビルド成果物は `dist/`。ビルド終了後に `studycopi-guide/`、`img/`、`feed.xml` をコピーします。
+ローカルのビルド成果物は `dist/`。ビルド終了後に `studycopi-guide/`、`img/` をコピーします。RSSなどの機械可読ファイルはAstroが生成します。
 
 ## フォルダー構成
 
@@ -23,8 +23,8 @@ npm run preview
 - `public/`: 追加画像と旧URLの転送設定
 - `studycopi-guide/`: 継続公開する独立したStudyCoPiガイド
 - `img/`: 現在も使うBotの画面画像とGitHubロゴ
-- `feed.xml`: 既存のRSS購読URLを維持するフィード
-- `scripts/preserve-legacy.mjs`: ガイド・画像・RSSをビルド成果物へコピー
+- `src/pages/feed.xml.ts`: 記事から生成するRSS（購読URLは従来どおり `/feed.xml`）
+- `scripts/preserve-legacy.mjs`: ガイド・画像をビルド成果物へコピー
 
 旧サイト専用のHTML、CSS/SCSS、ブログ用JavaScript、未使用画像は削除済みです。旧記事は `src/content/blog/` に移行しており、旧URLからの転送は `public/_redirects` で維持しています。削除したソースはGitの履歴から参照できます。
 
@@ -56,6 +56,14 @@ GitHubリポジトリと連携し、`main` への変更を本番へデプロイ�
 `/sitemap.xml` はサイトマップインデックスへ301転送します。`src/pages/robots.txt.ts` はビルド時に `robots.txt` を生成し、`astro.config.mjs` の本番URLを使ってサイトマップの場所を案内します。共通レイアウトとStudyCoPiガイドのheadにもサイトマップへのリンクがあります。
 
 本番反映後、Google Search Consoleの「サイトマップ」に `https://hb283.dev/sitemap-index.xml` を送信できます。プレビューで確認するときも、XML内のURLは本番の `https://hb283.dev` です。
+
+## RSSとAI向けの案内
+
+`src/pages/feed.xml.ts` は `src/content/blog/` の記事を新しい順にRSSへ出力します。タイトル・説明・日付・タグを記事と共有し、チャンネルと記事のリンク・GUIDは `astro.config.mjs` の本番URLを使います。`/feed.xml` の購読URLは維持し、共通レイアウトのheadからも案内します。旧GUIDを新しい正規URLへ統一するため、移行時に既存記事が再表示されるRSSリーダーもあります。
+
+`src/pages/llms.txt.ts` はH1・サイト概要・主要ページと記事のリンクを持つMarkdownを `/llms.txt` に生成します。概要は `src/data/site.ts`、主要ページの説明はこのエンドポイントで編集します。これはAIがサイトの内容を理解するための任意の案内で、クロールや学習の許可・拒否を制御するファイルではありません。[llms.txtの提案](https://llmstxt.org/)を参照してください。
+
+`src/pages/.well-known/ai-catalog.json.ts` は画像の監査が参照する `/.well-known/ai-catalog.json` をJSONで返します。[ARDのai-catalogスキーマ](https://github.com/ards-project/ard-spec/blob/main/spec/schemas/ai-catalog.schema.json)に合わせ、公開AIエージェントやAIツールの提供がない現在は `entries: []` です。一般の制作物や稼働状況APIをAI機能として登録しません。共通レイアウトとStudyCoPiガイドのheadから `llms.txt` とカタログへリンクします。
 
 ## サイトアイコン
 
